@@ -1,2 +1,3 @@
 # dds-2018-g13-mie-tn
-DiseÃ±o de Sistemas - TP SGE - G13 - 2018
+Trabajo Práctico Anual de Diseño de Sistemas
+UTN — FRBA
