@@ -8,14 +8,14 @@ public abstract class Persona {
 	String domicilio;
 	Date fechaAlta;
 	String nombreUsuario;
-	String contraseña;
+	String contrasena;
 	
-	public Persona(String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario, String contraseña) {
+	public Persona(String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario, String contrasena) {
 		setNombreApellido(nombreApellido);
 		setDomicilio(domicilio);
 		setFechaAlta(fechaAlta);
 		setNombreUsuario(nombreUsuario);
-		setContraseña(contraseña);
+		setContrasena(contrasena);
 	}
 
 	public String getNombreApellido() {
@@ -50,12 +50,12 @@ public abstract class Persona {
 		this.nombreUsuario = nombreUsuario;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasena() {
+		return contrasena;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
 	}
 	
 }

@@ -1,0 +1,21 @@
+{
+	"data_administradores": [
+		{
+			"nIdentificacion": 0156,
+			"nombreApellido": "Nombre Apellido",
+			"domicilio": "Pasaje Sin Nombre 654",
+			"fechaAlta": "1960-06-15",
+			"nombreUsuario": "username",
+			"contrasena": "password"
+		},
+		{
+			"nIdentificacion": 0156,
+			"nombreApellido": "Nombre Apellido",
+			"domicilio": "Pasaje Sin Nombre 654",
+			"fechaAlta": "1960-06-15",
+			"nombreUsuario": "username",
+			"contrasena": "password"
+		}		
+	]
+
+}
