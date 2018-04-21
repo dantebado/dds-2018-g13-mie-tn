@@ -21,7 +21,7 @@ public class TestLauncher {
 		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 			
-		String path = "D:\\Mis Documentos\\Documentos\\2018\\DDS\\workspace\\dds-2018-g13-mie-tn\\src\\test\\test_carga_data.json";
+		String path = "PATH_ABSOLUTO_AL_ARCHIVO_JSON";
 		File file = new File(path);
 		
 		try {
