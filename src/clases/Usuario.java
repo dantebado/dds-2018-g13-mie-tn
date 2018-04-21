@@ -1,5 +1,6 @@
 package clases;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Usuario extends Persona {
@@ -9,6 +10,8 @@ public class Usuario extends Persona {
 	int numeroDoc;
 	String categoria;
 	int kWConsumidos;
+	
+	ArrayList<Dispositivo> dispositivos;
 
 	public Usuario(String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario,
 			String contraseña, int telefono, String tipoDoc, int numeroDoc, String categoria, int kWConsumidos) {
@@ -18,6 +21,11 @@ public class Usuario extends Persona {
 		setNumeroDoc(numeroDoc);
 		setCategoria(categoria);
 		setkWConsumidos(kWConsumidos);
+		dispositivos = new ArrayList<Dispositivo>();
+	}
+	
+	public void agregarDispositivo(Dispositivo dispositivo) {
+		dispositivos.add(dispositivo);
 	}
 
 	public int getTelefono() {
@@ -58,6 +66,14 @@ public class Usuario extends Persona {
 
 	public void setkWConsumidos(int kWConsumidos) {
 		this.kWConsumidos = kWConsumidos;
-	}	
+	}
+
+	public ArrayList<Dispositivo> getDispositivos() {
+		return dispositivos;
+	}
+
+	public void setDispositivos(ArrayList<Dispositivo> dispositivos) {
+		this.dispositivos = dispositivos;
+	}
 
 }

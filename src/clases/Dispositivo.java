@@ -3,10 +3,10 @@ package clases;
 public class Dispositivo {
 	
 	Boolean encendido;
-	int consumokWh;
+	float consumokWh;
 	String nombre;
 	
-	public Dispositivo(Boolean encendido, int consumokWh, String nombre) {
+	public Dispositivo(Boolean encendido, float consumokWh, String nombre) {
 		setEncendido(encendido);
 		setConsumokWh(consumokWh);
 		setNombre(nombre);
@@ -20,11 +20,11 @@ public class Dispositivo {
 		this.encendido = encendido;
 	}
 
-	public int getConsumokWh() {
+	public float getConsumokWh() {
 		return consumokWh;
 	}
 
-	public void setConsumokWh(int consumokWh) {
+	public void setConsumokWh(float consumokWh) {
 		this.consumokWh = consumokWh;
 	}
 
