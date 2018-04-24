@@ -2,6 +2,7 @@ package clases;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Usuario extends Persona {
 	
@@ -11,7 +12,7 @@ public class Usuario extends Persona {
 	private String categoria;
 	private int kWConsumidos;
 	
-	ArrayList<Dispositivo> dispositivos;
+	List<Dispositivo> dispositivos;
 
 	public Usuario(String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario,
 			String password, int telefono, String tipoDoc, int numeroDoc, String categoria, int kWConsumidos) {
@@ -68,7 +69,7 @@ public class Usuario extends Persona {
 		this.kWConsumidos = kWConsumidos;
 	}
 
-	public ArrayList<Dispositivo> getDispositivos() {
+	public List<Dispositivo> getDispositivos() {
 		return dispositivos;
 	}
 
