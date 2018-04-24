@@ -5,17 +5,17 @@ import java.util.Date;
 
 public class Usuario extends Persona {
 	
-	int telefono;
-	String tipoDoc;
-	int numeroDoc;
-	String categoria;
-	int kWConsumidos;
+	private int telefono;
+	private String tipoDoc;
+	private int numeroDoc;
+	private String categoria;
+	private int kWConsumidos;
 	
 	ArrayList<Dispositivo> dispositivos;
 
 	public Usuario(String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario,
-			String contraseña, int telefono, String tipoDoc, int numeroDoc, String categoria, int kWConsumidos) {
-		super(nombreApellido, domicilio, fechaAlta, nombreUsuario, contraseña);
+			String password, int telefono, String tipoDoc, int numeroDoc, String categoria, int kWConsumidos) {
+		super(nombreApellido, domicilio, fechaAlta, nombreUsuario, password);
 		setTelefono(telefono);
 		setTipoDoc(tipoDoc);
 		setNumeroDoc(numeroDoc);

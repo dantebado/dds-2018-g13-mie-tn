@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Administrador extends Persona {
 	
-	int nIdentificacion;
+	private int nIdentificacion;
 
 	public Administrador(int nIdentificacion, String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario,
-			String contraseña) {
-		super(nombreApellido, domicilio, fechaAlta, nombreUsuario, contraseña);
+			String password) {
+		super(nombreApellido, domicilio, fechaAlta, nombreUsuario, password);
 		setnIdentificacion(nIdentificacion);
 	}
 

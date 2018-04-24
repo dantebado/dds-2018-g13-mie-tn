@@ -2,9 +2,9 @@ package clases;
 
 public class Dispositivo {
 	
-	Boolean encendido;
-	float consumokWh;
-	String nombre;
+	private Boolean encendido;
+	private float consumokWh;
+	private String nombre;
 	
 	public Dispositivo(Boolean encendido, float consumokWh, String nombre) {
 		setEncendido(encendido);

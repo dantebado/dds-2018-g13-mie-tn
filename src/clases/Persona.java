@@ -4,18 +4,18 @@ import java.util.Date;
 
 public abstract class Persona {
 	
-	String nombreApellido;
-	String domicilio;
-	Date fechaAlta;
-	String nombreUsuario;
-	String contrasena;
+	protected String nombreApellido;
+	protected String domicilio;
+	protected Date fechaAlta;
+	protected String nombreUsuario;
+	protected String password;
 	
-	public Persona(String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario, String contrasena) {
+	public Persona(String nombreApellido, String domicilio, Date fechaAlta, String nombreUsuario, String password) {
 		setNombreApellido(nombreApellido);
 		setDomicilio(domicilio);
 		setFechaAlta(fechaAlta);
 		setNombreUsuario(nombreUsuario);
-		setContrasena(contrasena);
+		setPassword(password);
 	}
 
 	public String getNombreApellido() {
@@ -50,12 +50,12 @@ public abstract class Persona {
 		this.nombreUsuario = nombreUsuario;
 	}
 
-	public String getContrasena() {
-		return contrasena;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }
