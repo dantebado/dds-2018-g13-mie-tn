@@ -11,10 +11,10 @@ public class Administrador extends Persona {
 		super(nombreApellido, domicilio, fechaAlta, nombreUsuario, password);
 		setnIdentificacion(nIdentificacion);
 	}
-
-	public int getnIdentificacion() {
-		return nIdentificacion;
-	}
+	
+	/*COMPORTAMIENTO*/
+	
+	/*GETTERS - SETTERS*/
 
 	public void setnIdentificacion(int nIdentificacion) {
 		this.nIdentificacion = nIdentificacion;

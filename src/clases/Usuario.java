@@ -25,52 +25,32 @@ public class Usuario extends Persona {
 		dispositivos = new ArrayList<Dispositivo>();
 	}
 	
+	/*COMPORTAMENTO*/
+	
 	public void agregarDispositivo(Dispositivo dispositivo) {
 		dispositivos.add(dispositivo);
 	}
-
-	public int getTelefono() {
-		return telefono;
-	}
+	
+	/*GETTERS - SETTERS*/
 
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
-	}
-
-	public String getTipoDoc() {
-		return tipoDoc;
 	}
 
 	public void setTipoDoc(String tipoDoc) {
 		this.tipoDoc = tipoDoc;
 	}
 
-	public int getNumeroDoc() {
-		return numeroDoc;
-	}
-
 	public void setNumeroDoc(int numeroDoc) {
 		this.numeroDoc = numeroDoc;
-	}
-
-	public String getCategoria() {
-		return categoria;
 	}
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
-	public int getkWConsumidos() {
-		return kWConsumidos;
-	}
-
 	public void setkWConsumidos(int kWConsumidos) {
 		this.kWConsumidos = kWConsumidos;
-	}
-
-	public List<Dispositivo> getDispositivos() {
-		return dispositivos;
 	}
 
 	public void setDispositivos(ArrayList<Dispositivo> dispositivos) {

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,8 +19,8 @@ public class TestLauncher {
 	
 	public static void main(String[] args) {
 		
-		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
-		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		List<Administrador> administradores = new ArrayList<Administrador>();
+		List<Usuario> usuarios = new ArrayList<Usuario>();
 			
 		String path = "PATH_ABSOLUTO_AL_ARCHIVO_JSON";
 		File file = new File(path);

@@ -11,25 +11,17 @@ public class Dispositivo {
 		setConsumokWh(consumokWh);
 		setNombre(nombre);
 	}
-
-	public Boolean getEncendido() {
-		return encendido;
-	}
+	
+	/*COMPORTAMIENTO*/
+	
+	/*GETTERS - SETTERS*/
 
 	public void setEncendido(Boolean encendido) {
 		this.encendido = encendido;
 	}
 
-	public float getConsumokWh() {
-		return consumokWh;
-	}
-
 	public void setConsumokWh(float consumokWh) {
 		this.consumokWh = consumokWh;
-	}
-
-	public String getNombre() {
-		return nombre;
 	}
 
 	public void setNombre(String nombre) {
