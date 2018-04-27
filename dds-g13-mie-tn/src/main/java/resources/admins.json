@@ -1,0 +1,14 @@
+[
+	{
+		"id":14,
+		"fullName":"Marco Alcaraz",
+		"address":"Cortina 144",
+		"registrationDate":{
+			"year":2018,
+			"month":6,
+			"day":4
+		},
+		"username":"malcaraz",
+		"password":"marco_1964"
+	}
+]
