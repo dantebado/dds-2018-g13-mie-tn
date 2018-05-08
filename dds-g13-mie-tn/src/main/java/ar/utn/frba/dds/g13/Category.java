@@ -2,14 +2,16 @@ package ar.utn.frba.dds.g13;
 
 import java.math.BigDecimal;
 
+import com.google.gson.annotations.Expose;
+
 import json.BeanToJson;
 
 public class Category extends BeanToJson {
 	
-	private String name;
-	private BigDecimal basePrice;
-	private BigDecimal variablePrice;
-	private BigDecimal monthlyConsumption;
+	@Expose private String name;
+	@Expose private BigDecimal basePrice;
+	@Expose private BigDecimal variablePrice;
+	@Expose private BigDecimal monthlyConsumption;
 	
 	public Category(String name, BigDecimal basePrice,
 			BigDecimal variablePrice, BigDecimal monthlyConsumption) {

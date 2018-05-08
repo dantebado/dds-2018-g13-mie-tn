@@ -34,6 +34,14 @@ public class User extends BeanToJson {
 	
 	/*GETTERS - SETTERS*/
 
+	public int getIdNumber() {
+		return idNumber;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
 	public User getObj() {
 		return this;
 	}
