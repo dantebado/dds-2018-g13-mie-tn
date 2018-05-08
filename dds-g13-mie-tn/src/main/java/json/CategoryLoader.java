@@ -8,13 +8,13 @@ import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
-import ar.utn.frba.dds.g13.User;
+import ar.utn.frba.dds.g13.Category;
 
-public class UserLoader {
+public class CategoryLoader {
 	
-	public static List<User> load(File file) throws IOException {
+	public static List<Category> load(File file) throws IOException {
         final String json = new JsonFile(file.getAbsolutePath()).read();
-        final Type listType = new TypeToken<ArrayList<User>>(){}.getType();
+        final Type listType = new TypeToken<ArrayList<Category>>(){}.getType();
         return  JsonUtils.getBuilder().create().fromJson(json, listType);
     }
 

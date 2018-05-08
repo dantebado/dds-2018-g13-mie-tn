@@ -7,12 +7,12 @@ import json.BeanToJson;
 
 public class Device extends BeanToJson	 {
 	
-	@Expose private Boolean on;
+	@Expose private Boolean deviceOn;
 	@Expose private BigDecimal consumptionkWh;
 	@Expose private String name;
 	
-	public Device(Boolean on, BigDecimal consumptionkWh , String  name) {
-		this.on = on;
+	public Device(Boolean deviceOn, BigDecimal consumptionkWh , String  name) {
+		this.deviceOn = deviceOn;
 		this.consumptionkWh = consumptionkWh;
 		this.name = name;
 	}
