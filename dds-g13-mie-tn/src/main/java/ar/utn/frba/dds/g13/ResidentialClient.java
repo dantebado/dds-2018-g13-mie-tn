@@ -41,6 +41,10 @@ public class ResidentialClient extends User {
 	}
 	
 	/*GETTERS - SETTERS*/
+	
+	public List<Address> getAddresses() {
+		return addresses;
+	}
 
 	public ResidentialClient getObj() {
 		return this;

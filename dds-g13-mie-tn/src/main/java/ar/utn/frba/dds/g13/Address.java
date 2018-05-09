@@ -47,6 +47,10 @@ public class Address extends BeanToJson {
 	}
 	
 	/*GETTERS - SETTERS*/
+	
+	public List<Device> getDevices() {
+		return devices;
+	}
 
 	@Override
 	public Address getObj() {
