@@ -4,6 +4,8 @@ import json.ResidentialClientLoader;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.utn.frba.dds.g13.devices.Device;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;

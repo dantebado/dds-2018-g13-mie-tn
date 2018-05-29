@@ -1,4 +1,4 @@
-package ar.utn.frba.dds.g13;
+package ar.utn.frba.dds.g13.devices;
 
 import java.math.BigDecimal;
 

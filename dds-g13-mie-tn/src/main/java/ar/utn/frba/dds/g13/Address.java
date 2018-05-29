@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
+import ar.utn.frba.dds.g13.devices.Device;
 import json.BeanToJson;
 
 public class Address extends BeanToJson {

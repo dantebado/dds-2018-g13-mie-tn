@@ -9,7 +9,7 @@ import java.util.List;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import ar.utn.frba.dds.g13.Device;
+import ar.utn.frba.dds.g13.devices.Device;
 
 public class DeviceLoader {
 	

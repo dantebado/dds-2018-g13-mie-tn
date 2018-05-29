@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
+import ar.utn.frba.dds.g13.devices.Device;
+
 public class ResidentialClient extends User {
 	
 	@Expose private BigDecimal kWConsumption;

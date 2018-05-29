@@ -1,22 +1,22 @@
-package ar.utn.frba.dds.g13;
+package ar.utn.frba.dds.g13.devices;
 
 import java.math.BigDecimal;
 
-public class StateEnergySaving implements StateDevice {
+public class StateOff implements StateDevice {
 
 	@Override
 	public boolean isOn(SmartDevice device) {
-		return true;
-	}
-
-	@Override
-	public boolean isOff(SmartDevice device) {
 		return false;
 	}
 
 	@Override
+	public boolean isOff(SmartDevice device) {
+		return true;
+	}
+
+	@Override
 	public BigDecimal energyConsumptionHours(SmartDevice device, float hours) {
-		return null; //TODO: Calcular consumo
+		return new BigDecimal(0);
 	}
 
 	@Override
@@ -25,11 +25,11 @@ public class StateEnergySaving implements StateDevice {
 	}
 
 	@Override
-	public void setDeviceOff(SmartDevice device) {
-		device.setState(new StateOff());
-	}
+	public void setDeviceOff(SmartDevice device) { }
 
 	@Override
-	public void setDeviceEnergySaving(SmartDevice device) {	}
+	public void setDeviceEnergySaving(SmartDevice device) {
+		device.setState(new StateEnergySaving());
+	}
 
 }
