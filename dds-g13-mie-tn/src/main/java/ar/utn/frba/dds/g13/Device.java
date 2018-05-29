@@ -11,7 +11,7 @@ public class Device extends BeanToJson	 {
 	@Expose private BigDecimal consumptionkWh;
 	@Expose private String name;
 	
-	public Device(Boolean deviceOn, BigDecimal consumptionkWh , String  name) {
+	public Device(Boolean deviceOn, BigDecimal consumptionkWh, String name) {
 		this.deviceOn = deviceOn;
 		this.consumptionkWh = consumptionkWh;
 		this.name = name;
