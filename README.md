@@ -13,6 +13,10 @@
 
 [Presentación](https://drive.google.com/open?id=1OdEszErsmliHEwJ038Bt_jz1p1bSrFpJ)
 
+[Entrega Integradora](https://docs.google.com/document/d/1Md2ArOQtJobnDi1N-TyXykdtv6bTpHvQE6GRB0dfgK8)
+
 [Entrega 0](https://drive.google.com/open?id=1bmRU9PltLU6sKZdiAS1UGh_7AZBRqyGH)
+
+[Entrega 1](https://drive.google.com/drive/u/0/folders/1L0w5N88o1mlS4AYxUZaae9hL1D7c7S6W)
 
 [Drive](https://drive.google.com/drive/folders/1lDwmyHbBSJPQsrbuC4_N_vXXVcMaHC3p)
