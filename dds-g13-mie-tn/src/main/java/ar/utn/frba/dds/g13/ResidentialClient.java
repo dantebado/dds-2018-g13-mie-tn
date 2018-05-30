@@ -1,6 +1,7 @@
 package ar.utn.frba.dds.g13;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -22,24 +23,44 @@ public class ResidentialClient extends User {
 	
 	/*COMPORTAMENTO*/
 	
-	public List<Device> totalAvblDevices() {
-		return null;
+	public List<Device> avblDevicesList() {
+		List<Device> devicesAvbl = new ArrayList<Device>();
+		for(Address address:this.getAddresses()) {
+			devicesAvbl.addAll(address.getDevices());
+		}
+		return devicesAvbl;
+	}
+	
+	public int totalAvblDevices() {
+		int counter = 0;
+		for(Address address:this.getAddresses()) {
+			counter += address.totalAvblDevicesAddr();
+		}
+		return counter;
 	}
 	
 	public List<Device> totalDevicesOn() {
-		return null;
+		List<Device> devicesOn = new ArrayList<Device>();
+		for(Address address:this.getAddresses()) {
+			devicesOn.addAll(address.totalDevicesOnAddr());
+		}
+		return devicesOn;
 	}
 	
 	public List<Device> totalDevicesOff() {
-		return null;
-	}
-	
-	public List<Device> avblDevicesList() {
-		return null;
+		List<Device> devicesOff = new ArrayList<Device>();
+		for(Address address:this.getAddresses()) {
+			devicesOff.addAll(address.totalDevicesOffAddr());
+		}
+		return devicesOff;
 	}
 	
 	public BigDecimal estimateMonthCost() {
-		return null;
+		BigDecimal counter = new BigDecimal("0");
+		for(Address address:this.getAddresses()) {
+			counter = counter.add(address.getAddresskWConsumption());
+		}
+		return counter;
 	}
 	
 	/*GETTERS - SETTERS*/

@@ -25,5 +25,9 @@ public class Device extends BeanToJson	 {
 	public Device getObj() {
 		return this;
 	}
+	
+	public boolean isOn() {
+		return deviceOn;
+	}
 
 }
