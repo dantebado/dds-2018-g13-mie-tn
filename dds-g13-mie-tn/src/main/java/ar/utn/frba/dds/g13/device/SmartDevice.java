@@ -5,17 +5,20 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import ar.utn.frba.dds.g13.device.states.DeviceState;
+
 public class SmartDevice extends Device {
 	
-	Boolean isOn;
+	DeviceState state;
 	List<TimeIntervalDevice> consumptionHistory;
 
 	public SmartDevice(String name,
 			BigDecimal hourlyConsumption, boolean isOn,
-			List<TimeIntervalDevice> consumptionHistory) {
+			List<TimeIntervalDevice> consumptionHistory,
+			DeviceState state) {
 		super(name, hourlyConsumption);
-		this.isOn = isOn;
 		this.consumptionHistory = consumptionHistory;
+		this.state = state;
 	}
 	
 	public BigDecimal consumptionLastHours(float hours) {
@@ -39,9 +42,27 @@ public class SmartDevice extends Device {
 	public boolean isSmart() {
 		return true;
 	}
+	
+	//Patron State
+	
+	public void setState(DeviceState state) {
+		this.state = state;
+	}
 
 	public boolean isOn() {
-		return isOn;
+		return state.isOn(this);
+	}
+
+	public void turnOn() {
+		state.turnOn(this);
+	}
+
+	public void turnOff() {
+		state.turnOff(this);
+	}
+
+	public void turnEnergySaving() {
+		state.turnEnergySaving(this);
 	}
 
 }
