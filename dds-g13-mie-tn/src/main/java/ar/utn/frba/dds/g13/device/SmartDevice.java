@@ -6,14 +6,15 @@ import java.util.Date;
 import java.util.List;
 
 import ar.utn.frba.dds.g13.device.states.DeviceState;
+import ar.utn.frba.dds.g13.device.states.Turnable;
 
-public class SmartDevice extends Device {
+public class SmartDevice extends Device implements Turnable {
 	
 	DeviceState state;
 	List<TimeIntervalDevice> consumptionHistory;
 
 	public SmartDevice(String name,
-			BigDecimal hourlyConsumption, boolean isOn,
+			BigDecimal hourlyConsumption,
 			List<TimeIntervalDevice> consumptionHistory,
 			DeviceState state) {
 		super(name, hourlyConsumption);

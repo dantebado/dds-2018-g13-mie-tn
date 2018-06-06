@@ -1,9 +1,14 @@
 package ar.utn.frba.dds.g13.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ar.utn.frba.dds.g13.device.AdaptedDevice;
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
+import ar.utn.frba.dds.g13.device.StandardDevice;
+import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
+import ar.utn.frba.dds.g13.device.states.DeviceOff;
 
 public class Residence {
 	
@@ -15,13 +20,25 @@ public class Residence {
 		this.devices = devices;
 	}
 	
+	public void addDevice(Device device) {
+		devices.add(device);
+	}
+	
+	public void adaptStandardDevice(Device device) {
+		if(devices.contains(device) && !device.isSmart()) {
+			devices.remove(device);
+			addDevice(new AdaptedDevice((StandardDevice) device,
+					new ArrayList<TimeIntervalDevice>(), new DeviceOff()));
+		}
+	}
+	
 	public Boolean anyDeviceOn() {
 		for(Device device : devices) {
 			if(device.isSmart()) {
 				SmartDevice sd = (SmartDevice) device;
 				if(sd.isOn()) {
 					return true;
-				}				
+				}
 			}
 		}
 		return false;
