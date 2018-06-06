@@ -35,11 +35,24 @@ public class Client extends User {
 		if(residences.contains(residence)) {
 			residence.addDevice(device);
 			if(device.isSmart()) {
-				score += 15;
+				increaseScore(15);
 			}
 		} else {
 			//Error
 		}
+	}
+	
+	public void adaptStandardDevice(Device device, Residence residence) {
+		if(residences.contains(residence)) {
+			residence.adaptStandardDevice(device);
+			increaseScore(10);
+		} else {
+			//Error
+		}
+	}
+	
+	public void increaseScore(int ammount) {
+		score += ammount;
 	}
 	
 	public Boolean anyDeviceOn() {

@@ -1,104 +1,342 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.2" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="ar.utn.frba.dds.g13.device.Device" project="dds-g13-mie-tn" 
-    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/Device.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="192" x="345" y="881"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="ar.utn.frba.dds.g13.category.Category" project="dds-g13-mie-tn" 
+  <class id="1" language="java" name="ar.utn.frba.dds.g13.category.Category" project="dds-g13-mie-tn" 
     file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/category/Category.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="264" x="41" y="634"/>    
+    <position height="117" width="264" x="208" y="278"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="ar.utn.frba.dds.g13.user.User" project="dds-g13-mie-tn" 
+  <class id="2" language="java" name="ar.utn.frba.dds.g13.device.AdaptedDevice" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/AdaptedDevice.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="368" x="488" y="983"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="ar.utn.frba.dds.g13.device.states.DeviceOff" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/states/DeviceOff.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="185" x="59" y="525"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="ar.utn.frba.dds.g13.device.SmartDevice" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/SmartDevice.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="225" width="361" x="305" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="ar.utn.frba.dds.g13.device.states.DeviceOn" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/states/DeviceOn.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="185" x="-147" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="ar.utn.frba.dds.g13.device.TimeIntervalDevice" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/TimeIntervalDevice.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="239" x="307" y="1176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="ar.utn.frba.dds.g13.device.Device" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/Device.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="150" x="727" y="525"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="ar.utn.frba.dds.g13.user.User" project="dds-g13-mie-tn" 
     file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/user/User.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="203" x="275" y="212"/>    
+    <position height="81" width="203" x="394" y="-54"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="ar.utn.frba.dds.g13.user.Client" project="dds-g13-mie-tn" 
+  <class id="9" language="java" name="ar.utn.frba.dds.g13.user.Client" project="dds-g13-mie-tn" 
     file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/user/Client.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="428" x="41" y="387"/>    
+    <position height="171" width="442" x="543" y="67"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="ar.utn.frba.dds.g13.user.Logueable" project="dds-g13-mie-tn" 
+  <interface id="10" language="java" name="ar.utn.frba.dds.g13.device.states.Turnable" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/states/Turnable.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="155" x="47" y="1176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="11" language="java" name="ar.utn.frba.dds.g13.user.Logueable" project="dds-g13-mie-tn" 
     file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/user/Logueable.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="156" x="275" y="37"/>    
+    <position height="135" width="156" x="394" y="-229"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="ar.utn.frba.dds.g13.user.Administrator" project="dds-g13-mie-tn" 
+  <class id="12" language="java" name="ar.utn.frba.dds.g13.user.Administrator" project="dds-g13-mie-tn" 
     file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/user/Administrator.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="117" width="258" x="509" y="387"/>    
+    <position height="99" width="258" x="245" y="67"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="ar.utn.frba.dds.g13.user.Residence" project="dds-g13-mie-tn" 
+  <class id="13" language="java" name="ar.utn.frba.dds.g13.user.Residence" project="dds-g13-mie-tn" 
     file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/user/Residence.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="178" x="345" y="634"/>    
+    <position height="207" width="194" x="512" y="278"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="8">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <association id="9">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="10" name="category"/>      
-      <multiplicity id="11" minimum="0" maximum="1"/>    
+  <interface id="14" language="java" name="ar.utn.frba.dds.g13.device.states.DeviceState" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/states/DeviceState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="135" width="185" x="223" y="1369"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="15" language="java" name="ar.utn.frba.dds.g13.device.StandardDevice" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/StandardDevice.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="249" x="877" y="1176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="ar.utn.frba.dds.g13.device.states.DeviceEnergySaving" project="dds-g13-mie-tn" 
+    file="/dds-g13-mie-tn/src/main/java/ar/utn/frba/dds/g13/device/states/DeviceEnergySaving.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="185" x="-107" y="983"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="false" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="17">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="18" name="devices"/>      
+      <multiplicity id="19" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="12">    
+  <dependency id="20">    
+    <bendpoint x="274" y="525"/>    
+    <bendpoint x="274" y="718"/>    
+    <bendpoint x="274" y="983"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="21">    
+    <bendpoint x="576" y="1176"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="22" name="state"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="24">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <generalization id="25">    
+    <bendpoint x="886" y="983"/>    
+    <bendpoint x="886" y="718"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <dependency id="26">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <generalization id="27">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="7"/>  
   </generalization>  
-  <generalization id="13">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="14">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="15" name="devices"/>      
-      <multiplicity id="16" minimum="0" maximum="2147483647"/>    
+  <dependency id="28">    
+    <bendpoint x="108" y="983"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <association id="29">    
+    <bendpoint x="295" y="983"/>    
+    <bendpoint x="276" y="1176"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="30" name="state"/>      
+      <multiplicity id="31" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="32">    
+    <bendpoint x="232" y="718"/>    
+    <bendpoint x="232" y="983"/>    
+    <bendpoint x="232" y="1176"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <dependency id="33">    
+    <bendpoint x="418" y="525"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <realization id="34">    
+    <bendpoint x="-138" y="983"/>    
+    <bendpoint x="-138" y="1176"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <association id="35">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="36" name="category"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="17">    
+  <dependency id="38">    
+    <bendpoint x="717" y="718"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="39">    
+    <bendpoint x="129" y="718"/>    
+    <bendpoint x="129" y="983"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <generalization id="40">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <generalization id="41">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <dependency id="42">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <generalization id="43">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="45">    
+    <bendpoint x="907" y="525"/>    
+    <bendpoint x="907" y="718"/>    
+    <bendpoint x="907" y="983"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <realization id="46">    
+    <bendpoint x="16" y="1176"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <dependency id="47">    
+    <bendpoint x="68" y="718"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <generalization id="48">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="50">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="51">    
+    <bendpoint x="696" y="525"/>    
+    <bendpoint x="696" y="718"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <realization id="52">    
+    <bendpoint x="253" y="983"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="10"/>  
+  </realization>  
+  <association id="53">    
+    <bendpoint x="316" y="983"/>    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="18" name="residences"/>      
-      <multiplicity id="19" minimum="0" maximum="2147483647"/>    
+      <attribute id="54" name="consumptionHistory"/>      
+      <multiplicity id="55" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="56">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="57" name="residences"/>      
+      <multiplicity id="58" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="59">    
+    <bendpoint x="736" y="278"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="60">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="61" name="consumptionHistory"/>      
+      <multiplicity id="62" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
