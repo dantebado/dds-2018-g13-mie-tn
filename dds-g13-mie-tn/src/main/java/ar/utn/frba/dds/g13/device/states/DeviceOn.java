@@ -6,10 +6,19 @@ public class DeviceOn implements DeviceState {
 		return true;
 	}
 
+	public boolean isOff(Turnable device) {
+		return false;
+	}
+
+	public boolean isEnergySaving(Turnable device) {
+		return false;
+	}
+
 	public void turnOn(Turnable device) { }
 
 	public void turnOff(Turnable device) {
 		device.setState(new DeviceOff());
+		System.out.println("Se apagó el device");
 	}
 
 	public void turnEnergySaving(Turnable device) {

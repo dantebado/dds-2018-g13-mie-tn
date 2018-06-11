@@ -9,7 +9,7 @@ public class TemperatureSensor extends Sensor {
 	}
 
 	@Override
-	public Measure measureValue() { //TODO Determinación del valor
+	protected Measure measureValue() { //TODO Determinación del valor
 		return new Measure(new BigDecimal(15), MeasureMagnitude.TEMPERATURE);
 	}
 

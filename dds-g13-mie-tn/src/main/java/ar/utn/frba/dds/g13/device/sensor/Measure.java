@@ -12,4 +12,12 @@ public class Measure {
 		this.magnitude = magnitude;
 	}
 
+	public BigDecimal getValue() {
+		return value;
+	}
+
+	public MeasureMagnitude getMagnitude() {
+		return magnitude;
+	}
+
 }

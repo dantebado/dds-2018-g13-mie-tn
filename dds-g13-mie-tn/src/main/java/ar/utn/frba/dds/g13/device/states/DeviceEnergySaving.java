@@ -6,6 +6,14 @@ public class DeviceEnergySaving implements DeviceState {
 		return false;
 	}
 
+	public boolean isOff(Turnable device) {
+		return false;
+	}
+
+	public boolean isEnergySaving(Turnable device) {
+		return true;
+	}
+
 	public void turnOn(Turnable device) {
 		device.setState(new DeviceOn());
 	}

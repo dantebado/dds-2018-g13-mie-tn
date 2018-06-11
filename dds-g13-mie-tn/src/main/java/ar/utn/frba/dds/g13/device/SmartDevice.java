@@ -54,6 +54,14 @@ public class SmartDevice extends Device implements Turnable {
 		return state.isOn(this);
 	}
 
+	public boolean isOff() {
+		return state.isOff(this);
+	}
+
+	public boolean isEnergySaving() {
+		return state.isEnergySaving(this);
+	}
+
 	public void turnOn() {
 		state.turnOn(this);
 	}
