@@ -50,6 +50,20 @@ public class Residence {
 		return false;
 	}
 	
+	public BigDecimal actualConsumption() {
+		BigDecimal consumption = new BigDecimal(0);
+		for(Device device : devices) {
+			if(device.isSmart()) {
+				SmartDevice sd = (SmartDevice) device;
+				if(sd.isOn()) {
+					consumption = consumption.add(sd.getHourlyConsumption());
+					
+				}
+			}
+		}
+		return consumption;
+	}
+	
 	public int numberDevicesOn() {
 		int counter = 0;
 		for(Device device : devices) {
