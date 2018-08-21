@@ -122,7 +122,7 @@ public class Residence {
 		}
 		PointValuePair resultado = simplex.resolver();
 		for (int i = 0; i < devices.size(); ++i) {
-			/*if ( devices.get(i).getHourlyConsumption() >= resultado.getPoint()[i] ) { //Problemas con el casteo de resultados
+			if ( Math.ceil(devices.get(i).getHourlyConsumption()*100) >= Math.ceil(resultado.getPoint()[i]*100)) {
 				    static {
          				System.out.println("El dispostivo:"devices.get(i).getName()"ya consumio sus horas horas planificadas, se recomienda apagarlo");
          				System.exit(0);
@@ -140,7 +140,7 @@ public class Residence {
          				System.out.println("El dispostivo:"devices.get(i).getName()"se encuentra dentro de sus horas de consumo planificadas");
          				System.exit(0);
     				} 
-			}*/
+			}
 		}
 	}
 }
