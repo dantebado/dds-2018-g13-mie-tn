@@ -2,18 +2,24 @@ package ar.utn.frba.dds.g13.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
+
+import org.apache.commons.math3.optim.PointValuePair;
 
 import ar.utn.frba.dds.g13.device.AdaptedDevice;
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
 import ar.utn.frba.dds.g13.device.StandardDevice;
 import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
 import ar.utn.frba.dds.g13.device.states.DeviceOff;
+import ar.utn.frba.dds.g13.simplex.simplexAdapter;
 
 public class Residence {
 	
 	String address;
 	List<Device> devices;
+	simplexAdapter simplex = new simplexAdapter();
 	
 	public Residence(String address, List<Device> devices) {
 		this.address = address;
@@ -75,4 +81,43 @@ public class Residence {
 		return devices.size();
 	}
 
+	public void makeSimplexMethod() {
+		DeviceInfoTable Table =DeviceInfoTable.getInstance();
+		simplex.enofoqueMAX();
+		double [] deviceTotal = new double[devices.size()];
+		for (int i = 0; i < devices.size(); ++i) {
+			deviceTotal[i] = 1;
+		}
+		simplex.crearFuncion(deviceTotal);
+		double maxConsumption = (double)Table.getMaxConsumption();
+		for (int i = 0; i < devices.size(); ++i) {
+			String deviceName = devices.get(i).getName();
+			double coeficiente = (double)Table.getConsumption(deviceName);
+			deviceTotal[i] = coeficiente;
+		}
+		simplex.crearRestriccionLEQ(maxConsumption,deviceTotal);
+		for (int i = 0; i < devices.size(); ++i) {
+			for (int j = 0; j < devices.size(); ++j) {
+				if (i==j) {deviceTotal[j] = 1;}
+				else {deviceTotal[j] = 0;}
+			}
+			String deviceName = devices.get(i).getName();
+			double minUse = (double)Table.getMinHsUse(deviceName);
+			double maxUse = (double)Table.getMaxHsUse(deviceName);
+			simplex.crearRestriccionGEQ(minUse,deviceTotal);
+			simplex.crearRestriccionLEQ(maxUse,deviceTotal);
+		}
+		PointValuePair resultado = simplex.resolver();
+		/*for (int i = 0; i < devices.size(); ++i) {
+			if ( devices.get(i).getHourlyConsumption() >= resultado.getPoint()[i] ) { //Problemas con el casteo de resultados
+				//print device overconsumption level message
+				if(devices.get(i).isModoAhorroEnergiaON() == true) {
+					//command OFF device
+				}
+			}
+			else{
+				//print device good consumption level message
+			}
+		}*/
+	}
 }
