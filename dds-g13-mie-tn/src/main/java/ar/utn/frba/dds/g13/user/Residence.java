@@ -108,16 +108,26 @@ public class Residence {
 			simplex.crearRestriccionLEQ(maxUse,deviceTotal);
 		}
 		PointValuePair resultado = simplex.resolver();
-		/*for (int i = 0; i < devices.size(); ++i) {
-			if ( devices.get(i).getHourlyConsumption() >= resultado.getPoint()[i] ) { //Problemas con el casteo de resultados
-				//print device overconsumption level message
-				if(devices.get(i).isModoAhorroEnergiaON() == true) {
-					//command OFF device
+		for (int i = 0; i < devices.size(); ++i) {
+			/*if ( devices.get(i).getHourlyConsumption() >= resultado.getPoint()[i] ) { //Problemas con el casteo de resultados
+				    static {
+         				System.out.println("El dispostivo:"devices.get(i).getName()"ya consumio sus horas horas planificadas, se recomienda apagarlo");
+         				System.exit(0);
+    				} 
+				if(devices.get(i).isEnergySaving() && devices.get(i).isSmart) {
+					devices.get(i).turnOff();
+					static {
+         				System.out.println("Modo ahorro de energia encendido, se envio orden automatica de apagado al dispositivo :"devices.get(i).getName());
+         				System.exit(0);
+    				} 
 				}
 			}
 			else{
-				//print device good consumption level message
-			}
-		}*/
+					static {
+         				System.out.println("El dispostivo:"devices.get(i).getName()"se encuentra dentro de sus horas de consumo planificadas");
+         				System.exit(0);
+    				} 
+			}*/
+		}
 	}
 }
