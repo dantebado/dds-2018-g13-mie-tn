@@ -57,7 +57,6 @@ public class Residence {
 				SmartDevice sd = (SmartDevice) device;
 				if(sd.isOn()) {
 					consumption = consumption.add(sd.getHourlyConsumption());
-					
 				}
 			}
 		}
