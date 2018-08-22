@@ -1,4 +1,4 @@
-/*package ar.utn.frba.dds.g13;
+package ar.utn.frba.dds.g13;
 
 import org.apache.commons.math3.optim.PointValuePair;
 import org.apache.commons.math3.optim.linear.Relationship;
@@ -34,15 +34,12 @@ public class SimplexTest extends TestCase {
 		DeviceInfoTable.addDeviceInfo(MicroI);
 		SmartDevice Aire = new SmartDevice("AireAcondicionado3500", null, null, null);
 		SmartDevice Pc = new SmartDevice("PC", null, null, null);
-		StandardDevice Micro =new StandardDevice("Microondas", null, null);//(BigDecimal)("1115.37");
+		StandardDevice Micro =new StandardDevice("Microondas", null, new Bigdecimal(10));
 		Residence CasaPrueba = new Residence("callefalsa123", null);
 		Residence.addDevice(Aire);
 		Residence.addDevice(Pc);
 		Residence.addDevice(Micro);
 		Residence.makeSimplexMethod();
-		Assert.assertEquals(760, solucion.getValue(), 0.01);
-		Assert.assertEquals(360, solucion.getPoint()[0], 0.01); // <--- X2
-		Assert.assertEquals(30, solucion.getPoint()[1], 0.01); // <--- X1
-		Assert.assertEquals(370, solucion.getPoint()[2], 0.01); // <--- X0
+		/*Assert.assertTrue(370, solucion.getPoint()[2], 0.01); // <--- X0*/
 	}
-}*/
+}

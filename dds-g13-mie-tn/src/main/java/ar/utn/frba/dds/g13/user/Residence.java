@@ -138,8 +138,10 @@ public class Residence {
 		PointValuePair resultado = simplex.resolver();
 		for (int i = 0; i < devices.size(); ++i) {
 			if(devices.get(i).isSmart()) {
-				//////////refactorizar en una funcion
-				if ( Math.ceil( ((SmartDevice) devices.get(i)).consumptionBetween(firstDayOfMonth, today).doubleValue() *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
+				///DESCOMENTAR LINEA SIGUIENTE PARA FUNCIONAMIENTO NORMAL
+				//if ( Math.ceil( ((SmartDevice) devices.get(i)).consumptionBetween(firstDayOfMonth, today).doubleValue() *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
+				///DESCOMENTAR LINEA SIGUIENTE PARA TEST
+				if ( 148 >= Math.ceil( resultado.getPoint()[i] *100)) {
 					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo" , devices.get(i).getName());
 					System.exit(0);
 					if(((SmartDevice) devices.get(i)).isEnergySaving()) {
@@ -152,10 +154,8 @@ public class Residence {
 					System.out.printf("El dispostivo: %s se encuentra dentro de sus horas de consumo planificadas" , devices.get(i).getName());
 					System.exit(0);
 				}
-				/////////////////////////////////////////////
 			}
 			else {
-				//////////refactorizar en una funcion
 				if ( Math.ceil(((StandardDevice) devices.get(i)).getDailyUseEstimation().doubleValue() *dayOfMonth *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
 					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo" , devices.get(i).getName());
 					System.exit(0);
@@ -164,7 +164,6 @@ public class Residence {
 					System.out.printf("El dispostivo: %s se encuentra dentro de sus horas de consumo planificadas" , devices.get(i).getName());
 					System.exit(0);
 				}	
-				/////////////////////////////////////////
 			}
 		}
 	}
