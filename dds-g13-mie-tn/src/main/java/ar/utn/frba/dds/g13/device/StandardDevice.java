@@ -8,10 +8,16 @@ public class StandardDevice extends Device {
 
 	public StandardDevice(String name,
 			BigDecimal hourlyConsumption,
-			BigDecimal dailUseEstimation) {
+			BigDecimal dailyUseEstimation) {
 		super(name, hourlyConsumption);
-		this.dailyUseEstimation = dailUseEstimation;
+		this.dailyUseEstimation = dailyUseEstimation;
 	}
+	
+	
+	public BigDecimal getDailyUseEstimation() {
+		return dailyUseEstimation;
+	}
+
 
 	@Override
 	public boolean isSmart() {

@@ -6,7 +6,6 @@ public abstract class Device {
 	
 	String name;
 	BigDecimal hourlyConsumption;
-	boolean ModoAhorroEnergiaON;
 	
 	public String getName() {
 		return name;
@@ -22,15 +21,6 @@ public abstract class Device {
 
 	public void setHourlyConsumption(BigDecimal hourlyConsumption) {
 		this.hourlyConsumption = hourlyConsumption;
-	}
-	
-
-	public boolean isModoAhorroEnergiaON() {
-		return ModoAhorroEnergiaON;
-	}
-
-	public void setModoAhorroEnergiaON(boolean modoAhorroEnergiaON) {
-		ModoAhorroEnergiaON = modoAhorroEnergiaON;
 	}
 
 	public Device(String name, BigDecimal hourlyConsumption) {

@@ -1,6 +1,9 @@
 package ar.utn.frba.dds.g13.user;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.math.BigDecimal;
 
@@ -18,15 +21,15 @@ import ar.utn.frba.dds.g13.simplex.simplexAdapter;
 public class Residence {
 	
 	String address;
-	List<Device> devices;
-	simplexAdapter simplex = new simplexAdapter();
+	static List<Device> devices;
+	static simplexAdapter simplex = new simplexAdapter();
 	
 	public Residence(String address, List<Device> devices) {
 		this.address = address;
 		this.devices = devices;
 	}
 	
-	public void addDevice(Device device) {
+	public static void addDevice(Device device) {
 		devices.add(device);
 	}
 	
@@ -93,8 +96,20 @@ public class Residence {
 	public int numberDevicesTotal() {
 		return devices.size();
 	}
+	
+	public static Date subtractDays(Date date, int days) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, -days);
+				
+		return cal.getTime();
+	}
 
-	public void makeSimplexMethod() {
+	public static void makeSimplexMethod() {
+		Calendar cal = Calendar.getInstance();
+		int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+		Date today = Calendar.getInstance().getTime();
+		Date firstDayOfMonth = subtractDays(today,dayOfMonth);
 		DeviceInfoTable Table =DeviceInfoTable.getInstance();
 		simplex.enofoqueMAX();
 		double [] deviceTotal = new double[devices.size()];
@@ -122,24 +137,34 @@ public class Residence {
 		}
 		PointValuePair resultado = simplex.resolver();
 		for (int i = 0; i < devices.size(); ++i) {
-			if ( Math.ceil(devices.get(i).getHourlyConsumption()*100) >= Math.ceil(resultado.getPoint()[i]*100)) {
-				    static {
-         				System.out.println("El dispostivo:"devices.get(i).getName()"ya consumio sus horas horas planificadas, se recomienda apagarlo");
-         				System.exit(0);
-    				} 
-				if(devices.get(i).isEnergySaving() && devices.get(i).isSmart) {
-					devices.get(i).turnOff();
-					static {
-         				System.out.println("Modo ahorro de energia encendido, se envio orden automatica de apagado al dispositivo :"devices.get(i).getName());
-         				System.exit(0);
-    				} 
+			if(devices.get(i).isSmart()) {
+				//////////refactorizar en una funcion
+				if ( Math.ceil( ((SmartDevice) devices.get(i)).consumptionBetween(firstDayOfMonth, today).doubleValue() *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
+					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo" , devices.get(i).getName());
+					System.exit(0);
+					if(((SmartDevice) devices.get(i)).isEnergySaving()) {
+						((SmartDevice) devices.get(i)).turnOff();
+						System.out.printf("Modo ahorro de energia encendido, se envio orden automatica de apagado al dispositivo : %s" , devices.get(i).getName());
+						System.exit(0);
+					}
 				}
+				else{
+					System.out.printf("El dispostivo: %s se encuentra dentro de sus horas de consumo planificadas" , devices.get(i).getName());
+					System.exit(0);
+				}
+				/////////////////////////////////////////////
 			}
-			else{
-					static {
-         				System.out.println("El dispostivo:"devices.get(i).getName()"se encuentra dentro de sus horas de consumo planificadas");
-         				System.exit(0);
-    				} 
+			else {
+				//////////refactorizar en una funcion
+				if ( Math.ceil(((StandardDevice) devices.get(i)).getDailyUseEstimation().doubleValue() *dayOfMonth *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
+					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo" , devices.get(i).getName());
+					System.exit(0);
+				}
+				else{
+					System.out.printf("El dispostivo: %s se encuentra dentro de sus horas de consumo planificadas" , devices.get(i).getName());
+					System.exit(0);
+				}	
+				/////////////////////////////////////////
 			}
 		}
 	}

@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 
 public class DeviceInfoTable {
-	private Collection<DeviceInfo> DevicesInfos = null;
+	private static Collection<DeviceInfo> DevicesInfos = null;
 	int maxConsumption = 612000;
 	 
 	public int getMaxConsumption() {
@@ -21,7 +21,7 @@ public class DeviceInfoTable {
 		return DevicesInfos;
 	}
 	
-	public void addDeviceInfo(DeviceInfo device) {
+	public static void addDeviceInfo(DeviceInfo device) {
 		DevicesInfos.add(device);
 	}
    	
