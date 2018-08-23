@@ -81,7 +81,7 @@ public class DeviceInfo {
 	
 	public void addDevice() {
 		DeviceInfoTable p =DeviceInfoTable.getInstance();
-		p.addDeviceInfo(this);
+		DeviceInfoTable.addDeviceInfo(this);
 	}
 
 	public DeviceInfo(String name, String desc, boolean inteligente, boolean bajoConsumo, double consumption,int minHsUse,int maxHsUse) {

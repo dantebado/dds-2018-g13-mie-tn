@@ -1,5 +1,6 @@
 package ar.utn.frba.dds.g13.device.deviceinfo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Predicate;
 
@@ -56,15 +57,17 @@ public class DeviceInfoTable {
 	}
   	
   	public DeviceInfo getDeviceByName(final String deviceName) {
-  		return (DeviceInfo) DevicesInfos.stream().filter(new Predicate<DeviceInfo>() {
-			public boolean test(DeviceInfo p) {
-				return p.getName() == deviceName;
+  		for (DeviceInfo deviceInfo : DevicesInfos) {
+			if(deviceInfo.getName() == deviceName) {
+				return deviceInfo;
 			}
-		});
+		}
+  		return null;
   	}
   	
 	private static DeviceInfoTable instance = null;
 		private DeviceInfoTable() {
+			DeviceInfoTable.DevicesInfos = new ArrayList<DeviceInfo>();
 		}
 
 	public static DeviceInfoTable getInstance() {

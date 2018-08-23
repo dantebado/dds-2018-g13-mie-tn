@@ -118,6 +118,7 @@ public class Residence {
 		}
 		simplex.crearFuncion(deviceTotal);
 		double maxConsumption = (double)Table.getMaxConsumption();
+		deviceTotal = deviceTotal.clone();
 		for (int i = 0; i < devices.size(); ++i) {
 			String deviceName = devices.get(i).getName();
 			double coeficiente = (double)Table.getConsumption(deviceName);
@@ -125,6 +126,7 @@ public class Residence {
 		}
 		simplex.crearRestriccionLEQ(maxConsumption,deviceTotal);
 		for (int i = 0; i < devices.size(); ++i) {
+			deviceTotal = deviceTotal.clone();
 			for (int j = 0; j < devices.size(); ++j) {
 				if (i==j) {deviceTotal[j] = 1;}
 				else {deviceTotal[j] = 0;}
@@ -142,17 +144,17 @@ public class Residence {
 				//if ( Math.ceil( ((SmartDevice) devices.get(i)).consumptionBetween(firstDayOfMonth, today).doubleValue() *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
 				///DESCOMENTAR LINEA SIGUIENTE PARA TEST
 				if ( 148 >= Math.ceil( resultado.getPoint()[i] *100)) {
-					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo" , devices.get(i).getName());
-					System.exit(0);
+					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo\n" , devices.get(i).getName());
+					//System.exit(0);
 					if(((SmartDevice) devices.get(i)).isEnergySaving()) {
 						((SmartDevice) devices.get(i)).turnOff();
-						System.out.printf("Modo ahorro de energia encendido, se envio orden automatica de apagado al dispositivo : %s" , devices.get(i).getName());
-						System.exit(0);
+						System.out.printf("Modo ahorro de energia encendido, se envio orden automatica de apagado al dispositivo : %s\n" , devices.get(i).getName());
+						//System.exit(0);
 					}
 				}
 				else{
-					System.out.printf("El dispostivo: %s se encuentra dentro de sus horas de consumo planificadas" , devices.get(i).getName());
-					System.exit(0);
+					System.out.printf("El dispostivo: %s se encuentra dentro de sus horas de consumo planificadas\n" , devices.get(i).getName());
+					//System.exit(0);
 				}
 			}
 			else {

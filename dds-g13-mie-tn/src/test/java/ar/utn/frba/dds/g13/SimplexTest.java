@@ -19,10 +19,10 @@ import org.apache.commons.math3.optim.*;
 import org.apache.commons.math3.optim.linear.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 public class SimplexTest extends TestCase {
 	
-	@Test
 	public void testSistemaCompatibleDeterminado() {
 		
 		DeviceInfo AireI = new DeviceInfo("AireAcondicionado3500", "De 3500 frigorias", true, false, 1.613, 90, 360);
@@ -34,12 +34,12 @@ public class SimplexTest extends TestCase {
 		DeviceInfoTable.addDeviceInfo(MicroI);
 		SmartDevice Aire = new SmartDevice("AireAcondicionado3500", null, null, null);
 		SmartDevice Pc = new SmartDevice("PC", null, null, null);
-		StandardDevice Micro =new StandardDevice("Microondas", null, new Bigdecimal(10));
-		Residence CasaPrueba = new Residence("callefalsa123", null);
+		StandardDevice Micro =new StandardDevice("Microondas", null, new BigDecimal(10));
+		Residence CasaPrueba = new Residence("callefalsa123", new ArrayList<Device>());
 		Residence.addDevice(Aire);
 		Residence.addDevice(Pc);
 		Residence.addDevice(Micro);
 		Residence.makeSimplexMethod();
-		/*Assert.assertTrue(370, solucion.getPoint()[2], 0.01); // <--- X0*/
+		//Assert.assertTrue(370, solucion.getPoint()[2], 0.01); // <--- X0*/
 	}
 }
