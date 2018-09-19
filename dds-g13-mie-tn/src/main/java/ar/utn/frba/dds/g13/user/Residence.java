@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 
 import org.apache.commons.math3.optim.PointValuePair;
 
+import com.google.gson.annotations.Expose;
+
 import ar.utn.frba.dds.g13.device.AdaptedDevice;
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
@@ -16,15 +18,17 @@ import ar.utn.frba.dds.g13.device.StandardDevice;
 import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
 import ar.utn.frba.dds.g13.device.states.DeviceOff;
+import ar.utn.frba.dds.g13.json.BeanToJson;
 import ar.utn.frba.dds.g13.simplex.simplexAdapter;
 
-public class Residence {
+public class Residence extends BeanToJson {
+
 	
-	String address;
-	static List<Device> devices;
-	static simplexAdapter simplex = new simplexAdapter();
-	Calendar cal = Calendar.getInstance();
-	int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+	@Expose String address;
+	@Expose static List<Device> devices;
+	@Expose static simplexAdapter simplex = new simplexAdapter();
+	@Expose Calendar cal = Calendar.getInstance();
+	@Expose int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 	
 	public Residence(String address, List<Device> devices) {
 		this.address = address;
@@ -133,5 +137,11 @@ public class Residence {
 				}	
 			}
 		}
+	}
+
+	@Override
+	public Object getObj() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -24,4 +24,11 @@ public class StandardDevice extends Device {
 		return false;
 	}
 
+
+	@Override
+	public Object getObj() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

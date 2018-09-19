@@ -39,7 +39,7 @@ public class SimplexTest extends TestCase {
 		Residence.addDevice(Aire);
 		Residence.addDevice(Pc);
 		Residence.addDevice(Micro);
-		Residence.makeSimplexMethod();
+		//Residence.makeSimplexMethod();
 		//Assert.assertTrue(370, solucion.getPoint()[2], 0.01); // <--- X0*/
 	}
 }

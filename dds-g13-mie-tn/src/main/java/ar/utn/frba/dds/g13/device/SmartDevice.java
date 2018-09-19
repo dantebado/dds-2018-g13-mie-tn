@@ -74,4 +74,10 @@ public class SmartDevice extends Device implements Turnable {
 		state.turnEnergySaving(this);
 	}
 
+	@Override
+	public Object getObj() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

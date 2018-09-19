@@ -2,13 +2,16 @@ package ar.utn.frba.dds.g13.device;
 
 import java.math.BigDecimal;
 
-import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
+import com.google.gson.annotations.Expose;
 
-public abstract class Device {
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
+import ar.utn.frba.dds.g13.json.BeanToJson;
+
+public abstract class Device extends BeanToJson {
 	
-	String name;
-	BigDecimal hourlyConsumption;
-	DeviceInfoTable Table = DeviceInfoTable.getInstance();
+	@Expose String name;
+	@Expose BigDecimal hourlyConsumption;
+	@Expose DeviceInfoTable Table = DeviceInfoTable.getInstance();
 	
 	public DeviceInfoTable getTable() {
 		return Table;
