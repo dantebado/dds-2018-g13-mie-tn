@@ -1,0 +1,218 @@
+[
+	{
+		"name": "Aire Acondicionado",
+		"desct": "De 3500 frigorías",
+		"inteligente": true,
+		"bajoConsumo": false,
+		"consumption": 1.613,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Aire Acondicionado",
+		"desct": "De 2200 frigorías",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 1.013,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Lámpara",
+		"desct": "Halógenas de 40W",
+		"inteligente": true,
+		"bajoConsumo": false,
+		"consumption": 0.04,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Lámpara",
+		"desct": "Halógenas de 60W",
+		"inteligente": true,
+		"bajoConsumo": false,
+		"consumption": 0.06,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Lámpara",
+		"desct": "Halógenas de 100W",
+		"inteligente": true,
+		"bajoConsumo": false,
+		"consumption": 0.015,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Lámpara",
+		"desct": "De 11W",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.011,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Lámpara",
+		"desct": "De 15W",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.015,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Lámpara",
+		"desct": "De 20W",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.02,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Televisor",
+		"desct": "Color de tubo fluorescente de 21",
+		"inteligente": false,
+		"bajoConsumo": false,
+		"consumption": 0.075,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Televisor",
+		"desct": "Color de tubo fluorescente de 29 a 34",
+		"inteligente": false,
+		"bajoConsumo": false,
+		"consumption": 0.175,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Televisor",
+		"desct": "LCD de 40",
+		"inteligente": false,
+		"bajoConsumo": false,
+		"consumption": 0.18,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Televisor",
+		"desct": "LED de 24",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.04,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Televisor",
+		"desct": "LED de 32",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.055,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Televisor",
+		"desct": "LED de 40",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.08,
+		"minHsUse": 90,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Helader",
+		"desct": "Con freezer",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.09
+	},
+	{
+		"name": "Helader",
+		"desct": "Sin freezer",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.075
+	},
+	{
+		"name": "Lavarropas",
+		"desct": "Automático de 5kg cpm cañemta,oemtp de agia",
+		"inteligente": false,
+		"bajoConsumo": false,
+		"consumption": 0.875,
+		"minHsUse": 6,
+		"maxHsUse": 30
+	},
+	{
+		"name": "Lavarropas",
+		"desct": "Automático de 5kg",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.175,
+		"minHsUse": 6,
+		"maxHsUse": 30
+	},
+	{
+		"name": "Lavarropas",
+		"desct": "Semi-automático de 5kg",
+		"inteligente": false,
+		"bajoConsumo": false,
+		"consumption": 0.1275,
+		"minHsUse": 6,
+		"maxHsUse": 30
+	},
+	{
+		"name": "Computadora",
+		"desct": "De escritorio",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.4,
+		"minHsUse": 60,
+		"maxHsUse": 360
+	},
+	{
+		"name": "Microondas",
+		"desct": "Convencional",
+		"inteligente": false,
+		"bajoConsumo": true,
+		"consumption": 0.64,
+		"minHsUse": 3,
+		"maxHsUse": 15
+	},
+	{
+		"name": "Plancha",
+		"desct": "A vapor",
+		"inteligente": false,
+		"bajoConsumo": true,
+		"consumption": 0.75,
+		"minHsUse": 3,
+		"maxHsUse": 30
+	},
+	{
+		"name": "Ventilador",
+		"desct": "De pie",
+		"inteligente": false,
+		"bajoConsumo": true,
+		"consumption": 0.09,
+		"minHsUse": 120,
+		"maxHsUse": 360
+	}
+	,
+	{
+		"name": "Ventilador",
+		"desct": "De techo",
+		"inteligente": true,
+		"bajoConsumo": true,
+		"consumption": 0.06,
+		"minHsUse": 120,
+		"maxHsUse": 360
+	}
+	
+]
+	
+			

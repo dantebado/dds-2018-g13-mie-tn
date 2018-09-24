@@ -1,0 +1,67 @@
+[
+	{
+		"name": "R1",
+		"minConsumption": 0.00,
+		"maxConsumption": 150.00,
+		"fixedCharge": 18.76,
+		"variableCharge": 0.644
+	},
+	{
+		"name": "R2",
+		"minConsumption": 150.00,
+		"maxConsumption": 325.00,
+		"fixedCharge": 35.32,
+		"variableCharge": 0.644
+	},
+	{
+		"name": "R3",
+		"minConsumption": 325.00,
+		"maxConsumption": 400.00,
+		"fixedCharge": 60.71,
+		"variableCharge": 0.681
+	},
+	{
+		"name": "R4",
+		"minConsumption": 400.00,
+		"maxConsumption": 450.00,
+		"fixedCharge": 71.74,
+		"variableCharge": 0.738
+	},
+	{
+		"name": "R5",
+		"minConsumption": 450.00,
+		"maxConsumption": 500.00,
+		"fixedCharge": 110.38,
+		"variableCharge": 0.794
+	},
+	{
+		"name": "R6",
+		"minConsumption": 500.00,
+		"maxConsumption": 600.00,
+		"fixedCharge": 220.75,
+		"variableCharge": 0.832
+	},
+	{
+		"name": "R7",
+		"minConsumption": 600.00,
+		"maxConsumption": 700.00,
+		"fixedCharge": 443.59,
+		"variableCharge": 0.851
+	},
+	{
+		"name": "R8",
+		"minConsumption": 700.00,
+		"maxConsumption": 1400.00,
+		"fixedCharge": 545.96,
+		"variableCharge": 0.851
+	},
+	{
+		"name": "R9",
+		"minConsumption": 1400.00,
+		"maxConsumption": 9999.00,
+		"fixedCharge": 887.19,
+		"variableCharge": 0.851
+	}
+]
+	
+			
