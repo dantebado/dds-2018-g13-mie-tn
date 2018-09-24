@@ -2,13 +2,17 @@ package ar.utn.frba.dds.g13.category;
 
 import java.math.BigDecimal;
 
-public class Category {
+import com.google.gson.annotations.Expose;
+
+import ar.utn.frba.dds.g13.json.BeanToJson;
+
+public class Category extends BeanToJson {
 	
-	String name;
-	float minConsumption;
-	float maxConsumption;
-	BigDecimal fixedCharge;
-	BigDecimal variableCharge;
+	@Expose String name;
+	@Expose float minConsumption;
+	@Expose float maxConsumption;
+	@Expose BigDecimal fixedCharge;
+	@Expose BigDecimal variableCharge;
 	
 	public Category(String name,
 			float minConsumption, float maxConsumption,
@@ -27,6 +31,12 @@ public class Category {
 	
 	public BigDecimal estimateBill(BigDecimal monthlyConsumption) {
 		return fixedCharge.add(variableCharge.multiply(monthlyConsumption)); 
+	}
+
+	@Override
+	public Object getObj() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

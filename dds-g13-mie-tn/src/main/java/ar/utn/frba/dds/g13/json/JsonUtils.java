@@ -24,7 +24,7 @@ public class JsonUtils {
                 return new Date(json.getAsJsonPrimitive().getAsLong());
             }
         });
-        builder.setDateFormat("yyyy-MM-dd");
+        builder.setDateFormat("EEE, dd MMM YYYY HH:mm:ss zzz");
     	return builder;
     }
 

@@ -1,24 +1,27 @@
 package ar.utn.frba.dds.g13.user;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.Device;
 
 public class Client extends User {
 	
-	String idType;
-	String idNumber;
-	String phoneNumber;
-	Category category;
+	@Expose String idType;
+	@Expose String idNumber;
+	@Expose String phoneNumber;
+	@Expose Category category;
 	
-	int score;
+	@Expose int score;
 	
-	List<Residence> residences;
+	@Expose List<Residence> residences;
 
 	public Client(String username, String password,
-			String fullname, String residenceAddress, Date registrationDate,
+			String fullname, String residenceAddress, Calendar registrationDate,
 			String idType, String idNumber, String phoneNumber,
 			Category category, int score,
 			List<Residence> residences) {
@@ -29,6 +32,14 @@ public class Client extends User {
 		this.category = category;
 		this.score = score;
 		this.residences = residences;
+	}
+	
+	public List<Residence> getResidences() {
+		return residences;
+	}
+	
+	public Calendar getRegistrationDate() {
+		return registrationDate;
 	}
 	
 	public void registerDevice(Device device, Residence residence) {

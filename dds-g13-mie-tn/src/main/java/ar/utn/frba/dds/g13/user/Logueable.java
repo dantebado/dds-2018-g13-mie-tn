@@ -1,9 +1,13 @@
 package ar.utn.frba.dds.g13.user;
 
-public class Logueable {
+import com.google.gson.annotations.Expose;
+
+import ar.utn.frba.dds.g13.json.BeanToJson;
+
+public class Logueable extends BeanToJson {
 	
-	private String username;
-	private String password;
+	@Expose private String username;
+	@Expose private String password;
 	
 	public Logueable(String username, String password) {
 		this.username = username;
@@ -12,6 +16,12 @@ public class Logueable {
 	
 	public boolean login(String username, String password) {
 		return (username == this.username && password == this.password);
+	}
+
+	@Override
+	public Object getObj() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

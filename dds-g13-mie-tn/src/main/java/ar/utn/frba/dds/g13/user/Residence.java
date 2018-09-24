@@ -35,6 +35,10 @@ public class Residence extends BeanToJson {
 		this.devices = devices;
 	}
 	
+	public String getAddress() {
+		return address;
+	}
+	
 	public static List<Device> getDevices() {
 		return devices;
 	}

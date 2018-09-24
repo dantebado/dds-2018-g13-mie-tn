@@ -1,6 +1,7 @@
 package ar.utn.frba.dds.g13.user;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Administrator extends User {
@@ -9,7 +10,7 @@ public class Administrator extends User {
 
 	public Administrator(int id,
 			String username, String password,
-			String fullname, String residenceAddress, Date registrationDate) {
+			String fullname, String residenceAddress, Calendar registrationDate) {
 		super(username, password, fullname, residenceAddress, registrationDate);
 		this.id = id;
 	}
@@ -18,7 +19,7 @@ public class Administrator extends User {
 	public int antiquity() {
 		LocalDate ld = LocalDate.now();
 		Date now = new Date(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
-		return now.getYear() - registrationDate.getYear();
+		return now.getYear() - registrationDate.get(1);
 	}
 
 }

@@ -11,7 +11,7 @@ public abstract class Device extends BeanToJson {
 	
 	@Expose String name;
 	@Expose BigDecimal hourlyConsumption;
-	@Expose DeviceInfoTable Table = DeviceInfoTable.getInstance();
+	DeviceInfoTable Table = DeviceInfoTable.getInstance();
 	
 	public DeviceInfoTable getTable() {
 		return Table;
