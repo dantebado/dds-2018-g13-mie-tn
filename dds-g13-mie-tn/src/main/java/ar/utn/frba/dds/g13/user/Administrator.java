@@ -11,19 +11,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Administrators")
+@Table(name = "Administrator")
 public class Administrator extends User {
 	
-	@Id
+	@Id								
+	@GeneratedValue
 	@Column(name="administrator_id")
-	int id;
-
+	private Long id;
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -31,11 +31,10 @@ public class Administrator extends User {
 		super();
 	}
 	
-	public Administrator(int id,
+	public Administrator(
 			String username, String password,
 			String fullname, String residenceAddress, Calendar registrationDate) {
 		super(username, password, fullname, residenceAddress, registrationDate);
-		this.id = id;
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -7,8 +7,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,30 +21,42 @@ import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.Device;
 
 @Entity
-@Table(name = "Clients")
+@Table(name = "Client")
 public class Client extends User {
+	
+	@Id								
+	@GeneratedValue
+	@Column(name="client_id")
+	private Long id;
 	
 	@Column(name="type_id")
 	@Expose String idType;
-	
-	@Id
-	@Column(name="client_id")
+
+	@Column(name="number_id")
 	@Expose String idNumber;
 	
-	@Column(name="phoneNumber")
+	@Column(name="phone_number")
 	@Expose String phoneNumber;
 	
-	@Column(name="category")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="category_id")
 	@Expose Category category;
 	
 	@Column(name="score")
 	@Expose int score;
 	
-	@OneToMany(cascade={CascadeType.ALL})
-	@JoinColumn(name="client_id")
+	@OneToMany(mappedBy = "client" , cascade = {CascadeType.ALL})
 	@Expose List<Residence> residences;
 
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getIdType() {
 		return idType;
 	}

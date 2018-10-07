@@ -9,9 +9,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -22,6 +24,7 @@ import org.apache.commons.math3.optim.PointValuePair;
 
 import com.google.gson.annotations.Expose;
 
+import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.AdaptedDevice;
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
@@ -32,7 +35,7 @@ import ar.utn.frba.dds.g13.json.BeanToJson;
 import ar.utn.frba.dds.g13.simplex.simplexAdapter;
 
 @Entity
-@Table(name = "Residences")
+@Table(name = "Residence")
 public class Residence extends BeanToJson {
 
 	
@@ -45,9 +48,12 @@ public class Residence extends BeanToJson {
 	@Column(name="address")
 	@Expose String address;
 	
-	@OneToMany(cascade={CascadeType.ALL})
-	@JoinColumn(name="residence_id")
+	@OneToMany(mappedBy = "residence" , cascade = {CascadeType.ALL}) //@JoinColumn(name="residence_id")
 	@Expose static List<Device> devices;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="client_id")
+	@Expose Client client;
 	
 	@Transient
 	@Expose static simplexAdapter simplex = new simplexAdapter();
