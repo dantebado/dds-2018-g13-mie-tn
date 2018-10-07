@@ -6,11 +6,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import java.math.BigDecimal;
 
@@ -34,32 +38,58 @@ public class Residence extends BeanToJson {
 	
 	
 	@Id								
-	@GeneratedValue					
+	@GeneratedValue
+	@Column(name="residence_id")
 	private Long id;
 	
-	@Column
+	@Column(name="address")
 	@Expose String address;
 	
-	
+	@OneToMany(cascade={CascadeType.ALL})
+	@JoinColumn(name="residence_id")
 	@Expose static List<Device> devices;
 	
+	@Transient
 	@Expose static simplexAdapter simplex = new simplexAdapter();
 	
+	@Transient
 	@Expose Calendar cal = Calendar.getInstance();
 	
+	@Transient	
 	@Expose int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 	
-	public Residence(String address, List<Device> devices) {
-		this.address = address;
-		this.devices = devices;
-	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getAddress() {
 		return address;
 	}
 	
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public static List<Device> getDevices() {
 		return devices;
+	}
+	
+	public static void setDevices(List<Device> devices) {
+		Residence.devices = devices;
+	}
+
+	public Residence(){
+		super();
+	}
+	
+	public Residence(String address, List<Device> devices) {
+		this.address = address;
+		this.devices = devices;
 	}
 
 	public static void addDevice(Device device) {
