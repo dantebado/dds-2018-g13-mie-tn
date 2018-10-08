@@ -24,6 +24,7 @@ import org.apache.commons.math3.optim.PointValuePair;
 
 import com.google.gson.annotations.Expose;
 
+import ar.utn.frba.dds.g13.area.Area;
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.AdaptedDevice;
 import ar.utn.frba.dds.g13.device.Device;
@@ -48,12 +49,16 @@ public class Residence extends BeanToJson {
 	@Column(name="address")
 	@Expose String address;
 	
-	@OneToMany(mappedBy = "residence" , cascade = {CascadeType.ALL}) //@JoinColumn(name="residence_id")
+	@OneToMany(mappedBy = "residence" , cascade = {CascadeType.ALL})
 	@Expose static List<Device> devices;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="client_id")
 	@Expose Client client;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="area_id")
+	@Expose Area area;
 	
 	@Transient
 	@Expose static simplexAdapter simplex = new simplexAdapter();
@@ -89,13 +94,31 @@ public class Residence extends BeanToJson {
 		Residence.devices = devices;
 	}
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
+
 	public Residence(){
 		super();
 	}
 	
-	public Residence(String address, List<Device> devices) {
+	public Residence(String address, List<Device> devices, Client client, Area area) {
 		this.address = address;
 		this.devices = devices;
+		this.area = area;
+		this.client = client;
 	}
 
 	public static void addDevice(Device device) {

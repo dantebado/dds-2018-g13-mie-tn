@@ -17,12 +17,12 @@ import com.google.gson.annotations.Expose;
 import ar.utn.frba.dds.g13.user.Client;
 
 @Entity
-@Table(name = "TimeIntervalDevice")
-public class TimeIntervalDevice {
+@Table(name = "StateHistory")
+public class StateHistory {
 	
 	@Id								
 	@GeneratedValue
-	@Column(name="timeIntervalDevice_id")
+	@Column(name="stateHistory_id")
 	private Long id;
 	
 	@Column(name="start")
@@ -31,8 +31,8 @@ public class TimeIntervalDevice {
 	@Column(name="end")
 	Date end;
 	
-	@Column(name="consuming")
-	Boolean consuming; //Cambiar a estado
+	@Column(name="state")
+	String state;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="device_id")
@@ -62,12 +62,12 @@ public class TimeIntervalDevice {
 		this.end = end;
 	}
 
-	public Boolean getConsuming() {
-		return consuming;
+	public String getState() {
+		return state;
 	}
 
-	public void setConsuming(Boolean consuming) {
-		this.consuming = consuming;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public Device getDevice() {
@@ -78,26 +78,16 @@ public class TimeIntervalDevice {
 		this.device = device;
 	}
 
-	public TimeIntervalDevice(){
+	public StateHistory(){
 		super();
 	}
 	
-	public TimeIntervalDevice(Date start, Date end,
-			Boolean consuming, Device device) {
+	public StateHistory(Date start, Date end,
+			String state, Device device) {
 		this.start = start;
 		this.end = end;
-		this.consuming = consuming;
+		this.state = state;
 		this.device = device;
-	}
-	
-	public BigDecimal consumtionInInterval(BigDecimal hourlyConsumption) {
-		float intervalInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
-		return (consuming)? hourlyConsumption.multiply(new BigDecimal(intervalInHours)) : new BigDecimal(0);
-	}
-	
-	public boolean isBetween(Date start, Date end) {
-		return (start.getTime() <= this.start.getTime() &&
-				this.end.getTime() <= end.getTime());
 	}
 
 }

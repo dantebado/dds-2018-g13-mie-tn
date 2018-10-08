@@ -5,14 +5,55 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 import ar.utn.frba.dds.g13.device.states.DeviceState;
 import ar.utn.frba.dds.g13.device.states.Turnable;
 
+
+@Entity
+@DiscriminatorValue("SMART")
 public class SmartDevice extends Device implements Turnable {
 	
+	@Transient
 	DeviceState state;
+	
+	@OneToMany(mappedBy = "device")
 	List<TimeIntervalDevice> consumptionHistory;
+	
+	@OneToMany(mappedBy = "device")
+	List<StateHistory> stateHistory;
+	
+	@OneToMany(mappedBy = "smartdevice")
+	
+	public List<TimeIntervalDevice> getConsumptionHistory() {
+		return consumptionHistory;
+	}
 
+	public List<StateHistory> getStateHistory() {
+		return stateHistory;
+	}
+
+	public void setStateHistory(List<StateHistory> stateHistory) {
+		this.stateHistory = stateHistory;
+	}
+
+	public void setConsumptionHistory(List<TimeIntervalDevice> consumptionHistory) {
+		this.consumptionHistory = consumptionHistory;
+	}
+
+	public DeviceState getState() {
+		return state;
+	}
+
+	public SmartDevice(){
+		super();
+	}
+	
 	public SmartDevice(String name,
 			BigDecimal hourlyConsumption,
 			List<TimeIntervalDevice> consumptionHistory,

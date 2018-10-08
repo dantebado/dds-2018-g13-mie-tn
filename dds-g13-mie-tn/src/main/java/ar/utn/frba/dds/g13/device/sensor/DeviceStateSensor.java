@@ -16,11 +16,11 @@ public class DeviceStateSensor extends Sensor {
 	@Override
 	protected Measure measureValue() { //TODO Determinación del valor
 		if(device.isOn()) {
-			return new Measure(new BigDecimal(1), MeasureMagnitude.DEVICE_STATE);
+			return new Measure(new BigDecimal(1), "DEVICE_STATE");
 		} else if(device.isOff()) {
-			return new Measure(new BigDecimal(-1), MeasureMagnitude.DEVICE_STATE);
+			return new Measure(new BigDecimal(-1), "DEVICE_STATE");
 		} else if(device.isEnergySaving()) {
-			return new Measure(new BigDecimal(0), MeasureMagnitude.DEVICE_STATE);
+			return new Measure(new BigDecimal(0), "DEVICE_STATE");
 		}
 		return null;
 	}

@@ -2,10 +2,21 @@ package ar.utn.frba.dds.g13.device;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("STANDARD")
 public class StandardDevice extends Device {
 	
+	@Column(name="dailyUseEstimation")
 	BigDecimal dailyUseEstimation;
 
+	public StandardDevice(){
+		super();
+	}
+	
 	public StandardDevice(String name,
 			BigDecimal hourlyConsumption,
 			BigDecimal dailyUseEstimation) {
@@ -14,6 +25,11 @@ public class StandardDevice extends Device {
 	}
 	
 	
+	public void setDailyUseEstimation(BigDecimal dailyUseEstimation) {
+		this.dailyUseEstimation = dailyUseEstimation;
+	}
+
+
 	public BigDecimal getDailyUseEstimation() {
 		return dailyUseEstimation;
 	}

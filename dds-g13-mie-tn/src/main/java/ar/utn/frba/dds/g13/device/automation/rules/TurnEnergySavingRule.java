@@ -20,11 +20,11 @@ public class TurnEnergySavingRule extends AutomationRule {
 		
 		for(Measure measure : measures) {
 			
-			if(measure.getMagnitude() == MeasureMagnitude.TEMPERATURE) {
+			if(measure.getMagnitude() == "TEMPERATURE") {
 				if(measure.getValue().compareTo(new BigDecimal(10)) > 0) {
 					flagTemperature = true;
 				}
-			} else if(measure.getMagnitude() == MeasureMagnitude.DEVICE_STATE) {
+			} else if(measure.getMagnitude() == "DEVICE_STATE") {
 				if(measure.getValue().compareTo(new BigDecimal(-1)) == 0) {
 					flagES = true;
 				}

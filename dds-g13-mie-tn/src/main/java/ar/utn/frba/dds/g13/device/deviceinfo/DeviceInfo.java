@@ -1,15 +1,52 @@
 package ar.utn.frba.dds.g13.device.deviceinfo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "DeviceInfo")
 public class DeviceInfo {
 	
+	
+	@Id								
+	@GeneratedValue
+	@Column(name="deviceInfo_id")
+	private Long id;
+	
+	@Column(name="name")
 	String name;
+	
+	@Column(name="desc")
 	String desc;
+	
+	@Column(name="inteligente")
 	boolean inteligente;
+	
+	@Column(name="bajoConsumo")
 	boolean bajoConsumo;
+	
+	@Column(name="consumption")
 	double consumption;
+	
+	@Column(name="minHsUse")
 	int minHsUse;
+	
+	@Column(name="maxHsUse")
 	int maxHsUse;
 	
+	
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public int getMinHsUse() {
 		return minHsUse;
 	}
@@ -84,6 +121,10 @@ public class DeviceInfo {
 		DeviceInfoTable.addDeviceInfo(this);
 	}
 
+	public DeviceInfo(){
+		super();
+	}
+	
 	public DeviceInfo(String name, String desc, boolean inteligente, boolean bajoConsumo, double consumption,int minHsUse,int maxHsUse) {
 		super();
 		this.name = name;
