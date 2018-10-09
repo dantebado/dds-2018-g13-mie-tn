@@ -3,8 +3,11 @@ package ar.utn.frba.dds.g13.user;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.google.gson.annotations.Expose;
 
@@ -17,6 +20,8 @@ public abstract class User extends Logueable {
 	@Column(name="residenceAddress")
 	@Expose String residenceAddress;
 	
+	@Basic
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="registrationDate")
 	@Expose Calendar registrationDate;
 	

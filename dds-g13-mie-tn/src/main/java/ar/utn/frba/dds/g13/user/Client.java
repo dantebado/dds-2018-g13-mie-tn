@@ -38,7 +38,7 @@ public class Client extends User {
 	@Column(name="phone_number")
 	@Expose String phoneNumber;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name="category_id")
 	@Expose Category category;
 	

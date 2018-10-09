@@ -39,8 +39,6 @@ import ar.utn.frba.dds.g13.simplex.simplexAdapter;
 @Table(name = "Residence")
 public class Residence extends BeanToJson {
 
-	
-	
 	@Id								
 	@GeneratedValue
 	@Column(name="residence_id")

@@ -6,7 +6,7 @@
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="connection.url">jdbc:mysql://localhost:3306/db</property>
     <property name="connection.username">root</property>
-    <property name="connection.password"> 	<!-- JDBC connection pool (use the built-in) -->
+    <property name="connection.password"></property> 	<!-- JDBC connection pool (use the built-in) -->
   	<property name="connection.pool_size">1</property>
   
   	<!-- SQL dialect -->
@@ -19,21 +19,29 @@
   	<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
   
   	<!-- Echo all executed SQL to stdout -->
-  	<property name="show_sql">true</property>
-
-	<mapping class="ar.utn.frba.dds.g13.user.Administrator" />
-   	<mapping class="ar.utn.frba.dds.g13.user.Client" />
-   	<mapping class="ar.utn.frba.dds.g13.category.Category" />
-   	<mapping class="ar.utn.frba.dds.g13.transformer.Transformer" />
-   	<mapping class="ar.utn.frba.dds.g13.area.Area" />
-   	<mapping class="ar.utn.frba.dds.g13.device.Device" />
-   	<mapping class="ar.utn.frba.dds.g13.device.TimeIntervalDevice" />
-   	<mapping class="ar.utn.frba.dds.g13.device.StateHistory" />
-   	<mapping class="ar.utn.frba.dds.g13.device.automation.Actuator" />
-   	<mapping class="ar.utn.frba.dds.g13.device.automation.rules.AutomationRule" />
-   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Sensor" />
-   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Measure" />
-   	<mapping class="ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo" />
+	<property name="show_sql">true</property>
+	
+	   	<mapping class="ar.utn.frba.dds.g13.area.Area" />
+	   	
+	   	<mapping class="ar.utn.frba.dds.g13.category.Category" />
+	   	   	
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.Actuator" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.rules.AutomationRule" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Sensor" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Measure" />   	   	
+	   	<mapping class="ar.utn.frba.dds.g13.device.AdaptedDevice" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.Device" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.SmartDevice" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.StandardDevice" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.StateHistory" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.TimeIntervalDevice" />
+	   	   	
+	   	<mapping class="ar.utn.frba.dds.g13.transformer.Transformer" />
+	   	
+		<mapping class="ar.utn.frba.dds.g13.user.Administrator" />
+	   	<mapping class="ar.utn.frba.dds.g13.user.Client" />
+	   	<mapping class="ar.utn.frba.dds.g13.user.Residence" />
 
    </session-factory>
  </hibernate-configuration>
