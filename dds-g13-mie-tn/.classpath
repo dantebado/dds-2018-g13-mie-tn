@@ -25,6 +25,6 @@
 	<classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.26/mysql-connector-java-5.1.26.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hsqldb/hsqldb/2.2.8/hsqldb-2.2.8.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-lang3/3.0/commons-lang3-3.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Simplex-Solution-Final-master"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/simplex-implementation-java"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

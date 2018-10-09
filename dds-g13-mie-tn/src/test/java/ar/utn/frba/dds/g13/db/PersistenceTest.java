@@ -14,7 +14,7 @@ import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 import ar.utn.frba.dds.g13.user.Logueable;
 
 public class PersistenceTest {
-	
+	/*
 	public static SessionFactory getSessionFactory() {
         // Creating Configuration Instance & Passing Hibernate Configuration File
         Configuration configObj = new Configuration();
@@ -55,6 +55,6 @@ public class PersistenceTest {
 		// cerrar sesion
 	}
 	
-	
+	*/
 
 }
