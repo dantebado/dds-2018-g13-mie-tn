@@ -19,7 +19,7 @@ public class DeviceInfo {
 	@Column(name="name")
 	String name;
 	
-	@Column(name="desc")
+	@Column(name="description")
 	String desc;
 	
 	@Column(name="inteligente")
