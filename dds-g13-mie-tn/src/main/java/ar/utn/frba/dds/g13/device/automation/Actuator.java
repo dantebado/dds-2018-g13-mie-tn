@@ -29,7 +29,7 @@ public class Actuator {
 	
 	@Id								
 	@GeneratedValue
-	@Column(name="residence_id")
+	@Column(name="actuator_id")
 	private Long id;
 	
 	@OneToMany(mappedBy = "actuator" , cascade = {CascadeType.ALL})

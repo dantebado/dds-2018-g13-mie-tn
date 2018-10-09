@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+ 
+ <hibernate-configuration>
+   <session-factory>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/db</property>
+    <property name="connection.username">root</property>
+    <property name="connection.password">mysecretpassword</property>
+ 
+ 	<!-- JDBC connection pool (use the built-in) -->
+  	<property name="connection.pool_size">1</property>
+  
+  	<!-- SQL dialect -->
+  	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+  
+  	<!-- Enable Hibernate's automatic session context management -->
+  	<property name="current_session_context_class">thread</property>
+  
+  	<!-- Disable the second-level cache  -->
+  	<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+  
+  	<!-- Echo all executed SQL to stdout -->
+  	<property name="show_sql">true</property>
+
+	<mapping class="ar.utn.frba.dds.g13.user.Administrator" />
+   	<mapping class="ar.utn.frba.dds.g13.user.Client" />
+   	<mapping class="ar.utn.frba.dds.g13.category.Category" />
+   	<mapping class="ar.utn.frba.dds.g13.transformer.Transformer" />
+   	<mapping class="ar.utn.frba.dds.g13.area.Area" />
+   	<mapping class="ar.utn.frba.dds.g13.device.Device" />
+   	<mapping class="ar.utn.frba.dds.g13.device.TimeIntervalDevice" />
+   	<mapping class="ar.utn.frba.dds.g13.device.StateHistory" />
+   	<mapping class="ar.utn.frba.dds.g13.device.automation.Actuator" />
+   	<mapping class="ar.utn.frba.dds.g13.device.automation.rules.AutomationRule" />
+   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Sensor" />
+   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Measure" />
+   	<mapping class="ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo" />
+
+   </session-factory>
+ </hibernate-configuration>
