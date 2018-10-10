@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,6 +27,7 @@ import ar.utn.frba.dds.g13.device.sensor.Sensor;
 
 @Entity
 @Table(name = "Actuator")
+
 public class Actuator {
 	
 	@Id								
@@ -35,7 +38,14 @@ public class Actuator {
 	@OneToMany(mappedBy = "actuator" , cascade = {CascadeType.ALL})
 	List<AutomationRule> rules;
 	
-	@Transient//@OneToMany(mappedBy = "Actuator" , cascade = {CascadeType.ALL})
+	@ManyToMany(
+			cascade = { CascadeType.ALL },
+			fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "ActuatorSensor", 
+        joinColumns = { @JoinColumn(name = "actuator_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "sensor_id") }
+    )
 	List<Sensor> sensors;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -84,6 +94,9 @@ public class Actuator {
 		this.sensors = sensors;
 		for(Sensor sensor : sensors) {
 			sensor.addActuatorToNotify(this);
+		}
+		for(AutomationRule rule : rules) {
+			rule.setActuator(this);
 		}
 	}
 	

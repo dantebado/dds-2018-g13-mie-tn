@@ -26,9 +26,17 @@
 	   	<mapping class="ar.utn.frba.dds.g13.category.Category" />
 	   	   	
 	   	<mapping class="ar.utn.frba.dds.g13.device.automation.Actuator" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.DeviceAction" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.AutomationTurnOn" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.AutomationTurnOff" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.AutomationTurnEnergySaving" />
 	   	<mapping class="ar.utn.frba.dds.g13.device.automation.rules.AutomationRule" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.rules.TurnEnergySavingRule" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.automation.rules.TurnOffWhenCold" />
 	   	<mapping class="ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo" />
 	   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Sensor" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.sensor.TemperatureSensor" />
+	   	<mapping class="ar.utn.frba.dds.g13.device.sensor.DeviceStateSensor" />
 	   	<mapping class="ar.utn.frba.dds.g13.device.sensor.Measure" />   	   	
 	   	<mapping class="ar.utn.frba.dds.g13.device.AdaptedDevice" />
 	   	<mapping class="ar.utn.frba.dds.g13.device.Device" />

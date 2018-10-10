@@ -2,15 +2,20 @@ package ar.utn.frba.dds.g13.device.sensor;
 
 import java.math.BigDecimal;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import ar.utn.frba.dds.g13.device.SmartDevice;
 
+@Entity
+@DiscriminatorValue("STATESENSOR")
 public class DeviceStateSensor extends Sensor {
 	
-	SmartDevice device;
-	
 	public DeviceStateSensor(float intervalInSeconds, SmartDevice device) {
-		super(intervalInSeconds);
-		this.device = device;
+		super(intervalInSeconds, device);
+	}
+	
+	protected DeviceStateSensor() {
 	}
 
 	@Override

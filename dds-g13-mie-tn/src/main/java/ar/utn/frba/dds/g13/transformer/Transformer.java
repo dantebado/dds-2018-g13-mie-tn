@@ -2,6 +2,7 @@ package ar.utn.frba.dds.g13.transformer;
 
 import java.awt.Point;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -81,6 +82,14 @@ public class Transformer extends BeanToJson{
         BigDecimal totalConsumption = new BigDecimal(0);
         for(Residence residence : residences) {
             totalConsumption = totalConsumption.add(residence.actualConsumption());
+        }
+        return totalConsumption;
+    }
+    
+    public BigDecimal energySuppliedBetween(Calendar start, Calendar end) {
+        BigDecimal totalConsumption = new BigDecimal(0);
+        for(Residence residence : residences) {
+            totalConsumption = totalConsumption.add(residence.consumptionBetween(start, end));
         }
         return totalConsumption;
     }

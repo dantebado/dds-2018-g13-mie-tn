@@ -21,7 +21,7 @@ public class App {
     	SmartDevice device = new SmartDevice("Aire Acondicionado",
     			new BigDecimal(15), new ArrayList<TimeIntervalDevice>(), new DeviceOn());
     	
-    	TemperatureSensor sensor_1 = new TemperatureSensor(2);
+    	TemperatureSensor sensor_1 = new TemperatureSensor(2, device);
     	DeviceStateSensor sensor_2 = new DeviceStateSensor(5, device);
     	sensor_1.start();
     	sensor_2.start();

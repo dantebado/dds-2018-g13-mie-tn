@@ -4,11 +4,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import ar.utn.frba.dds.g13.device.automation.AutomationTurnOn;
 import ar.utn.frba.dds.g13.device.automation.DeviceAction;
 import ar.utn.frba.dds.g13.device.sensor.Measure;
 import ar.utn.frba.dds.g13.device.sensor.MeasureMagnitude;
 
+@Entity
+@DiscriminatorValue("TURNENERGYSAVING")
 public class TurnEnergySavingRule extends AutomationRule {
 	
 	@Override

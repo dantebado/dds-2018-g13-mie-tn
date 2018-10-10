@@ -119,7 +119,7 @@ public class Residence extends BeanToJson {
 		this.client = client;
 	}
 
-	public static void addDevice(Device device) {
+	public void addDevice(Device device) {
 		devices.add(device);
 	}
 	
@@ -186,6 +186,19 @@ public class Residence extends BeanToJson {
 	public int numberDevicesTotal() {
 		return devices.size();
 	}
+	
+	public BigDecimal consumptionBetween(Calendar start, Calendar end) {
+        BigDecimal acum = new BigDecimal(0);
+        for(Device device : devices) {
+            if(device.isSmart()) {
+                acum = acum.add( ((SmartDevice)device).consumptionBetween(start, end) );
+            }
+            else {
+            	System.out.println("NO ES SMART");
+            }
+        }
+        return acum;
+    }
 
 	public void makeSimplexMethod() {
 		PointValuePair resultado = simplex.makeSimplexMethod(this);
@@ -218,6 +231,8 @@ public class Residence extends BeanToJson {
 			}
 		}
 	}
+	
+	
 
 	@Override
 	public Object getObj() {

@@ -56,12 +56,6 @@
         dailyUseEstimation decimal(19,2),
         primary key (device_id)
     );
-    
-    create table DeviceAction (
-        deviceAction_type varchar(31) not null,
-        deviceAction_id bigint not null auto_increment,
-        primary key (deviceAction_id)
-    );
 
     create table DeviceInfo (
         deviceInfo_id bigint not null auto_increment,
@@ -94,7 +88,6 @@
     create table Rule (
         rule_id bigint not null auto_increment,
         actuator_id bigint,
-        rule_type varchar(30) not null,
         primary key (rule_id)
     );
 
@@ -102,7 +95,6 @@
         sensor_id bigint not null auto_increment,
         intervalInSeconds float,
         device_id bigint,
-        sensor_type varchar(30) not null,
         primary key (sensor_id)
     );
 

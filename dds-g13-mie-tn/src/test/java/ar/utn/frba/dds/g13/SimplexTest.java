@@ -36,9 +36,9 @@ public class SimplexTest extends TestCase {
 		SmartDevice Pc = new SmartDevice("PC", null, null, null);
 		StandardDevice Micro =new StandardDevice("Microondas", null, new BigDecimal(10));
 		//Residence CasaPrueba = new Residence("callefalsa123", new ArrayList<Device>());
-		Residence.addDevice(Aire);
-		Residence.addDevice(Pc);
-		Residence.addDevice(Micro);
+		//Residence.addDevice(Aire);
+		//Residence.addDevice(Pc);
+		//Residence.addDevice(Micro);
 		//Residence.makeSimplexMethod();
 		//Assert.assertTrue(370, solucion.getPoint()[2], 0.01); // <--- X0*/
 	}

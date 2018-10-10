@@ -91,7 +91,8 @@ public class SmartDevice extends Device implements Turnable {
 		BigDecimal acum = new BigDecimal(0);
 		for(TimeIntervalDevice interval : consumptionHistory) {
 			if(interval.isBetween(start, end)) {
-				acum.add(interval.consumtionInInterval(hourlyConsumption));
+				BigDecimal consumption = interval.consumtionInInterval(hourlyConsumption);
+				acum = acum.add(consumption);
 			}
 		}
 		return acum;

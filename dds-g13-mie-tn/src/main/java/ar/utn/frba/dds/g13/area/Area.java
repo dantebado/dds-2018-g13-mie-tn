@@ -78,6 +78,10 @@ public class Area {
 	public void setResidences(List<Residence> residences) {
 		this.residences = residences;
 	}
+	
+	public void setTransformers(List<Transformer> transformers) {
+		this.transformers = transformers;
+	}
 
 	public Area() {
 		super();
