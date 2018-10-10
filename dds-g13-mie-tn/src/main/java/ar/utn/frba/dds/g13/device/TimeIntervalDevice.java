@@ -1,6 +1,7 @@
 package ar.utn.frba.dds.g13.device;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
 
 import com.google.gson.annotations.Expose;
 
@@ -25,11 +30,14 @@ public class TimeIntervalDevice {
 	@Column(name="timeIntervalDevice_id")
 	private Long id;
 	
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="start")
-	Date start;
-	
+	Calendar start;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="end")
-	Date end;
+	Calendar end;
 	
 	@Column(name="consuming")
 	Boolean consuming; //Cambiar a estado
@@ -46,19 +54,19 @@ public class TimeIntervalDevice {
 		this.id = id;
 	}
 
-	public Date getStart() {
+	public Calendar getStart() {
 		return start;
 	}
 
-	public void setStart(Date start) {
+	public void setStart(Calendar start) {
 		this.start = start;
 	}
 
-	public Date getEnd() {
+	public Calendar getEnd() {
 		return end;
 	}
 
-	public void setEnd(Date end) {
+	public void setEnd(Calendar end) {
 		this.end = end;
 	}
 
@@ -82,7 +90,7 @@ public class TimeIntervalDevice {
 		super();
 	}
 	
-	public TimeIntervalDevice(Date start, Date end,
+	public TimeIntervalDevice(Calendar start, Calendar end,
 			Boolean consuming, Device device) {
 		this.start = start;
 		this.end = end;
@@ -91,13 +99,13 @@ public class TimeIntervalDevice {
 	}
 	
 	public BigDecimal consumtionInInterval(BigDecimal hourlyConsumption) {
-		float intervalInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+		float intervalInHours = (end.getTimeInMillis() - start.getTimeInMillis()) / (1000 * 60 * 60);
 		return (consuming)? hourlyConsumption.multiply(new BigDecimal(intervalInHours)) : new BigDecimal(0);
 	}
 	
-	public boolean isBetween(Date start, Date end) {
-		return (start.getTime() <= this.start.getTime() &&
-				this.end.getTime() <= end.getTime());
+	public boolean isBetween(Calendar start, Calendar end) {
+		return (start.getTimeInMillis() <= this.start.getTimeInMillis() &&
+				this.end.getTimeInMillis() <= end.getTimeInMillis());
 	}
 
 }

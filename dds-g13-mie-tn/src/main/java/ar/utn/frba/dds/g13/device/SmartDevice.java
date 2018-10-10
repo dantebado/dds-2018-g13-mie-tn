@@ -2,12 +2,15 @@ package ar.utn.frba.dds.g13.device;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -23,13 +26,21 @@ public class SmartDevice extends Device implements Turnable {
 	@Transient
 	DeviceState state;
 	
-	@OneToMany(mappedBy = "device")
+	
+	@OneToMany(
+		    mappedBy = "device", 
+		    cascade = CascadeType.ALL, 
+		    orphanRemoval = true
+		)
 	List<TimeIntervalDevice> consumptionHistory;
 	
-	@OneToMany(mappedBy = "device")
-	List<StateHistory> stateHistory;
 	
-	@OneToMany(mappedBy = "smartdevice")
+	@OneToMany(
+		    mappedBy = "device", 
+		    cascade = CascadeType.ALL, 
+		    orphanRemoval = true
+		)
+	List<StateHistory> stateHistory;
 	
 	public List<TimeIntervalDevice> getConsumptionHistory() {
 		return consumptionHistory;
@@ -64,14 +75,19 @@ public class SmartDevice extends Device implements Turnable {
 		this.state = state;
 	}
 	
+	
 	public BigDecimal consumptionLastHours(float hours) {
-		LocalDate ld = LocalDate.now();
-		Date end = new Date(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
-		Date start = new Date((end.getTime() - (long)(hours * 60 * 60 * 1000)));
+		Calendar ld = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		Calendar start = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		Calendar end = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		end.set(Calendar.YEAR, ld.get(Calendar.YEAR));
+		end.set(Calendar.MONTH, ld.get(Calendar.MONTH));
+		end.set(Calendar.DAY_OF_MONTH, ld.get(Calendar.DAY_OF_MONTH));
+		start.add(Calendar.MILLISECOND, (int) (end.getTimeInMillis() - (long)(hours * 60 * 60 * 1000)));
 		return consumptionBetween(start, end);
 	}
 	
-	public BigDecimal consumptionBetween(Date start, Date end) {
+	public BigDecimal consumptionBetween(Calendar start, Calendar end) {
 		BigDecimal acum = new BigDecimal(0);
 		for(TimeIntervalDevice interval : consumptionHistory) {
 			if(interval.isBetween(start, end)) {

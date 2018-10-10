@@ -1,6 +1,7 @@
 package ar.utn.frba.dds.g13.device;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
 
 import com.google.gson.annotations.Expose;
 
@@ -25,11 +30,13 @@ public class StateHistory {
 	@Column(name="stateHistory_id")
 	private Long id;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="start")
-	Date start;
+	Calendar start;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="end")
-	Date end;
+	Calendar end;
 	
 	@Column(name="state")
 	String state;
@@ -46,19 +53,19 @@ public class StateHistory {
 		this.id = id;
 	}
 
-	public Date getStart() {
+	public Calendar getStart() {
 		return start;
 	}
 
-	public void setStart(Date start) {
+	public void setStart(Calendar start) {
 		this.start = start;
 	}
 
-	public Date getEnd() {
+	public Calendar getEnd() {
 		return end;
 	}
 
-	public void setEnd(Date end) {
+	public void setEnd(Calendar end) {
 		this.end = end;
 	}
 
@@ -82,7 +89,7 @@ public class StateHistory {
 		super();
 	}
 	
-	public StateHistory(Date start, Date end,
+	public StateHistory(Calendar start, Calendar end,
 			String state, Device device) {
 		this.start = start;
 		this.end = end;

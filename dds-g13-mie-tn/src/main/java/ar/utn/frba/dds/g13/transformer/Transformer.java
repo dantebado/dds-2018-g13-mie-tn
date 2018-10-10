@@ -17,12 +17,14 @@ import javax.persistence.Transient;
 import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.area.Area;
+import ar.utn.frba.dds.g13.json.BeanToJson;
 import ar.utn.frba.dds.g13.user.Residence;
+import ar.utn.frba.dds.g13.json.BeanToJson;
 
 
 @Entity
 @Table(name = "Transformer")
-public class Transformer {
+public class Transformer extends BeanToJson{
 	
 	@Id								
 	@GeneratedValue
@@ -30,10 +32,10 @@ public class Transformer {
 	private Long id;
 
 	@Column(name="coordinate")
-    Point coordinate;
+    @Expose Point coordinate;
 	
 	@Transient
-    List<Residence> residences;
+    @Expose List<Residence> residences;
 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="area_id")
@@ -82,4 +84,10 @@ public class Transformer {
         }
         return totalConsumption;
     }
+
+	@Override
+	public Object getObj() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
