@@ -30,7 +30,10 @@ import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
 import ar.utn.frba.dds.g13.device.automation.Actuator;
 import ar.utn.frba.dds.g13.device.automation.rules.AutomationRule;
 import ar.utn.frba.dds.g13.device.automation.rules.TurnEnergySavingRule;
+import ar.utn.frba.dds.g13.device.automation.rules.TurnOffWhenCold;
+import ar.utn.frba.dds.g13.device.sensor.DeviceStateSensor;
 import ar.utn.frba.dds.g13.device.sensor.Sensor;
+import ar.utn.frba.dds.g13.device.sensor.TemperatureSensor;
 import ar.utn.frba.dds.g13.device.states.DeviceState;
 import ar.utn.frba.dds.g13.json.ClientLoader;
 import ar.utn.frba.dds.g13.transformer.Transformer;
@@ -411,21 +414,7 @@ public class PersistenceTest {
 	}
 	
 	@Test
-	public void testRules() {
-				
-		Calendar calendarDateStart = Calendar.getInstance(
-				  TimeZone.getTimeZone("UTC"));
-				calendarDateStart.set(Calendar.YEAR, 2017);
-				calendarDateStart.set(Calendar.MONTH, 10);
-				calendarDateStart.set(Calendar.DAY_OF_MONTH, 15);
-		
-		Calendar calendarDateEnd = Calendar.getInstance(
-				  TimeZone.getTimeZone("UTC"));
-				calendarDateEnd.set(Calendar.YEAR, 2018);
-				calendarDateEnd.set(Calendar.MONTH, 10);
-				calendarDateEnd.set(Calendar.DAY_OF_MONTH, 15);
-				
-		
+	public void testRules() {		
 		SmartDevice smart_device = new SmartDevice("TV", 
 				new BigDecimal(0.200000000000000011102230246251565404236316680908203125), null, null);
 				
@@ -433,7 +422,100 @@ public class PersistenceTest {
 		List<AutomationRule> rules = new ArrayList<AutomationRule>();
 		rules.add(energySavingRule);
 		
-		Actuator actuatorEnergy = new Actuator(smart_device, rules, null);
+		TemperatureSensor temperatureSensor = new TemperatureSensor(5);
+		List<Sensor> sensors = new ArrayList<Sensor>();
+		sensors.add(temperatureSensor);
+		
+		Actuator actuatorEnergy = new Actuator(smart_device, rules, sensors);
+		
+		/*SAVE TO DB*/
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+		Long ID = null;
+		try {
+			tx = session.beginTransaction();
+			ID = (Long) session.save(actuatorEnergy);
+			session.save(smart_device);
+			tx.commit();			
+			System.out.println("Actuator saved w id " + ID);
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		
+		
+		
+		/*LOAD*/
+		session = getSessionFactory().openSession();
+		tx = null;
+		actuatorEnergy = null;
+		try {
+			tx = session.beginTransaction();
+			actuatorEnergy = (Actuator) session.load(Actuator.class, ID);			
+			tx.commit();
+			System.out.println("Actuator loaded " + actuatorEnergy.getClass());
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		
+		
+		TurnOffWhenCold turnOffWhenColdRule = new TurnOffWhenCold();
+		rules.clear();
+		rules.add(turnOffWhenColdRule);
+		actuatorEnergy.setRules(rules);
+		session = getSessionFactory().openSession();
+		tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.update(actuatorEnergy);			
+			tx.commit();
+			System.out.println("Actuator saved " + actuatorEnergy.getClass());
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		
+		
+		/*RECOVER*/
+		session = getSessionFactory().openSession();
+		tx = null;
+		actuatorEnergy = null;
+		try {
+			tx = session.beginTransaction();
+			actuatorEnergy = (Actuator) session.load(Actuator.class, ID);			
+			tx.commit();
+			System.out.println("Actuator loaded " + actuatorEnergy.getClass());
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		
+		/*DELETE ALL*/
+		session = getSessionFactory().openSession();
+		tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.delete(actuatorEnergy);
+			tx.commit();
+			System.out.println("All deleted");
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		
+		assertEquals(rules, actuatorEnergy.getRules());
+
 		
 	}
 }
