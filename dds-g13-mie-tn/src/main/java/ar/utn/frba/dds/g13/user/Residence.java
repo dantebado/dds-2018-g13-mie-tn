@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import java.awt.Point;
 import java.math.BigDecimal;
 
 import org.apache.commons.math3.optim.PointValuePair;
@@ -34,6 +35,7 @@ import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
 import ar.utn.frba.dds.g13.device.states.DeviceOff;
 import ar.utn.frba.dds.g13.json.BeanToJson;
 import ar.utn.frba.dds.g13.simplex.simplexAdapter;
+import ar.utn.frba.dds.g13.transformer.Transformer;
 
 @Entity
 @Table(name = "Residence")
@@ -46,17 +48,22 @@ public class Residence extends BeanToJson {
 	
 	@Column(name="address")
 	@Expose String address;
+
+	@OneToMany(mappedBy = "residence" , cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@Expose List<Device> devices;
 	
-	@OneToMany(mappedBy = "residence" , cascade = {CascadeType.ALL})
-	@Expose static List<Device> devices;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
 	@JoinColumn(name="client_id")
 	@Expose Client client;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="area_id")
 	@Expose Area area;
+
+	@Column(name="x")
+	@Expose double coordX;
+	@Column(name="y")
+	@Expose double coordY;
 	
 	@Transient
 	@Expose static simplexAdapter simplex = new simplexAdapter();
@@ -84,16 +91,26 @@ public class Residence extends BeanToJson {
 		this.address = address;
 	}
 
-	public static List<Device> getDevices() {
+	public List<Device> getDevices() {
 		return devices;
 	}
 	
-	public static void setDevices(List<Device> devices) {
-		Residence.devices = devices;
+	public void setDevices(List<Device> devices) {
+		this.devices = devices;
 	}
 
 	public Client getClient() {
 		return client;
+	}
+	
+	public Point getCoords() {
+		Point p = new Point();
+		p.setLocation(coordX, coordY);
+		return p;
+	}
+	
+	public Transformer getTransformer() {
+		return area.assignTransformer(getCoords());
 	}
 
 	public void setClient(Client client) {
@@ -115,12 +132,16 @@ public class Residence extends BeanToJson {
 	public Residence(String address, List<Device> devices, Client client, Area area) {
 		this.address = address;
 		this.devices = devices;
+		for(Device d : devices) {
+			d.setResidence(this);
+		}
 		this.area = area;
 		this.client = client;
 	}
 
 	public void addDevice(Device device) {
 		devices.add(device);
+		device.setResidence(this);
 	}
 	
 	public void adaptStandardDevice(Device device) {

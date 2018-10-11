@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,17 +33,20 @@ public class Transformer extends BeanToJson{
 	@Column(name="transformer_id")
 	private Long id;
 
-	@Column(name="coordinate")
-    @Expose Point coordinate;
+	@Transient
+    Point coordinate;
+
+	@Column(name="x")
+	@Expose double coordX;
+	@Column(name="y")
+	@Expose double coordY;
 	
 	@Transient
     @Expose List<Residence> residences;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="area_id")
-	@Expose Area area;
-    
-    
+	@Expose Area area;    
     
     public Long getId() {
 		return id;
@@ -53,10 +57,16 @@ public class Transformer extends BeanToJson{
 	}
 
 	public Point getCoordinate() {
+		if(coordinate == null) {
+			this.coordinate = new Point();
+			coordinate.setLocation(coordX, coordY);
+		}
 		return coordinate;
 	}
 
 	public void setCoordinate(Point coordinate) {
+		this.coordX = coordinate.getX();
+		this.coordY = coordinate.getY();
 		this.coordinate = coordinate;
 	}
 
@@ -67,13 +77,21 @@ public class Transformer extends BeanToJson{
 	public void setArea(Area area) {
 		this.area = area;
 	}
+	
+	public List<Residence> getResidences(){
+		return area.getResidencesByTransformer(this);
+	}
+	
+	public void setResidences(List<Residence> residences){
+		this.residences = residences;
+	}
 
 	public Transformer() {
 		super();
 	}
     
     public Transformer(Point coordinate, Area area, List<Residence> residences) {
-        this.coordinate = coordinate;
+        this.setCoordinate(coordinate);
         this.area = area;
         this.residences = residences;
     }
@@ -86,12 +104,14 @@ public class Transformer extends BeanToJson{
         return totalConsumption;
     }
     
-    public BigDecimal energySuppliedBetween(Calendar start, Calendar end) {
+    public BigDecimal energySuppliedAverageBetween(Calendar start, Calendar end) {
         BigDecimal totalConsumption = new BigDecimal(0);
+        int counter = 0;
         for(Residence residence : residences) {
             totalConsumption = totalConsumption.add(residence.consumptionBetween(start, end));
+            counter = counter + 1;
         }
-        return totalConsumption;
+        return totalConsumption.divide(new BigDecimal(counter));
     }
 
 	@Override

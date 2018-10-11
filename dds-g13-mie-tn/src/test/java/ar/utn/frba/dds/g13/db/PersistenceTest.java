@@ -145,7 +145,7 @@ public class PersistenceTest {
 			session.close();
 		}
 		
-		/*DELETE ALL*/
+		/*DELETE ALL
 		session = getSessionFactory().openSession();
 		tx = null;
 		try {
@@ -158,7 +158,7 @@ public class PersistenceTest {
 			e.printStackTrace(); 
 		} finally {
 			session.close();
-		}
+		}*/
 		
 		assertEquals("Juan Rodriguez", client.getFullname());
 		
@@ -277,7 +277,7 @@ public class PersistenceTest {
 			session.close();
 		}
 		
-		/*DELETE ALL*/
+		/*DELETE ALL
 		session = getSessionFactory().openSession();
 		tx = null;
 		try {
@@ -290,7 +290,7 @@ public class PersistenceTest {
 			e.printStackTrace(); 
 		} finally {
 			session.close();
-		}
+		}*/
 		
 		assertEquals("TV ROTA", smart_device.getName());
 		
@@ -521,7 +521,7 @@ public class PersistenceTest {
 		} finally {
 			session.close();
 		}
-		
+		/*
 		session = getSessionFactory().openSession();
 		tx = null;
 		try {
@@ -535,7 +535,7 @@ public class PersistenceTest {
 		} finally {
 			session.close();
 		}
-		
+		*/
 		assertEquals(TurnOffWhenCold.class, actuatorEnergy.getRules().get(0).getClass());
 
 		
@@ -543,7 +543,6 @@ public class PersistenceTest {
 	
 	@Test
 	public void finalTest() {
-		
 		Calendar calendarDate = Calendar.getInstance(
 				  TimeZone.getTimeZone("UTC"));
 				calendarDate.set(Calendar.YEAR, 2017);
@@ -574,10 +573,13 @@ public class PersistenceTest {
 				endConsumption.set(Calendar.MONTH, 10);
 				endConsumption.set(Calendar.DAY_OF_MONTH, 15);
 
-
 		ArrayList<Residence> residences = new ArrayList<Residence>();
+		ArrayList<Residence> residencesTwo = new ArrayList<Residence>();
+		
 		ArrayList<Residence> areaResidences = new ArrayList<Residence>();
+		
 		ArrayList<Device> devices = new ArrayList<Device>();
+		ArrayList<Device> devicesTwo = new ArrayList<Device>();
 		
 		Category category = new Category("Residencial", 200, 500, new BigDecimal(500), new BigDecimal(1.5));
 		
@@ -587,41 +589,116 @@ public class PersistenceTest {
 				category, 13,
 				residences);
 		
+		Client clientTwo = new Client("jcarlos", "aovsdyb",
+				"Juan Carlos", "Balcarce 50", calendarDate,
+				"DNI", "20469755", "43687952",
+				category, 13,
+				residencesTwo);
+		
 		List<Transformer> transformers = new ArrayList<Transformer>();
 		
 		Area area = new Area("Devoto", (float) 50, transformers, new Point(30, 70), areaResidences);
 				
 		Residence residence = new Residence("Segurola y Habana", devices, client, area);
-		
-		residences.add(residence);
-		client.setResidences(residences);
-		
-		Transformer transformer = new Transformer(new Point(30, 70), area, areaResidences);
-		
-		residences.add(residence);
-		area.setResidences(residences);
-		
-		transformers.add(transformer);
-		area.setTransformers(transformers);
-	
+		Residence residenceTwo = new Residence("Segurola y Beiro", devicesTwo, clientTwo, area);
 		
 		List<StateHistory> stateHistoryList = new ArrayList<StateHistory>();
+		List<StateHistory> stateHistoryListTwo = new ArrayList<StateHistory>();
 		List<TimeIntervalDevice> timeIntervalList = new ArrayList<TimeIntervalDevice>();
+		List<TimeIntervalDevice> timeIntervalListTwo = new ArrayList<TimeIntervalDevice>();
 		
 		SmartDevice smart_device = new SmartDevice("TV", 
 				new BigDecimal(0.200000000000000011102230246251565404236316680908203125), timeIntervalList, new DeviceOn());
-		
-		residence.addDevice(smart_device);
+		SmartDevice smart_device_two = new SmartDevice("PC", 
+				new BigDecimal(0.1000000000000000111022432251565404236316680908203125), timeIntervalListTwo, new DeviceOn());
 		
 		TimeIntervalDevice time_one = new TimeIntervalDevice(calendarDateStart, calendarDateEnd, true, smart_device);
 		StateHistory state_one = new StateHistory(calendarDateStart, calendarDateEnd, "isOn", smart_device);
+		
+		TimeIntervalDevice time_two = new TimeIntervalDevice(startConsumption, endConsumption, true, smart_device);
+		StateHistory state_two = new StateHistory(startConsumption, endConsumption, "isOn", smart_device);
 
 		timeIntervalList.add(time_one);
 		stateHistoryList.add(state_one);
+		timeIntervalListTwo.add(time_two);
+		stateHistoryListTwo.add(state_two);
 		smart_device.setStateHistory(stateHistoryList); 
+		smart_device_two.setStateHistory(stateHistoryListTwo); 
 		
-		System.out.println("Total residence consumption:" + residence.consumptionBetween(startConsumption, endConsumption));
-
+		residence.addDevice(smart_device);
+		residenceTwo.addDevice(smart_device);
+		residenceTwo.addDevice(smart_device_two);
+		
+		residences.add(residence);
+		residencesTwo.add(residenceTwo);
+		
+		areaResidences.add(residence);
+		areaResidences.add(residenceTwo);
+		area.setResidences(areaResidences);
+		
+		client.setResidences(residences);
+		clientTwo.setResidences(residencesTwo);
+		
+		Transformer transformer = new Transformer(new Point(30, 70), area, areaResidences);
+		
+		transformers.add(transformer);
+		area.setTransformers(transformers);
+		
+		System.out.println("Total residence consumption:" + residence.consumptionBetween(calendarDateStart, calendarDateEnd));
+		System.out.println("Transformer consumption average:" + transformer.energySuppliedAverageBetween(startConsumption, endConsumption));
+		
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+		Long ID = null;
+		try {
+			tx = session.beginTransaction();
+			ID = (Long) session.save(area);
+			session.save(client);
+			session.save(smart_device);
+			tx.commit();			
+			System.out.println("Actuator saved w id " + ID);
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		
+		Area larea = null;
+		session = getSessionFactory().openSession();
+		tx = null;
+		try {
+			tx = session.beginTransaction();
+			larea = (Area) session.load(Area.class, ID);
+			tx.commit();			
+			System.out.println("AREA " + larea.getAreaName());
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		
+		Transformer tranf = larea.getTransformers().get(0);
+		List<Device> rdevices = tranf.getResidences().get(0).getDevices();
+		Device d = rdevices.get(0);
+		/*
+		d.setHourlyConsumption(d.getHourlyConsumption()*1000);
+		
+		session = getSessionFactory().openSession();
+		tx = null;
+		try {
+			tx = session.beginTransaction();
+			larea = (Area) session.load(Area.class, ID);
+			tx.commit();			
+			System.out.println("AREA " + larea.getAreaName());
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+		*/
 		
 	}
 }

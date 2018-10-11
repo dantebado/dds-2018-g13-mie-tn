@@ -18,7 +18,8 @@
     create table Area (
         area_id bigint not null auto_increment,
         area_name varchar(255),
-        coordinate tinyblob,
+        x double not null,
+        y double not null,
         radius float,
         primary key (area_id)
     );
@@ -54,6 +55,7 @@
         hourlyConsumption decimal(19,2),
         name varchar(255),
         dailyUseEstimation decimal(19,2),
+        residence_id int,
         primary key (device_id)
     );
     
@@ -88,6 +90,8 @@
         address varchar(255),
         area_id bigint,
         client_id bigint,
+        x double not null,
+        y double not null,
         primary key (residence_id)
     );
 
@@ -126,7 +130,8 @@
 
     create table Transformer (
         transformer_id bigint not null auto_increment,
-        coordinate tinyblob,
+        x double not null,
+        y double not null,
         area_id bigint,
         primary key (transformer_id)
     );

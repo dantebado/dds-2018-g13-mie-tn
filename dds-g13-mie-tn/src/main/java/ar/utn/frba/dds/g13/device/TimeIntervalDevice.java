@@ -108,5 +108,13 @@ public class TimeIntervalDevice {
 				this.end.getTimeInMillis() <= end.getTimeInMillis());
 	}
 
+	public float hoursOverlap(Calendar start, Calendar end) {
+		Calendar startO = start;
+		Calendar endO = end;
+		if(startO.getTimeInMillis() <= this.start.getTimeInMillis()) startO = this.start;
+		if(this.end.getTimeInMillis() <= endO.getTimeInMillis()) endO = this.end;
+		return (endO.getTimeInMillis() - startO.getTimeInMillis()) / (1000 * 60 * 60);
+	}
+
 }
 

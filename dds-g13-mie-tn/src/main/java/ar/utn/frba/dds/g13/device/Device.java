@@ -2,14 +2,18 @@ package ar.utn.frba.dds.g13.device;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,6 +21,7 @@ import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
 import ar.utn.frba.dds.g13.json.BeanToJson;
+import ar.utn.frba.dds.g13.user.Residence;
 
 @Entity
 @Table(name = "Device")
@@ -31,6 +36,10 @@ public abstract class Device extends BeanToJson {
 	
 	@Column(name="name")
 	@Expose String name;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="residence_id")
+	@Expose Residence residence;
 	
 	@Column(name="hourlyConsumption")
 	@Expose BigDecimal hourlyConsumption;
@@ -40,6 +49,14 @@ public abstract class Device extends BeanToJson {
 	
 	public DeviceInfoTable getTable() {
 		return Table;
+	}
+	
+	public Residence getResidence() {
+		return residence;
+	}
+
+	public void setResidence(Residence residence) {
+		this.residence = residence;
 	}
 
 	public Long getId() {
