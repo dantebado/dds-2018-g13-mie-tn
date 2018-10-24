@@ -34,7 +34,7 @@ public class DeviceInfoTable {
   	public boolean isInteligente(String deviceName) {
   		DeviceInfo device = getDeviceByName(deviceName);
 		return device.isInteligente();
-	}  
+	}
       
   	public boolean isBajoConsumo(String deviceName) {
   		DeviceInfo device = getDeviceByName(deviceName);
@@ -56,7 +56,7 @@ public class DeviceInfoTable {
 		return device.getMaxHsUse();
 	}
   	
-  	public DeviceInfo getDeviceByName(final String deviceName) {
+  	public static DeviceInfo getDeviceByName(final String deviceName) {
   		for (DeviceInfo deviceInfo : DevicesInfos) {
 			if(deviceInfo.getName() == deviceName) {
 				return deviceInfo;
@@ -66,14 +66,16 @@ public class DeviceInfoTable {
   	}
   	
 	private static DeviceInfoTable instance = null;
-		private DeviceInfoTable() {
-			DeviceInfoTable.DevicesInfos = new ArrayList<DeviceInfo>();
-		}
+	
+	private DeviceInfoTable() {
+		DeviceInfoTable.DevicesInfos = new ArrayList<DeviceInfo>();
+		//TODO Populate with devices (from persistance)
+	}
 
 	public static DeviceInfoTable getInstance() {
-  if(instance == null) {
-     instance = new DeviceInfoTable();
-  }
-  return instance;
+		if(instance == null) {
+			instance = new DeviceInfoTable();
+		}
+		return instance;
 	}
 }

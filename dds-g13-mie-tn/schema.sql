@@ -52,10 +52,10 @@
     create table Device (
         device_type varchar(31) not null,
         device_id bigint not null auto_increment,
-        hourlyConsumption decimal(19,2),
         name varchar(255),
         dailyUseEstimation decimal(19,2),
         residence_id int,
+        deviceinfo_id bigint,
         primary key (device_id)
     );
     

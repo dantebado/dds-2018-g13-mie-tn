@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.states.DeviceState;
 import ar.utn.frba.dds.g13.device.states.Turnable;
 
@@ -26,14 +27,12 @@ public class SmartDevice extends Device implements Turnable {
 	@Transient
 	DeviceState state;
 	
-	
 	@OneToMany(
 		    mappedBy = "device", 
 		    cascade = CascadeType.ALL, 
 		    orphanRemoval = true
 		)
 	List<TimeIntervalDevice> consumptionHistory;
-	
 	
 	@OneToMany(
 		    mappedBy = "device", 
@@ -67,10 +66,10 @@ public class SmartDevice extends Device implements Turnable {
 	}
 	
 	public SmartDevice(String name,
-			BigDecimal hourlyConsumption,
+			DeviceInfo info,
 			List<TimeIntervalDevice> consumptionHistory,
 			DeviceState state) {
-		super(name, hourlyConsumption);
+		super(name, info);
 		this.consumptionHistory = consumptionHistory;
 		this.state = state;
 	}
@@ -90,7 +89,7 @@ public class SmartDevice extends Device implements Turnable {
 	public BigDecimal consumptionBetween(Calendar start, Calendar end) {
 		BigDecimal acum = new BigDecimal(0);
 		for(TimeIntervalDevice interval : consumptionHistory) {
-			BigDecimal consumption = hourlyConsumption.multiply(new BigDecimal(interval.hoursOverlap(start, end)));
+			BigDecimal consumption = this.getHourlyConsumption().multiply(new BigDecimal(interval.hoursOverlap(start, end)));
 			acum = acum.add(consumption);
 		}
 		return acum;

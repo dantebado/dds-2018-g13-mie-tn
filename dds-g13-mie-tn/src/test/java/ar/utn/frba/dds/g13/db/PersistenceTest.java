@@ -34,6 +34,7 @@ import ar.utn.frba.dds.g13.device.automation.AutomationTurnOff;
 import ar.utn.frba.dds.g13.device.automation.rules.AutomationRule;
 import ar.utn.frba.dds.g13.device.automation.rules.TurnEnergySavingRule;
 import ar.utn.frba.dds.g13.device.automation.rules.TurnOffWhenCold;
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
 import ar.utn.frba.dds.g13.device.sensor.DeviceStateSensor;
 import ar.utn.frba.dds.g13.device.sensor.Sensor;
 import ar.utn.frba.dds.g13.device.sensor.TemperatureSensor;
@@ -195,8 +196,7 @@ public class PersistenceTest {
 		List<StateHistory> stateHistoryList = new ArrayList<StateHistory>();
 		List<TimeIntervalDevice> timeIntervalList = new ArrayList<TimeIntervalDevice>();
 		
-		SmartDevice smart_device = new SmartDevice("TV", 
-				new BigDecimal(0.200000000000000011102230246251565404236316680908203125), timeIntervalList, new DeviceOn());
+		SmartDevice smart_device = new SmartDevice("TV", DeviceInfoTable.getDeviceByName("TV"), timeIntervalList, new DeviceOn());
 		
 		TimeIntervalDevice time_one = new TimeIntervalDevice(calendarDateStartOne, calendarDateEndOne, true, smart_device);
 		TimeIntervalDevice time_two = new TimeIntervalDevice(calendarDateStartTwo, calendarDateEndTwo, false, smart_device);
@@ -434,8 +434,7 @@ public class PersistenceTest {
 	
 	@Test
 	public void testRules() {		
-		SmartDevice smart_device = new SmartDevice("TV", 
-				new BigDecimal(0.200000000000000011102230246251565404236316680908203125), null, null);
+		SmartDevice smart_device = new SmartDevice("TV", DeviceInfoTable.getDeviceByName("TV"), null, null);
 				
 		TurnEnergySavingRule energySavingRule = new TurnEnergySavingRule();
 		
@@ -607,10 +606,8 @@ public class PersistenceTest {
 		List<TimeIntervalDevice> timeIntervalList = new ArrayList<TimeIntervalDevice>();
 		List<TimeIntervalDevice> timeIntervalListTwo = new ArrayList<TimeIntervalDevice>();
 		
-		SmartDevice smart_device = new SmartDevice("TV", 
-				new BigDecimal(0.200000000000000011102230246251565404236316680908203125), timeIntervalList, new DeviceOn());
-		SmartDevice smart_device_two = new SmartDevice("PC", 
-				new BigDecimal(0.1000000000000000111022432251565404236316680908203125), timeIntervalListTwo, new DeviceOn());
+		SmartDevice smart_device = new SmartDevice("TV", DeviceInfoTable.getDeviceByName("TV"), timeIntervalList, new DeviceOn());
+		SmartDevice smart_device_two = new SmartDevice("PC", DeviceInfoTable.getDeviceByName("PC"), timeIntervalListTwo, new DeviceOn());
 		
 		TimeIntervalDevice time_one = new TimeIntervalDevice(calendarDateStart, calendarDateEnd, true, smart_device);
 		StateHistory state_one = new StateHistory(calendarDateStart, calendarDateEnd, "isOn", smart_device);

@@ -8,8 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DeviceInfo")
-public class DeviceInfo {
-	
+public class DeviceInfo {	
 	
 	@Id								
 	@GeneratedValue

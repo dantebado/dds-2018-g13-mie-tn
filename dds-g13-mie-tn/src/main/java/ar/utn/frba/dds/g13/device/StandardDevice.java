@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
+
 @Entity
 @DiscriminatorValue("STANDARD")
 public class StandardDevice extends Device {
@@ -18,9 +20,9 @@ public class StandardDevice extends Device {
 	}
 	
 	public StandardDevice(String name,
-			BigDecimal hourlyConsumption,
+			DeviceInfo info,
 			BigDecimal dailyUseEstimation) {
-		super(name, hourlyConsumption);
+		super(name, info);
 		this.dailyUseEstimation = dailyUseEstimation;
 	}
 	

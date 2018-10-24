@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
 import ar.utn.frba.dds.g13.json.BeanToJson;
 import ar.utn.frba.dds.g13.user.Residence;
@@ -37,12 +38,13 @@ public abstract class Device extends BeanToJson {
 	@Column(name="name")
 	@Expose String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="residence_id")
 	@Expose Residence residence;
 	
-	@Column(name="hourlyConsumption")
-	@Expose BigDecimal hourlyConsumption;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@JoinColumn(name="deviceinfo_id")
+	@Expose DeviceInfo device_info;
 	
 	@Transient
 	DeviceInfoTable Table = DeviceInfoTable.getInstance();
@@ -74,23 +76,26 @@ public abstract class Device extends BeanToJson {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public DeviceInfo getDevice_info() {
+		return device_info;
+	}
+
+	public void setDevice_info(DeviceInfo device_info) {
+		this.device_info = device_info;
+	}
+
 	public BigDecimal getHourlyConsumption() {
-		return hourlyConsumption;
+		return new BigDecimal(device_info.getConsumption());
 	}
-
-	public void setHourlyConsumption(BigDecimal hourlyConsumption) {
-		this.hourlyConsumption = hourlyConsumption;
-	}
-
 	
-	public Device(){
+	public Device() {
 		super();
 	}
 	
-	public Device(String name, BigDecimal hourlyConsumption) {
+	public Device(String name, DeviceInfo info) {
 		this.name = name;
-		this.hourlyConsumption = hourlyConsumption;
+		this.device_info = info;
 	}
 	
 	public abstract boolean isSmart();

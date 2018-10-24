@@ -32,9 +32,9 @@ public class SimplexTest extends TestCase {
 		DeviceInfoTable.addDeviceInfo(AireI);
 		DeviceInfoTable.addDeviceInfo(PcI);
 		DeviceInfoTable.addDeviceInfo(MicroI);
-		SmartDevice Aire = new SmartDevice("AireAcondicionado3500", null, null, null);
-		SmartDevice Pc = new SmartDevice("PC", null, null, null);
-		StandardDevice Micro =new StandardDevice("Microondas", null, new BigDecimal(10));
+		SmartDevice Aire = new SmartDevice("AireAcondicionado3500", AireI, null, null);
+		SmartDevice Pc = new SmartDevice("PC", PcI, null, null);
+		StandardDevice Micro = new StandardDevice("Microondas", MicroI, new BigDecimal(10));
 		//Residence CasaPrueba = new Residence("callefalsa123", new ArrayList<Device>());
 		//Residence.addDevice(Aire);
 		//Residence.addDevice(Pc);
