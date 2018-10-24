@@ -41,12 +41,12 @@ public class Transformer extends BeanToJson{
 	@Column(name="y")
 	@Expose double coordY;
 	
-	@Transient
-    @Expose List<Residence> residences;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="area_id")
 	@Expose Area area;    
+    
+    @Transient
+    boolean active = true;
     
     public Long getId() {
 		return id;
@@ -54,6 +54,10 @@ public class Transformer extends BeanToJson{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public boolean getActive() {
+		return active;
 	}
 
 	public Point getCoordinate() {
@@ -81,10 +85,6 @@ public class Transformer extends BeanToJson{
 	public List<Residence> getResidences(){
 		return area.getResidencesByTransformer(this);
 	}
-	
-	public void setResidences(List<Residence> residences){
-		this.residences = residences;
-	}
 
 	public Transformer() {
 		super();
@@ -93,12 +93,11 @@ public class Transformer extends BeanToJson{
     public Transformer(Point coordinate, Area area, List<Residence> residences) {
         this.setCoordinate(coordinate);
         this.area = area;
-        this.residences = residences;
     }
 
     public BigDecimal energySupplied() {
         BigDecimal totalConsumption = new BigDecimal(0);
-        for(Residence residence : residences) {
+        for(Residence residence : getResidences()) {
             totalConsumption = totalConsumption.add(residence.actualConsumption());
         }
         return totalConsumption;
@@ -107,7 +106,7 @@ public class Transformer extends BeanToJson{
     public BigDecimal energySuppliedAverageBetween(Calendar start, Calendar end) {
         BigDecimal totalConsumption = new BigDecimal(0);
         int counter = 0;
-        for(Residence residence : residences) {
+        for(Residence residence : getResidences()) {
             totalConsumption = totalConsumption.add(residence.consumptionBetween(start, end));
             counter = counter + 1;
         }

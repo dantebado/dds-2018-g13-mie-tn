@@ -132,7 +132,7 @@ public class Area {
     	double dist = t.getCoordinate().distance(point);
     	for(Transformer tt : transformers) {
     		double tdistv = tt.getCoordinate().distance(point);
-    		if(tdistv < dist) {
+    		if(tdistv < dist && tt.getActive()) {
     			dist = tdistv;
     			t = tt;
     		}
