@@ -95,7 +95,11 @@ public abstract class Device extends BeanToJson {
 	
 	public Device(String name, DeviceInfo info) {
 		this.name = name;
-		this.device_info = info;
+		if(info == null) {
+			this.device_info = DeviceInfoTable.getDeviceByName(name);
+		} else {
+			this.device_info = info;
+		}
 	}
 	
 	public abstract boolean isSmart();
