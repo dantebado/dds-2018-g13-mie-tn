@@ -44,9 +44,6 @@ public abstract class Sensor extends Thread {
 	@OneToMany(mappedBy = "sensor" , cascade = {CascadeType.ALL})
 	@Expose static List<Measure> measures;
 	
-	@OneToMany(mappedBy = "sensor" , cascade = {CascadeType.ALL})
-	@Expose static List<AutomationRule> rules;
-	
 	@Column(name="intervalInSeconds")
 	float intervalInSeconds;
 	
@@ -72,14 +69,6 @@ public abstract class Sensor extends Thread {
 
 	public static void setMeasures(List<Measure> measures) {
 		Sensor.measures = measures;
-	}
-
-	public static List<AutomationRule> getRules() {
-		return rules;
-	}
-
-	public static void setRules(List<AutomationRule> rules) {
-		Sensor.rules = rules;
 	}
 
 	public float getIntervalInSeconds() {

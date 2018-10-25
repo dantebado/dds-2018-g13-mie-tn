@@ -10,6 +10,7 @@ import ar.utn.frba.dds.g13.device.automation.Actuator;
 import ar.utn.frba.dds.g13.device.automation.rules.AutomationRule;
 import ar.utn.frba.dds.g13.device.automation.rules.TurnEnergySavingRule;
 import ar.utn.frba.dds.g13.device.automation.rules.TurnOffWhenCold;
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
 import ar.utn.frba.dds.g13.device.sensor.DeviceStateSensor;
 import ar.utn.frba.dds.g13.device.sensor.Sensor;
@@ -18,6 +19,8 @@ import ar.utn.frba.dds.g13.device.states.DeviceOn;
 
 public class App {
     public static void main( String[] args ) {
+    	
+    	DeviceInfoTable.addDeviceInfo(new DeviceInfo("Aire Acondicionado", "Aire Acondicionado", true, true, 25, 0, 0));
     	
     	SmartDevice device = new SmartDevice("Aire Acondicionado", DeviceInfoTable.getDeviceByName("Aire Acondicionado"),
     			new ArrayList<TimeIntervalDevice>(), new DeviceOn());
