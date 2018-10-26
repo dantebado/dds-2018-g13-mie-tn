@@ -171,11 +171,6 @@
         foreign key (actuator_id) 
         references Actuator (actuator_id);
 
-    alter table Rule 
-        add constraint FK_bfot57sbj6wxbqp977t11etrt 
-        foreign key (sensor_id) 
-        references Sensor (sensor_id);
-
     alter table Sensor 
         add constraint FK_ppmi5j5lawo8147qlw48a2pmd 
         foreign key (device_id) 
