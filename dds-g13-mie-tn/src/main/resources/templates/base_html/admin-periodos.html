@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Sistema de Gestión Energética</title>
+  <meta name="description" content="SGE">
+  <meta name="author" content="G13">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm p-3 mb-5 bg-white rounded">
+  <a class="navbar-brand" href="#">
+    <div class="logo">
+      <img src="logo.svg">
+    </div></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Map</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="estado.html">Panel</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link">Panel admin</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item active admin-login">
+        <a class="nav-link" style="  color: #3fa9f5;">Hola, <b>$Kichan Pavon</b>	<i class="fas fa-sign-out-alt"></i></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+  <div class="panel-content">
+    <nav class="panel-nav">
+      <ul>
+        <div class="panel-admin-banner">
+          PANEL ADMIN
+        </div>
+      </ul>
+      <ul>
+        <li><a href="admin-dispositivos.html">DISPOSITIVOS</a></li>
+        <li><a href="admin-reportes.html">REPORTES</a></li>
+        <li><a class="active">PERÍODOS</a></li>
+      </ul>
+    </nav>
+    <div class="panel-box-title">
+      <div class="panel-admin-box-title-gradient-line"></div>
+      <h2>Consulta de período</h2>
+      <h4 class="panel-info">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Cras eu elit ut massa maximus commodo. In diam ligula, sodales sollicitudin erat non,
+         consectetur ultrices lacus. Pellentesque mollis tincidunt nibh, et finibus mauris iaculis et. </h4>
+         <div class="row">
+         <div class="col-md-8 datepickerbox">
+              <label class="info-datepicker">INICIO</label> <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control daypicker">
+
+              <label class="info-datepicker">FIN</label> <input type="date" name="bday" max="3000-12-31" min="1000-01-01" class="form-control daypicker">
+          </div>
+         <div class="col-4 text-right">
+          <button type="button" class="btn btn-primary btn-load">Consultar</button>
+        </div>
+      </div>
+      </div>
+
+    </div>
+    <div class="panel-data-recieved">
+      <ul class="list-group data-recieved">
+        <li class="list-group-item remove-device">
+          <div class="row">
+            <div class="col period-col"><b>INICIO:</b> 20/20/20</div>
+            <div class="col period-col"><b>FIN:</b> 20/20/20</div>
+            <div class="col text-right info-consumption"><i class="fas fa-bolt"></i> 0.12</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </content>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

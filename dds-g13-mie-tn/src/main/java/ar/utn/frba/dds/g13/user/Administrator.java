@@ -44,4 +44,9 @@ public class Administrator extends User {
 		return now.getYear() - registrationDate.get(1);
 	}
 
+	@Override
+	public boolean isAdmin() {
+		return true;
+	}
+
 }

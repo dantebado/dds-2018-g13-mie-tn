@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm p-3 mb-5 bg-white rounded">
+	<a class="navbar-brand" href="#">
+	<div class="logo">
+		<img src="/logo.svg">
+	</div></a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="/">Map</a>
+			</li>
+			
+			{% if (current_user != -1) %}
+			    {% if (current_user.isAdmin) %}	
+        			<li class="nav-item">
+        				<a class="nav-link" href="admin-dispositivos.html">Panel admin</a>
+        			</li>
+    		    {% else %}
+        			<li class="nav-item">
+        				<a class="nav-link" href="estado.html">Panel</a>
+        			</li>
+           	    {% endif %}
+            {% endif %}
+		</ul>
+		<ul class="navbar-nav">
+			{% if (current_user == -1) %}			
+    			<li class="nav-item active">
+    				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Ingresar</button>
+    			</li>
+    		{% else %}
+        		<li class="nav-item active">
+        			<a class="nav-link" style="color: #3fa9f5;" href="/logout">Hola, <b>{{ current_user.username }}</b>	<i class="fas fa-sign-out-alt"></i></a>
+        		</li>
+            {% endif %}
+		</ul>
+	</div>
+</nav>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times; Volver al mapa</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+         <div class="col-md-4">
+           <h1>Sistema de Gestión Energética</h1>
+           <br>
+          <h3>Miles de usuarios de la región ya utilizan SGE para control del consumo
+          energético en sus hogares. Registrándote en el sistema te da la posibilidad
+          de seguir de cerca a todos tus dispositivos conectados y aquellos a los cuales
+          registres. Controlá tu hogar, ahorrá y fomentá el uso sustentable de la energía.</h3>
+        </div>
+         <div class="col-md-2 ml-auto">
+           <h2>Ingreso al sistema:</h2>
+            <br>
+            <form id="login-form" action="/login_pst" method="post" role="form" style="display: block;">
+								<div class="form-group">
+									<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+								</div>
+									<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+								<div class="form-group">
+                <br>
+									<div class="row">
+                  <button type="button" class="btn btn-primary register-button">Registrarse</button>
+                  <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Log In">
+									</div>
+								</div>
+							</form>
+       </div>
+      </div>
+        <div class="modal-footer">
+        <!--<img src="login-img.svg" class="login-img">-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

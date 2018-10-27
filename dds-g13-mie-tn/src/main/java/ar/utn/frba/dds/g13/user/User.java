@@ -61,5 +61,7 @@ public abstract class User extends Logueable {
 		this.residenceAddress = residenceAddress;
 		this.registrationDate = registrationDate;
 	}
+	
+	public abstract boolean isAdmin();
 
 }

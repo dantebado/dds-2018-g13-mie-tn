@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Sistema de Gestión Energética</title>
+  <meta name="description" content="SGE">
+  <meta name="author" content="G13">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm p-3 mb-5 bg-white rounded">
+  <a class="navbar-brand" href="#">
+    <div class="logo">
+      <img src="logo.svg">
+    </div></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Map</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="estado.html">Panel</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="admin-dispositivos.html">Panel admin</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Ingresar</button>
+      </li>
+      <!--
+      <li class="nav-item active">
+        <a class="nav-link" style="  color: #3fa9f5;">Hola, <b>$Kichan Pavon</b>	<i class="fas fa-sign-out-alt"></i></a>
+      </li>
+    -->
+  </div>
+</nav>
+  <content>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times; Volver al mapa</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+             <div class="col-md-4">
+               <h1>Sistema de Gestión Energética</h1>
+               <br>
+              <h3>Miles de usuarios de la región ya utilizan SGE para control del consumo
+              energético en sus hogares. Registrándote en el sistema te da la posibilidad
+              de seguir de cerca a todos tus dispositivos conectados y aquellos a los cuales
+              registres. Controlá tu hogar, ahorrá y fomentá el uso sustentable de la energía.</h3>
+            </div>
+             <div class="col-md-2 ml-auto">
+               <h2>Ingreso al sistema:</h2>
+                <br>
+                <form id="login-form" action="#" method="post" role="form" style="display: block;">
+									<div class="form-group">
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+									</div>
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+									<div class="form-group">
+                    <br>
+										<div class="row">
+                      <button type="button" class="btn btn-primary register-button">Registrarse</button>
+                      <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Log In">
+										</div>
+									</div>
+								</form>
+           </div>
+          </div>
+            <div class="modal-footer">
+            <!--<img src="login-img.svg" class="login-img">-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-map">
+        <div class="map-search-bar">
+          <img class="search-ico" src="search-ico.svg">
+          <input type=search placeholder="Buscar transformador por dirección cercana ..." onfocus="this.placeholder = ''"
+        onblur="this.placeholder = 'Buscar transformador por dirección cercana ...'">
+        </div>
+        <div class="map-search-located-menu">
+            <button role="button" class=" btn btn-transformer" data-toggle="collapse" data-target="#tc">
+                <i class="fas fa-solar-panel"></i>
+            </button>
+            <div id="tc" class="collapse transformer-menu">
+              <h2>Transformador<br> #21934237</h2>
+              <br>
+              <h3><b>ID</b>: 21934237</h3>
+              <br>
+              <h3><b>ÁREA</b>: CARLOS CARLOS CARLOS</h3>
+              <br>
+              <h3><b>SUMINISTRO ACTUAL</b>:</h3>
+              <br>
+              <label class="actual-transformer-consumption-map"><i class="fas fa-bolt"></i> 0.12</label>
+            </div>
+        </div>
+    </div>
+  </content>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

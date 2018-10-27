@@ -1,0 +1,27 @@
+{% extends 'full_base.html.twig' %}
+
+{% block body %}
+	<div class="content-map">
+        <div class="map-search-bar">
+          <img class="search-ico" src="search-ico.svg">
+          <input type=search placeholder="Buscar transformador por dirección cercana ..." onfocus="this.placeholder = ''"
+        onblur="this.placeholder = 'Buscar transformador por dirección cercana ...'">
+        </div>
+        <div class="map-search-located-menu">
+            <button role="button" class=" btn btn-transformer" data-toggle="collapse" data-target="#tc">
+                <i class="fas fa-solar-panel"></i>
+            </button>
+            <div id="tc" class="collapse transformer-menu">
+              <h2>Transformador<br> #21934237</h2>
+              <br>
+              <h3><b>ID</b>: 21934237</h3>
+              <br>
+              <h3><b>ÁREA</b>: CARLOS CARLOS CARLOS</h3>
+              <br>
+              <h3><b>SUMINISTRO ACTUAL</b>:</h3>
+              <br>
+              <label class="actual-transformer-consumption-map"><i class="fas fa-bolt"></i> 0.12</label>
+            </div>
+        </div>
+    </div>
+{% endblock %}

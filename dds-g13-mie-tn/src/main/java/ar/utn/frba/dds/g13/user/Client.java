@@ -180,4 +180,9 @@ public class Client extends User {
 		return counter;
 	}
 
+	@Override
+	public boolean isAdmin() {
+		return false;
+	}
+	
 }
