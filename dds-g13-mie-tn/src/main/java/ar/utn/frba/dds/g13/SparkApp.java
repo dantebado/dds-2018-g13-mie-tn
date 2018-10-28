@@ -35,8 +35,31 @@ public class SparkApp {
 	}
 
 	public static void main(String[] args) {
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("PC", "PC", true, true, 2, 4, 6, 2));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV", "TV", true, true, 2, 4, 6, 2));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Aire Acondicionado 3500", "Aire Acondicionado 3500", true, false, 1.613, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Aire Acondicionado 2200", "Aire Acondicionado 2200", true, true, 1.013, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV Tubo 21inch", "TV Tubo 21inch", false, false, 0.075, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV Tubo 21-34inch", "TV Tubo 21-34inch", false, false, 0.175, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 40inch", "LCD 40inch", false, false, 0.18, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 24inch", "LCD 24inch", true, true, 0.04, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 32inch", "LCD 32inch", true, true, 0.055, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 40inch", "LCD 40inch", true, true, 0.08, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Heladera Freezer", "Heladera Freezer", true, true, 0.09, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Heladera", "Heladera", true, true, 0.075, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lavarropas Auto 5kg Calentador", "Lavarropas Auto 5kg Calentador", false, false, 0.875, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lavarropas Auto 5kg", "Lavarropas Auto 5kg", true, true, 0.175, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lavarropas Semiauto 5kg", "Lavarropas Semiauto 5kg", false, true, 0.1275, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Ventilador de Pie", "Ventilador de Pie", false, true, 0.09, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Ventilador de Techo", "Ventilador de Techo", true, true, 0.06, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara Halógena 40W", "Lámpara Halógena 40W", true, false, 0.04, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara Halógena 60W", "Lámpara Halógena 60W", true, false, 0.06, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara Halógena 100W", "Lámpara Halógena 100W", true, false, 0.015, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara 11W", "Lámpara Halógena 15W", true, true, 0.011, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara 15W", "Lámpara Halógena 15W", true, true, 0.015, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara 20W", "Lámpara Halógena 20W", true, true, 0.02, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("PC Escritorio", "PC Escritorio", true, true, 0.4, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Microondas Convencional", "Microondas Convencional", false, true, 0.64, 0, 0, 0));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Plancha A Vapor", "Plancha A Vapor", false, true, 0.75, 0, 0, 0));
+		
 		
 		Calendar calendarDate = Calendar.getInstance(
 				  TimeZone.getTimeZone("UTC"));
