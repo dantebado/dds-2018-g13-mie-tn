@@ -13,10 +13,13 @@ import org.jtwig.*;
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
+import ar.utn.frba.dds.g13.device.StandardDevice;
 import ar.utn.frba.dds.g13.device.StateHistory;
 import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
+import ar.utn.frba.dds.g13.device.states.DeviceEnergySaving;
+import ar.utn.frba.dds.g13.device.states.DeviceOff;
 import ar.utn.frba.dds.g13.device.states.DeviceOn;
 import ar.utn.frba.dds.g13.user.Client;
 import ar.utn.frba.dds.g13.user.Residence;
@@ -61,7 +64,7 @@ public class SparkApp {
 		List<TimeIntervalDevice> timeIntervalListTwo = new ArrayList<TimeIntervalDevice>();
 		
 		SmartDevice smart_device = new SmartDevice("TV", DeviceInfoTable.getDeviceByName("TV"), timeIntervalList, new DeviceOn());
-		SmartDevice smart_device_two = new SmartDevice("PC", DeviceInfoTable.getDeviceByName("PC"), timeIntervalListTwo, new DeviceOn());
+		SmartDevice smart_device_two = new SmartDevice("PC", DeviceInfoTable.getDeviceByName("PC"), timeIntervalListTwo, new DeviceEnergySaving());
 		residence.addDevice(smart_device);
 		residence.addDevice(smart_device_two);
 		
@@ -153,6 +156,127 @@ public class SparkApp {
 	        }
 	        
 	        return template.render(model);
+		});
+		
+		get("/client/residence/devices", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        JtwigTemplate template = getTemplate("client_devices.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "client_home");
+	        model.with("client_section", "devices");
+        	model.with("current_user", client);
+	        
+	        if(client.getResidences().size() == 0) {
+	        	//No residences to display
+	        	model.with("has_residences", false);
+	        } else {
+	        	model.with("has_residences", true);
+		        String rid = request.queryParamOrDefault("rid", client.getResidences().get(0).getId() + "");
+		        
+		        Residence r = null;
+		        for(Residence tr : client.getResidences()) {
+		        	if((tr.getId() + "").equals(rid)) {
+		        		r = tr;
+		        	}
+		        }
+		        
+		        model.with("rid", r.getId());
+		        model.with("display_residence", r);
+		        model.with("residences", client.getResidences());
+	        }
+	        
+	        return template.render(model);
+		});
+		
+		get("/client/residence/devices/load", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        JtwigTemplate template = getTemplate("client_devices_load.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "client_home");
+	        model.with("client_section", "devices");
+        	model.with("current_user", client);
+	        
+	        if(client.getResidences().size() == 0) {
+	        	//No residences to display
+	        	model.with("has_residences", false);
+	        } else {
+	        	model.with("has_residences", true);
+		        String rid = request.queryParams("rid");
+		        
+		        Residence r = null;
+		        for(Residence tr : client.getResidences()) {
+		        	if((tr.getId() + "").equals(rid)) {
+		        		r = tr;
+		        	}
+		        }
+		        
+		        System.out.println(DeviceInfoTable.getDevicesInfos().size());
+		        
+		        model.with("rid", r.getId());
+		        model.with("display_residence", r);
+		        model.with("residences", client.getResidences());
+		        model.with("device_info_table", DeviceInfoTable.getDevicesInfos());
+	        }
+	        
+	        return template.render(model);
+		});
+		
+		post("/device_load/", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+
+	        String rid = request.queryParams("rid");
+	        
+	        Residence r = null;
+	        for(Residence tr : client.getResidences()) {
+	        	if((tr.getId() + "").equals(rid)) {
+	        		r = tr;
+	        	}
+	        }
+	        
+	        Device d = null;
+	        if(request.queryParams("device_smart") == null) {
+	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), new BigDecimal(1)); //TODO Last parameter
+	        } else {
+	        	List<TimeIntervalDevice> consumptionHistory = new ArrayList<TimeIntervalDevice>();
+	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOff());
+	        }
+	        r.addDevice(d);
+
+        	response.redirect("/");
+	        return null;
+		});
+		
+		
+		
+		//AJAX
+		post("/ajax_utils/", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        String function = request.queryParamOrDefault("ajax_utility", "-1");
+	        switch(function) {
+		        case "search_residence_devices":
+			        String rid = request.queryParams("rid");
+			        String q = request.queryParams("q");
+			        Residence r = null;
+			        ArrayList<Device> d = new ArrayList<Device>();
+			        for(Residence tr : client.getResidences()) {
+			        	if((tr.getId() + "").equals(rid)) {
+			        		r = tr;
+			        		for(Device td : r.getDevices()) {
+			        			if(td.getName().toLowerCase().contains(q.toLowerCase())) {
+			        				d.add(td);
+			        			}
+			        		}
+			        	}
+			        }
+			        JtwigTemplate template = getTemplate("client_devices_helper.html");
+			        JtwigModel model = JtwigModel.newModel();
+			        model.with("devices", d);
+			        return template.render(model);
+		        case "-1":
+				default:
+		        		break;
+	        }
+	        return "";
 		});
 		
 	}

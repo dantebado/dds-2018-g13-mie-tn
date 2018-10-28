@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 
 public class DeviceInfoTable {
-	private static Collection<DeviceInfo> DevicesInfos = null;
+	private static ArrayList<DeviceInfo> DevicesInfos = new ArrayList<DeviceInfo>();
 	int maxConsumption = 612000;
 	 
 	public int getMaxConsumption() {
@@ -18,7 +18,7 @@ public class DeviceInfoTable {
 		this.maxConsumption = maxConsumption;
 	}
 
-	public Collection<DeviceInfo> getDevicesInfos() {
+	public static Collection<DeviceInfo> getDevicesInfos() {
 		return DevicesInfos;
 	}
 	
@@ -68,7 +68,6 @@ public class DeviceInfoTable {
 	private static DeviceInfoTable instance = null;
 	
 	private DeviceInfoTable() {
-		DeviceInfoTable.DevicesInfos = new ArrayList<DeviceInfo>();
 		//TODO Populate with devices (from persistance)
 	}
 

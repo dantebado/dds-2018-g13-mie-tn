@@ -1,0 +1,45 @@
+{% extends 'client_base.html.twig' %}
+
+{% block body %}
+	<div class="panel-box-title">
+      <div class="panel-box-title-gradient-line"></div>
+      <h2>Mis dispositivos</h2>
+      <h4 class="panel-info">Consulte su lista de dispositivos (tanto standard o smart).
+        Si desea, puede agregar un dispositivo nuevo, o consultar información ampliada
+        de aquellos que son smart.</h4>
+         <div class="row">
+         <div class="col-md-6">
+           <div class="map-search-bar panel-search ">
+             <img class="search-ico" src="/search-ico.svg">
+             <form action="/ajax_utils/" method="post">
+             <input type=search class="input_search_device" name="q" placeholder="Buscar dispositivo ..." onfocus="this.placeholder = ''"
+           onblur="this.placeholder = 'Buscar dispositivo ...'">
+           		<input type="hidden" name="rid" value="{{ rid }}">
+           		<input type="hidden" name="ajax_utility" value="search_residence_devices">
+			 </form>
+            </div>
+         </div>
+         <div class="col-md-6 text-right">
+          <a href="/client/residence/devices/load?rid={{ rid }}" ><button type="button" class="btn btn-primary btn-load"><i class="fas fa-plus"></i>Cargar Dispositivo</button></a>
+        </div>
+      </div>
+    </div>
+    <div class="panel-data-recieved">
+      <ul class="list-group data-recieved">
+        <li class="list-group-item remove-device q-devices">
+        	{% set devices = display_residence.devices %}
+        	{% include 'client_devices_helper.html.twig' %}
+        </li>
+      </ul>
+    </div>
+    
+    <script>
+    $(document).ready(function() {
+		$(".input_search_device").on('change keyup paste', function() {
+			form = $(this).parent();
+			form.ajaxSubmit( { success: function(data) { $(".q-devices").html(data); } } );
+		});
+	});
+	</script>
+    
+{% endblock %}

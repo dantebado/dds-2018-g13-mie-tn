@@ -116,8 +116,6 @@ public class DeviceInfo {
 	}
 	
 	public void addDevice() {
-		DeviceInfoTable p =DeviceInfoTable.getInstance();
-		DeviceInfoTable.addDeviceInfo(this);
 	}
 
 	public DeviceInfo(){

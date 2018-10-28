@@ -1,0 +1,9 @@
+{% for device in devices %}
+      <div class="row">
+        <div class="col">{{ device.name }}</div>
+        <div class="col smart-col">{% if device.isSmart %}SMART{% else %}STANDARD{% endif %}</div>
+        <div class="col text-right consumption-col"><i class="fas fa-bolt"></i>{% if device.isSmart %}{% if device.isOn or device.isEnergySaving %}{{ device.getHourlyConsumption }}{% else %}0.0{% endif %}{% else %}{{ device.getHourlyConsumption }}{% endif %}</div>
+        <div class="col text-right state-col"><i class="fas fa-info"></i>{% if device.isSmart %}{% if device.isOn %}Prendido{% elseif device.isOff %}Apagado{% else %}Energy Saving{% endif %}{% else %}Sin Data{% endif %}</div>
+        <div class="col text-right other-col">OTRA DATA</div>
+      </div>
+{% endfor %}
