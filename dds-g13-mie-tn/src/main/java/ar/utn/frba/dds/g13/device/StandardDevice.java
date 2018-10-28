@@ -12,31 +12,15 @@ import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 @DiscriminatorValue("STANDARD")
 public class StandardDevice extends Device {
 	
-	@Column(name="dailyUseEstimation")
-	BigDecimal dailyUseEstimation;
-
 	public StandardDevice(){
 		super();
 	}
 	
 	public StandardDevice(String name,
-			DeviceInfo info,
-			BigDecimal dailyUseEstimation) {
+			DeviceInfo info) {
 		super(name, info);
-		this.dailyUseEstimation = dailyUseEstimation;
 	}
 	
-	
-	public void setDailyUseEstimation(BigDecimal dailyUseEstimation) {
-		this.dailyUseEstimation = dailyUseEstimation;
-	}
-
-
-	public BigDecimal getDailyUseEstimation() {
-		return dailyUseEstimation;
-	}
-
-
 	@Override
 	public boolean isSmart() {
 		return false;

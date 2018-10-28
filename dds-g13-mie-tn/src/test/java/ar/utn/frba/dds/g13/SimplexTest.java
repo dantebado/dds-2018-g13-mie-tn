@@ -25,16 +25,16 @@ public class SimplexTest extends TestCase {
 	
 	public void testSistemaCompatibleDeterminado() {
 		
-		DeviceInfo AireI = new DeviceInfo("AireAcondicionado3500", "De 3500 frigorias", true, false, 1.613, 90, 360);
-		DeviceInfo PcI =new DeviceInfo("PC", "De escritorio", true, true, 0.4, 60, 360);
-		DeviceInfo MicroI =new DeviceInfo("Microondas", "Convencional", false, true, 0.64, 3, 15);
+		DeviceInfo AireI = new DeviceInfo("AireAcondicionado3500", "De 3500 frigorias", true, false, 1.613, 90, 360, 2);
+		DeviceInfo PcI =new DeviceInfo("PC", "De escritorio", true, true, 0.4, 60, 360, 2);
+		DeviceInfo MicroI =new DeviceInfo("Microondas", "Convencional", false, true, 0.64, 3, 15, 10);
 		DeviceInfoTable.getInstance();
 		DeviceInfoTable.addDeviceInfo(AireI);
 		DeviceInfoTable.addDeviceInfo(PcI);
 		DeviceInfoTable.addDeviceInfo(MicroI);
 		SmartDevice Aire = new SmartDevice("AireAcondicionado3500", AireI, null, null);
 		SmartDevice Pc = new SmartDevice("PC", PcI, null, null);
-		StandardDevice Micro = new StandardDevice("Microondas", MicroI, new BigDecimal(10));
+		StandardDevice Micro = new StandardDevice("Microondas", MicroI);
 		//Residence CasaPrueba = new Residence("callefalsa123", new ArrayList<Device>());
 		//Residence.addDevice(Aire);
 		//Residence.addDevice(Pc);

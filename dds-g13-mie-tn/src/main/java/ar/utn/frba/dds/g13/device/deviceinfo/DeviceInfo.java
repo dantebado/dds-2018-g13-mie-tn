@@ -36,7 +36,20 @@ public class DeviceInfo {
 	@Column(name="maxHsUse")
 	int maxHsUse;
 	
+	@Column(name="dailyEstimate")
+	double dailyEstimate;	
 	
+	
+	public double getDailyEstimate() {
+		return dailyEstimate;
+	}
+
+
+	public void setDailyEstimate(double dailyEstimate) {
+		this.dailyEstimate = dailyEstimate;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -114,15 +127,12 @@ public class DeviceInfo {
 	public void setConsumption(double consumption) {
 		this.consumption = consumption;
 	}
-	
-	public void addDevice() {
-	}
 
 	public DeviceInfo(){
 		super();
 	}
 	
-	public DeviceInfo(String name, String desc, boolean inteligente, boolean bajoConsumo, double consumption,int minHsUse,int maxHsUse) {
+	public DeviceInfo(String name, String desc, boolean inteligente, boolean bajoConsumo, double consumption,int minHsUse,int maxHsUse,double dailyEstimate) {
 		super();
 		this.name = name;
 		this.desc = desc;
@@ -131,7 +141,7 @@ public class DeviceInfo {
 		this.consumption = consumption;
 		this.minHsUse = minHsUse;
 		this.maxHsUse = maxHsUse;
-		this.addDevice();
+		this.dailyEstimate = dailyEstimate;
 	}
 
 }

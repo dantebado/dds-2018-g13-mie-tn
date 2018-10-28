@@ -20,7 +20,7 @@ import ar.utn.frba.dds.g13.device.states.DeviceOn;
 public class App {
     public static void main( String[] args ) {
     	
-    	DeviceInfoTable.addDeviceInfo(new DeviceInfo("Aire Acondicionado", "Aire Acondicionado", true, true, 25, 0, 0));
+    	DeviceInfoTable.addDeviceInfo(new DeviceInfo("Aire Acondicionado", "Aire Acondicionado", true, true, 25, 0, 0, 0));
     	
     	SmartDevice device = new SmartDevice("Aire Acondicionado", DeviceInfoTable.getDeviceByName("Aire Acondicionado"),
     			new ArrayList<TimeIntervalDevice>(), new DeviceOn());

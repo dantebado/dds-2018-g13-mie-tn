@@ -35,8 +35,8 @@ public class SparkApp {
 	}
 
 	public static void main(String[] args) {
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("PC", "PC", true, true, 2, 4, 6));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV", "TV", true, true, 2, 4, 6));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("PC", "PC", true, true, 2, 4, 6, 2));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV", "TV", true, true, 2, 4, 6, 2));
 		
 		Calendar calendarDate = Calendar.getInstance(
 				  TimeZone.getTimeZone("UTC"));
@@ -235,7 +235,7 @@ public class SparkApp {
 	        
 	        Device d = null;
 	        if(request.queryParams("device_smart") == null) {
-	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), new BigDecimal(1)); //TODO Last parameter
+	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")));
 	        } else {
 	        	List<TimeIntervalDevice> consumptionHistory = new ArrayList<TimeIntervalDevice>();
 	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOff());

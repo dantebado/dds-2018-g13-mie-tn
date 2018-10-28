@@ -53,7 +53,6 @@
         device_type varchar(31) not null,
         device_id bigint not null auto_increment,
         name varchar(255),
-        dailyUseEstimation decimal(19,2),
         residence_id int,
         deviceinfo_id bigint,
         primary key (device_id)
@@ -74,6 +73,7 @@
         maxHsUse integer,
         minHsUse integer,
         name varchar(255),
+        dailyEstimate double,
         primary key (deviceInfo_id)
     );
 

@@ -243,7 +243,7 @@ public class Residence extends BeanToJson {
 				}
 			}
 			else {
-				if ( Math.ceil(((StandardDevice) devices.get(i)).getDailyUseEstimation().doubleValue() *dayOfMonth *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
+				if ( Math.ceil(((StandardDevice) devices.get(i)).getDevice_info().getDailyEstimate() *dayOfMonth *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
 					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo" , devices.get(i).getName());
 				}
 				else{
