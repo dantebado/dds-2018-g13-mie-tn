@@ -1,0 +1,50 @@
+{% extends 'client_base.html.twig' %}
+
+{% block body %}
+	<div class="panel-content">
+    <div class="panel-box-title">
+      <div class="panel-box-title-gradient-line"></div>
+      <h2>Estado de mi Residencia</h2>
+      <h4 class="panel-info">Consulte información general de su residencia actualizada en tiempo real.</h4>
+    </div>
+    
+    {% if (has_residences) %}
+    
+        <div class="panel-data-recieved"> 
+          <ul class="list-group data-recieved">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col info-consumption"><i class="fas fa-bolt"></i> Consumo actual</div>
+                <div class="col text-right info-consumption">{{ display_residence.actualConsumption }}</div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col info-devices"><i class="fas fa-info"></i> Dispositivos totales</div>
+                <div class="col text-right info-devices">{{ display_residence.numberDevicesTotal }}</div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col info-devices-smart"><i class="fas fa-info"></i> Dispositivos smart</div>
+                <div class="col text-right info-devices-smart">{{ display_residence.numberSmartDevicesTotal }}</div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col info-devices-on"><i class="fas fa-info"></i> Dispositivos prendidos</div>
+                <div class="col text-right info-devices-on">{{ display_residence.numberDevicesOn }}</div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col info-devices-off"><i class="fas fa-info"></i> Dispositivos apagados</div>
+                <div class="col text-right info-devices-off">{{ display_residence.numberDevicesOff }}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+    {% else %}
+    {% endif %}
+
+{% endblock %}

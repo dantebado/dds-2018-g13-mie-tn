@@ -62,6 +62,12 @@ public abstract class User extends Logueable {
 		this.registrationDate = registrationDate;
 	}
 	
+	public boolean checkCredentials(String username, String password) {
+		System.out.println(this.getUsername() + " vs " + username);
+		System.out.println(this.getPassword() + " vs " + password);
+		return this.getUsername().equals(username) && this.getPassword().equals(password);
+	}
+	
 	public abstract boolean isAdmin();
 
 }

@@ -5,12 +5,19 @@ import java.math.BigDecimal;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.jtwig.*;
 
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.Device;
+import ar.utn.frba.dds.g13.device.SmartDevice;
+import ar.utn.frba.dds.g13.device.StateHistory;
+import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
+import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
+import ar.utn.frba.dds.g13.device.states.DeviceOn;
 import ar.utn.frba.dds.g13.user.Client;
 import ar.utn.frba.dds.g13.user.Residence;
 import ar.utn.frba.dds.g13.user.User;
@@ -18,11 +25,51 @@ import spark.Request;
 
 public class SparkApp {
 	
+	public static Client client1;
+	
 	public static JtwigTemplate getTemplate(String filename) {
 		return JtwigTemplate.fileTemplate( Paths.get("src", "main", "resources", "templates", filename + ".twig").toFile() );
 	}
 
 	public static void main(String[] args) {
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("PC", "PC", true, true, 2, 4, 6));
+		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV", "TV", true, true, 2, 4, 6));
+		
+		Calendar calendarDate = Calendar.getInstance(
+				  TimeZone.getTimeZone("UTC"));
+		calendarDate.set(Calendar.YEAR, 2017);
+		calendarDate.set(Calendar.MONTH, 10);
+		calendarDate.set(Calendar.DAY_OF_MONTH, 15);
+		ArrayList<Residence> residences = new ArrayList<Residence>();
+		
+		Category category = new Category("Residencial", 200, 500, new BigDecimal(500), new BigDecimal(1.5));
+		
+		client1 = new Client("name", "pass",
+				"Juan Perez", "Balcarce 50", calendarDate,
+				"DNI", "20469755", "43687952",
+				category, 13,
+				residences);
+
+		ArrayList<Device> devices = new ArrayList<Device>();
+		Residence residence = new Residence("Segurola y Habana", devices, client1, null);
+		residence.setId(1l);
+		residences.add(residence);
+		
+		List<StateHistory> stateHistoryList = new ArrayList<StateHistory>();
+		List<StateHistory> stateHistoryListTwo = new ArrayList<StateHistory>();
+		List<TimeIntervalDevice> timeIntervalList = new ArrayList<TimeIntervalDevice>();
+		List<TimeIntervalDevice> timeIntervalListTwo = new ArrayList<TimeIntervalDevice>();
+		
+		SmartDevice smart_device = new SmartDevice("TV", DeviceInfoTable.getDeviceByName("TV"), timeIntervalList, new DeviceOn());
+		SmartDevice smart_device_two = new SmartDevice("PC", DeviceInfoTable.getDeviceByName("PC"), timeIntervalListTwo, new DeviceOn());
+		residence.addDevice(smart_device);
+		residence.addDevice(smart_device_two);
+		
+		
+		//DATA
+		ArrayList<User> users = new ArrayList<User>();
+		users.add(client1);
+		
 		staticFiles.location("/public/");
 		
 		get("/test_twig", (req, res) -> {
@@ -37,9 +84,12 @@ public class SparkApp {
 		
 		get("/test", (req, res) -> "Test successful");
 		
+		//WEBSITE
+		
 		get("/", (request, res) -> {
 	        JtwigTemplate template = getTemplate("map.html");
 	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "map");
 	        
 	        User user = loadUser(request);
 	        if(user == null) {
@@ -55,26 +105,17 @@ public class SparkApp {
 	        User user = loadUser(request);
 	        System.out.println("Login Attempt: " + request.queryParams("username"));
 	        //Check user credentials
-	        if(true) {
-	        	Calendar calendarDate = Calendar.getInstance(
-	  				  TimeZone.getTimeZone("UTC"));
-				calendarDate.set(Calendar.YEAR, 2017);
-				calendarDate.set(Calendar.MONTH, 10);
-				calendarDate.set(Calendar.DAY_OF_MONTH, 15);
-				ArrayList<Residence> residences = new ArrayList<Residence>();
-				
-				Client client = new Client("jperez", "aovsdyb",
-						"Juan Perez", "Balcarce 50", calendarDate,
-						"DNI", "20469755", "43687952",
-						null, 13,
-						residences);
-				
-				System.out.println("Setting user " + client.getUsername() + " in session " + request.session().id());
-	        	request.session().attribute("current_user", client);
-	        	response.redirect("/");
-	        } else {
-	        	response.redirect("/");
-	        }
+        	for(User u : users) {
+        		if(u.checkCredentials(request.queryParams("username"), request.queryParams("password"))) {
+        			System.out.println("Setting user " + u.getUsername() + " in session " + request.session().id());
+                	request.session().attribute("current_user", u);
+                	System.out.println("Login Successfull");
+                	response.redirect("/");
+                	return null;
+        		}
+        	}			
+        	System.out.println("Login Failed");
+        	response.redirect("/");
 	        return "";
 		});
 		
@@ -84,13 +125,45 @@ public class SparkApp {
         	return "";
 		});
 		
+		get("/client", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        JtwigTemplate template = getTemplate("client_home.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "client_home");
+	        model.with("client_section", "state");
+        	model.with("current_user", client);
+	        
+	        if(client.getResidences().size() == 0) {
+	        	//No residences to display
+	        	model.with("has_residences", false);
+	        } else {
+	        	model.with("has_residences", true);
+		        String rid = request.queryParamOrDefault("rid", client.getResidences().get(0).getId() + "");
+		        
+		        Residence r = null;
+		        for(Residence tr : client.getResidences()) {
+		        	if((tr.getId() + "").equals(rid)) {
+		        		r = tr;
+		        	}
+		        }
+		        
+		        model.with("rid", r.getId());
+		        model.with("display_residence", r);
+		        model.with("residences", client.getResidences());
+	        }
+	        
+	        return template.render(model);
+		});
+		
 	}
 	
 	private static User loadUser(Request request) {
 		request.session(true);
         if(request.session().isNew()) {
         	request.session().attribute("current_user", null);
+        	request.session().attribute("current_user", client1);
         } else {
+        	request.session().attribute("current_user", client1);
         	User user = request.session().attribute("current_user");
         	if(user == null) {
         		System.out.println(request.session().id() + " no está logueado");

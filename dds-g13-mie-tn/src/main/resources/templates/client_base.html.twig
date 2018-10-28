@@ -1,0 +1,27 @@
+{% extends 'full_base.html.twig' %}
+
+{% block subheader %}
+	<nav class="panel-nav">
+      <ul>      	
+        {% if (has_residences) %}
+            <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ display_residence.address }}</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            	{% for residence in residences %}
+              		<a class="dropdown-item" href="?rid={{ residence.id }}">{{ residence.address }}</a>
+            	{% endfor %}
+              
+              <a class="dropdown-item" href="#">Registrar Residencia</a>
+            </div>
+        {% else %}
+            <button type="button" class="btn btn-primary" id="" data-toggle="" aria-haspopup="true" aria-expanded="false">Registrar Residencia</button>
+        {% endif %}
+      </ul>
+      <ul>
+        <li><a {% if (client_section == "state") %}class="text-dark"{% endif %} href="/client?rid={{ rid }}">ESTADO</a></li>
+        <li><a {% if (client_section == "devices") %}class="text-dark"{% endif %} href="/client/residence/devices?rid={{ rid }}">DISPOSITIVOS</a></li>
+        <li><a {% if (client_section == "automation") %}class="text-dark"{% endif %} href="/client/residence/automation?rid={{ rid }}">AUTOMATIZAR</a></li>
+        <li><a {% if (client_section == "simplex") %}class="text-dark"{% endif %} href="/client/residence/simplex?rid={{ rid }}">SIMPLEX</a></li>
+        <li><a {% if (client_section == "timelines") %}class="text-dark"{% endif %} href="/client/residence/timelines?rid={{ rid }}">PERÍODOS</a></li>
+      </ul>
+    </nav>	
+{% endblock %}
