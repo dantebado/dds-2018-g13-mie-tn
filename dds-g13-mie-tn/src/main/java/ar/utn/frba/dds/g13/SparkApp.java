@@ -257,7 +257,7 @@ public class SparkApp {
 	        }
 	        
 	        Device d = null;
-	        if(request.queryParams("device_smart") == null) {
+	        if(DeviceInfoTable.getDeviceByName(request.queryParams("device_type")).isInteligente()) {
 	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")));
 	        } else {
 	        	List<TimeIntervalDevice> consumptionHistory = new ArrayList<TimeIntervalDevice>();
