@@ -1,0 +1,12 @@
+{% for sensor_req in requirements %}
+  <div class="form-group">
+    <small id="deviceTypeHelp" class="form-text text-muted">{{ sensor_req.sensor_type }}</small>
+    <br>
+    <select class="form-control form-input-b" aria-describedby="deviceTypeHelp" name="sensor_{{ rule.rule_name }}_{{ sensor_req.sensor_type }}">
+      <option value="-1" >Nuevo Sensor</option>
+      {% for available in sensor_req.availables %}
+      	<option value="{{ available.id }}" >Sensor {{ available.id }}</option>
+      {% endfor %}
+    </select>
+  </div>
+{% endfor %}

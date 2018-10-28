@@ -99,6 +99,16 @@ public class Residence extends BeanToJson {
 		this.devices = devices;
 	}
 
+	public List<SmartDevice> getSmartDevices() {
+		ArrayList<SmartDevice> l = new ArrayList<SmartDevice>();
+		for(Device d : this.getDevices()) {
+			if(d.isSmart()) {
+				l.add((SmartDevice) d);
+			}
+		}
+		return l;
+	}
+
 	public Client getClient() {
 		return client;
 	}

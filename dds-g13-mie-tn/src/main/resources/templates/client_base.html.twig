@@ -17,7 +17,7 @@
         {% endif %}
       </ul>
       <ul>
-        <li><a {% if (client_section == "state") %}class="text-dark"{% endif %} href="/client?rid={{ rid }}">ESTADO</a></li>
+        <li><a {% if (client_section == "state") %}class="text-dark"{% endif %} href="/client/residence?rid={{ rid }}">ESTADO</a></li>
         <li><a {% if (client_section == "devices") %}class="text-dark"{% endif %} href="/client/residence/devices?rid={{ rid }}">DISPOSITIVOS</a></li>
         <li><a {% if (client_section == "automation") %}class="text-dark"{% endif %} href="/client/residence/automation?rid={{ rid }}">AUTOMATIZAR</a></li>
         <li><a {% if (client_section == "simplex") %}class="text-dark"{% endif %} href="/client/residence/simplex?rid={{ rid }}">SIMPLEX</a></li>

@@ -1,0 +1,53 @@
+{% extends 'client_base.html.twig' %}
+
+{% block body %}
+	<div class="panel-box-title">
+      <div class="panel-box-title-gradient-line"></div>
+      <h2>Automatizar</h2>
+      <h4 class="panel-info">Podrás especificar reglas sobre tus dispositivos, y así poder
+        automatizar las decisiones sobre ellos. Puede agregar nuevas, como también eliminar
+        reglas ya configuradas.</h4>
+    </div>
+    <div class="panel-form">
+      <form method="post" action="/client/residence/automation/check/" id="form_rules">
+        <div class="form-group">
+        	<input type="hidden" name="rid" value="{{ rid }}"/>
+          <label for="inputDevice">Elegir dispositivo</label>
+          <br>
+          <select class="form-control form-input-b" aria-describedby="deviceTypeHelp" name="device">
+
+			{% for device in devices %}
+				<option value="{{ device.id }}">{{ device.name }}</option>
+			{% endfor %}
+
+          </select>
+          <small id="deviceTypeHelp" class="form-text text-muted">Dispositivo al cual quieres automatizar con reglas</small>
+        </div>
+        <label for="inputDevice">Reglas a aplicar</label>
+        
+        {% for rule in available_rules %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="{{ rule }}" name="{{ rule }}">
+              <label class="form-check-label" for="{{ rule }}">{{ rule }}</label>
+            </div>
+        {% endfor %}
+        
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6 text-right">
+           <a href="javascript:;"><button type="button" class="btn btn-primary btn-load btn-check-rules">Chequear acciones</button></a>
+         </div>
+         
+         <script>
+			$(document).ready(function() {
+				$(".btn-check-rules").click(function() {
+					$("#form_rules").submit();
+				});
+			});
+         </script>
+         
+        </div>
+      </form>
+    </div>
+{% endblock %}

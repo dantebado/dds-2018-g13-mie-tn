@@ -16,8 +16,16 @@ import ar.utn.frba.dds.g13.device.SmartDevice;
 import ar.utn.frba.dds.g13.device.StandardDevice;
 import ar.utn.frba.dds.g13.device.StateHistory;
 import ar.utn.frba.dds.g13.device.TimeIntervalDevice;
+import ar.utn.frba.dds.g13.device.automation.Actuator;
+import ar.utn.frba.dds.g13.device.automation.rules.AutomationRequirement;
+import ar.utn.frba.dds.g13.device.automation.rules.AutomationRule;
+import ar.utn.frba.dds.g13.device.automation.rules.SensorRequirement;
+import ar.utn.frba.dds.g13.device.automation.rules.TurnEnergySavingRule;
+import ar.utn.frba.dds.g13.device.automation.rules.TurnOffWhenCold;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
+import ar.utn.frba.dds.g13.device.sensor.Sensor;
+import ar.utn.frba.dds.g13.device.sensor.TemperatureSensor;
 import ar.utn.frba.dds.g13.device.states.DeviceEnergySaving;
 import ar.utn.frba.dds.g13.device.states.DeviceOff;
 import ar.utn.frba.dds.g13.device.states.DeviceOn;
@@ -75,6 +83,7 @@ public class SparkApp {
 				"DNI", "20469755", "43687952",
 				category, 13,
 				residences);
+		client1.setId(1l);
 
 		ArrayList<Device> devices = new ArrayList<Device>();
 		Residence residence = new Residence("Segurola y Habana", devices, client1, null);
@@ -87,9 +96,17 @@ public class SparkApp {
 		List<TimeIntervalDevice> timeIntervalListTwo = new ArrayList<TimeIntervalDevice>();
 		
 		SmartDevice smart_device = new SmartDevice("TV", DeviceInfoTable.getDeviceByName("TV"), timeIntervalList, new DeviceOn());
+		smart_device.setId(1l);
 		SmartDevice smart_device_two = new SmartDevice("PC", DeviceInfoTable.getDeviceByName("PC"), timeIntervalListTwo, new DeviceEnergySaving());
+		smart_device_two.setId(2l);
 		residence.addDevice(smart_device);
 		residence.addDevice(smart_device_two);
+		
+		ArrayList<Sensor> sensors = new ArrayList<Sensor>();
+		sensors.add(new TemperatureSensor(5, smart_device));
+		sensors.get(0).setId(1l);
+		
+		Actuator act = new Actuator(smart_device, new ArrayList<AutomationRule>(), sensors);
 		
 		
 		//DATA
@@ -129,18 +146,14 @@ public class SparkApp {
 		
 		post("/login_pst", (request, response) -> {
 	        User user = loadUser(request);
-	        System.out.println("Login Attempt: " + request.queryParams("username"));
 	        //Check user credentials
         	for(User u : users) {
         		if(u.checkCredentials(request.queryParams("username"), request.queryParams("password"))) {
-        			System.out.println("Setting user " + u.getUsername() + " in session " + request.session().id());
                 	request.session().attribute("current_user", u);
-                	System.out.println("Login Successfull");
                 	response.redirect("/");
                 	return null;
         		}
-        	}			
-        	System.out.println("Login Failed");
+        	}
         	response.redirect("/");
 	        return "";
 		});
@@ -152,6 +165,11 @@ public class SparkApp {
 		});
 		
 		get("/client", (request, response) -> {
+        	response.redirect("/client/residence");
+        	return "";
+		});
+		
+		get("/client/residence", (request, response) -> {
 	        Client client = (Client) loadUser(request);
 	        JtwigTemplate template = getTemplate("client_home.html");
 	        JtwigModel model = JtwigModel.newModel();
@@ -233,8 +251,6 @@ public class SparkApp {
 		        	}
 		        }
 		        
-		        System.out.println(DeviceInfoTable.getDevicesInfos().size());
-		        
 		        model.with("rid", r.getId());
 		        model.with("display_residence", r);
 		        model.with("residences", client.getResidences());
@@ -267,6 +283,165 @@ public class SparkApp {
 
         	response.redirect("/");
 	        return null;
+		});
+		
+		get("/client/residence/automation", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        JtwigTemplate template = getTemplate("client_automation.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "client_home");
+	        model.with("client_section", "automation");
+        	model.with("current_user", client);
+	        
+	        if(client.getResidences().size() == 0) {
+	        	//No residences to display
+	        	model.with("has_residences", false);
+	        } else {
+	        	model.with("has_residences", true);
+		        String rid = request.queryParamOrDefault("rid", client.getResidences().get(0).getId() + "");
+		        
+		        Residence r = null;
+		        for(Residence tr : client.getResidences()) {
+		        	if((tr.getId() + "").equals(rid)) {
+		        		r = tr;
+		        	}
+		        }
+		        
+		        model.with("available_rules", AutomationRule.rules_names);
+		        model.with("devices", r.getSmartDevices());
+		        model.with("rid", r.getId());
+		        model.with("display_residence", r);
+		        model.with("residences", client.getResidences());
+	        }
+	        
+	        return template.render(model);
+		});
+		
+		post("/client/residence/automation/check/", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        JtwigTemplate template = getTemplate("client_automation_check.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "client_home");
+	        model.with("client_section", "automation");
+        	model.with("current_user", client);
+	        
+	        String rid = request.queryParamOrDefault("rid", client.getResidences().get(0).getId() + "");	        
+	        Residence r = null;
+	        for(Residence tr : client.getResidences()) {
+	        	if((tr.getId() + "").equals(rid)) {
+	        		r = tr;
+	        	}
+	        }
+	        String did = request.queryParams("device");
+	        SmartDevice d = null;
+	        for(SmartDevice td : r.getSmartDevices()) {
+	        	if((td.getId() + "").equals(did)) {
+	        		d = td;
+	        	}
+	        }
+	        
+	        ArrayList<Integer> r_indexes = new ArrayList<Integer>();
+	        ArrayList<AutomationRequirement> to_fullfill = new ArrayList<AutomationRequirement>();
+	        ArrayList<Sensor> userSensors = client.getSensorCollection();
+	        for(String s : AutomationRule.rules_names) {
+	        	if(request.queryParams(s) != null) {
+	        		ArrayList<SensorRequirement> requirements = new ArrayList<SensorRequirement>();
+	        		AutomationRequirement requirement = new AutomationRequirement(s, requirements);
+	        		r_indexes.add(AutomationRule.getRuleIndexByName(s));
+	        		
+	        		int[] required = AutomationRule.getRequiredSensorsByType(s);
+	        		
+    				for(int i : required) {
+    					ArrayList<Sensor> availables = new ArrayList<Sensor>();
+    					String sensor_type = Sensor.types[i];
+    					
+    					for(Sensor ts : userSensors) {
+    						if(ts.getClass() == Sensor.searchClassByType(i)) {
+    							availables.add(ts);
+    						}
+    					}
+    					
+    					requirements.add(new SensorRequirement(sensor_type, availables));
+    				}
+	        		to_fullfill.add(requirement);
+	        	}
+	        }
+	        
+	        String indexes_str = "";
+	        int c = 0;
+	        for(c=0 ; c<r_indexes.size() ; c++) {
+	        	indexes_str += r_indexes.get(c);
+	        	if(c != (r_indexes.size()-1)) {
+	        		indexes_str += ";";
+	        	}
+	        }
+	        		
+	        model.with("rules_indexes", indexes_str);
+	        model.with("rules", to_fullfill);
+	        model.with("rid", r.getId());
+	        model.with("device", d);
+	        model.with("display_residence", r);
+	        model.with("residences", client.getResidences());
+	        
+	        return template.render(model);
+		});
+		
+		
+		post("/client/residence/automation/finish_pipeline/", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        
+	        String rid = request.queryParamOrDefault("rid", client.getResidences().get(0).getId() + "");	        
+	        Residence r = null;
+	        for(Residence tr : client.getResidences()) {
+	        	if((tr.getId() + "").equals(rid)) {
+	        		r = tr;
+	        	}
+	        }
+	        String did = request.queryParams("device");
+	        SmartDevice d = null;
+	        for(SmartDevice td : r.getSmartDevices()) {
+	        	if((td.getId() + "").equals(did)) {
+	        		d = td;
+	        	}
+	        }
+	        
+	        System.out.println("CREANDO REGLAS SOBRE " + d.getName());
+
+	        String indexes = request.queryParams("rules_indexes");
+	        String[] indexes_spl = indexes.split(";");
+	        ArrayList<Sensor> userSensors = client.getSensorCollection();
+	        for(String str : indexes_spl) {
+	        	ArrayList<AutomationRule> a_rules = new ArrayList<AutomationRule>();
+	        	ArrayList<Sensor> a_sensors = new ArrayList<Sensor>();
+	        	int tindex = Integer.parseInt(str);
+	        	
+	        	System.out.println("     REGLA " + AutomationRule.rules_names[tindex]);
+
+        		int[] required = AutomationRule.getRequiredSensorsByType(AutomationRule.rules_names[tindex]);
+        		for(int q : required) {
+        			
+        			System.out.println("          REQUIRE SENSOR " + Sensor.types[q]);
+        			
+        			String input_name = "sensor_" + AutomationRule.rules_names[tindex] + "_" + Sensor.types[q];
+        			long value = Long.parseLong(request.queryParams(input_name));
+        			if(value == -1) {
+        				System.out.println("               CREO UNO NUEVO");
+        				a_sensors.add(Sensor.createByType(q, 5, d));	//INTERVALO
+        			} else {
+        				for(Sensor s : userSensors) {
+        					if(s.getId() == value) {
+        						a_sensors.add(s);
+        						System.out.println("               UTILIZO EL EXISTENTE " + s.getId());
+        					}
+        				}
+        			}
+        		}
+
+		        Actuator n_act = new Actuator(d, a_rules, a_sensors);
+	        }
+	        
+        	response.redirect("/client/residence?rid=" + rid);
+	        return "";
 		});
 		
 		
@@ -309,6 +484,7 @@ public class SparkApp {
         if(request.session().isNew()) {
         	request.session().attribute("current_user", null);
         	request.session().attribute("current_user", client1);
+        	return client1;
         } else {
         	request.session().attribute("current_user", client1);
         	User user = request.session().attribute("current_user");
@@ -319,7 +495,7 @@ public class SparkApp {
         	}
         	return user;
         }
-        return null;
+        //return null;
 	}
 
 }

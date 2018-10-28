@@ -1,0 +1,51 @@
+{% extends 'client_base.html.twig' %}
+
+{% block body %}
+	<div class="panel-box-title">
+      <div class="panel-box-title-gradient-line"></div>
+      <h2>Automatizaciones aceptadas ({{ device.name }})</h2>
+      <h4 class="panel-info">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Cras eu elit ut massa maximus commodo. In diam ligula, sodales sollicitudin erat non,
+         consectetur ultrices lacus. Pellentesque mollis tincidunt nibh, et finibus mauris iaculis et. </h4>
+    </div>
+    <form id="form_rules" action="/client/residence/automation/finish_pipeline/" method="post">
+    <div class="panel-data-recieved">
+      <ul class="list-group data-recieved">
+      	<input type="hidden" name="rid" value="{{ rid }}"/>
+      	<input type="hidden" name="device" value="{{ device.id }}"/>
+      	<input type="hidden" name="rules_indexes" value="{{ rules_indexes }}"/>
+      	{% for rule in rules %}
+          	<li class="list-group-item remove-device">
+              <div class="row">
+                <div class="col">{{ rule.rule_name }}</div>
+                <div class="col smart-col text-right">REGLA ACEPTADA</div>
+              </div>
+              <br>
+
+					{% set requirements = rule.requirements %}
+					{% include 'util_render_rule_requirements.html.twig' %}
+              
+            </li>
+      	{% endfor %}      
+        
+      </ul>
+      <div class="row">
+        <div class="col-md-6">
+          <a href="reglas.html"><button type="button" class="btn btn-secondary btn-load">Cancelar</button></a>
+        </div>
+        <div class="col-md-6 text-right">
+         <a href="javascript:;"><button type="button" class="btn btn-primary btn-load btn-confirm-sensors">Confirmar sensores</button></a>
+       </div>
+         
+         <script>
+			$(document).ready(function() {
+				$(".btn-confirm-sensors").click(function() {
+					$("#form_rules").submit();
+				});
+			});
+         </script>
+         
+      </div>
+    </div>
+    </form>
+{% endblock %}

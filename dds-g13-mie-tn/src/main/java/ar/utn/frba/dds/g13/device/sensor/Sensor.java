@@ -32,6 +32,30 @@ import ar.utn.frba.dds.g13.device.automation.rules.AutomationRule;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="sensor_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Sensor extends Thread {
+
+	@Transient
+	public static String[] types = {"Estado de Dispositivo",	//0
+									"Temperatura"};				//1
+	
+	public static Class searchClassByType(int type) {
+		switch(type) {
+		case 0:
+			return DeviceStateSensor.class;
+		case 1:
+			return TemperatureSensor.class;
+		}
+		return null;
+	}
+	
+	public static Sensor createByType(int type, float intervalInSeconds, SmartDevice device) {
+		switch(type) {
+		case 0:
+			return new DeviceStateSensor(intervalInSeconds, device);
+		case 1:
+			return new TemperatureSensor(intervalInSeconds, device);
+		}
+		return null;
+	}
 	
 	@Transient
 	Measure lastMeasure = null;

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 import ar.utn.frba.dds.g13.device.automation.AutomationTurnOff;
 import ar.utn.frba.dds.g13.device.automation.DeviceAction;
@@ -15,6 +16,9 @@ import ar.utn.frba.dds.g13.device.sensor.MeasureMagnitude;
 @Entity
 @DiscriminatorValue("TURNOFFWHENCOLD")
 public class TurnOffWhenCold extends AutomationRule {
+
+	@Transient
+	public static int[] required_sensors = {1};
 
 	@Override
 	protected List<DeviceAction> getActionsToExecute(List<Measure> measures) {

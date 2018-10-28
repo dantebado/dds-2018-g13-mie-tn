@@ -29,6 +29,8 @@ import ar.utn.frba.dds.g13.device.sensor.Sensor;
 @Table(name = "Actuator")
 
 public class Actuator {
+	@Transient
+	public static ArrayList<Actuator> GLOBAL_ACTUATORS = new ArrayList<Actuator>();
 	
 	@Id								
 	@GeneratedValue
@@ -86,6 +88,7 @@ public class Actuator {
 
 	public Actuator(){
 		super();
+		Actuator.GLOBAL_ACTUATORS.add(this);
 	}
 	
 	public Actuator(SmartDevice device, List<AutomationRule> rules, List<Sensor> sensors) {
@@ -98,6 +101,7 @@ public class Actuator {
 		for(AutomationRule rule : rules) {
 			rule.setActuator(this);
 		}
+		Actuator.GLOBAL_ACTUATORS.add(this);
 	}
 	
 	public void notifySensorChange() {

@@ -1,5 +1,6 @@
 package ar.utn.frba.dds.g13.user;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,8 @@ import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.Device;
+import ar.utn.frba.dds.g13.device.automation.Actuator;
+import ar.utn.frba.dds.g13.device.sensor.Sensor;
 
 @Entity
 @Table(name = "Client")
@@ -103,6 +106,16 @@ public class Client extends User {
 	
 	public void setResidences(List<Residence> residences) {
 		this.residences = residences;
+	}
+	
+	public ArrayList<Sensor> getSensorCollection() {
+		ArrayList<Sensor> ss = new ArrayList<Sensor>();
+		for(Actuator a : Actuator.GLOBAL_ACTUATORS) {
+			if(a.getDevice().getResidence().getClient().getId() == this.getId()) {
+				ss.addAll(a.getSensors());
+			}
+		}
+		return ss;
 	}
 
 	public Client() {
