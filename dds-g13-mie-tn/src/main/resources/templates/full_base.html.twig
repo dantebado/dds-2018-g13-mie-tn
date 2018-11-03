@@ -18,7 +18,7 @@
 			{% if (current_user != -1) %}
 			    {% if (current_user.isAdmin) %}	
         			<li class="nav-item{% if (menu_section == "admin_home") %} active{% endif %}">
-        				<a class="nav-link" href="admin-dispositivos.html">Panel admin</a>
+        				<a class="nav-link" href="/admin/devices">Panel admin</a>
         			</li>
     		    {% else %}
         			<li class="nav-item{% if (menu_section == "client_home") %} active{% endif %}">

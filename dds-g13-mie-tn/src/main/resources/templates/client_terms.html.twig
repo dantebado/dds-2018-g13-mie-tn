@@ -1,0 +1,44 @@
+{% extends 'client_base.html.twig' %}
+
+{% block body %}
+	<div class="panel-box-title">
+      <div class="panel-box-title-gradient-line"></div>
+      <h2>Consulta de período</h2>
+      <h4 class="panel-info">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Cras eu elit ut massa maximus commodo. In diam ligula, sodales sollicitudin erat non,
+         consectetur ultrices lacus. Pellentesque mollis tincidunt nibh, et finibus mauris iaculis et. </h4>
+         <div class="row">
+         <form id="timeline_parameters" action="/ajax_utils/" method="POST">
+         <input type="hidden" name="rid" value="{{ rid }}" />
+         <input type="hidden" name="ajax_utility" value="query_residence_terms" />
+         <div class="col-md-8 datepickerbox">
+              <label class="info-datepicker">INICIO</label> <input type="date" name="start" max="3000-12-31" min="1000-01-01" class="form-control daypicker">
+              <label class="info-datepicker">FIN</label> <input type="date" name="end" max="3000-12-31" min="1000-01-01" class="form-control daypicker">
+          </div>
+         <div class="col-4 text-right">
+          <button type="button" class="btn btn-primary btn-load" id="form_timeline_sumbit">Consultar</button>
+        </div>
+      	</div>
+      	</form>
+      </div>
+
+    </div>
+    <div class="panel-data-recieved">
+      <ul class="list-group data-recieved">
+        <li class="list-group-item remove-device">
+          <div class="row" id="timeline_result">
+          	<p>Realizá una consulta arriba</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <script>
+    $(document).ready(function() {
+		$("#form_timeline_sumbit").on('click', function() {
+			form = $("#timeline_parameters");
+			form.ajaxSubmit( { success: function(data) { $("#timeline_result").html(data); } } );
+		});
+	});
+	</script>
+{% endblock %}

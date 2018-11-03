@@ -636,7 +636,7 @@ public class PersistenceTest {
 		client.setResidences(residences);
 		clientTwo.setResidences(residencesTwo);
 		
-		Transformer transformer = new Transformer(new Point(30, 70), area, areaResidences);
+		Transformer transformer = new Transformer(new Point(30, 70), area);
 		
 		transformers.add(transformer);
 		area.setTransformers(transformers);

@@ -1,0 +1,43 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+	<div class="panel-box-title">
+      <div class="panel-admin-box-title-gradient-line"></div>
+      <h2>Dispositivos</h2>
+      <h4 class="panel-info">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Cras eu elit ut massa maximus commodo. In diam ligula, sodales sollicitudin erat non,
+         consectetur ultrices lacus. Pellentesque mollis tincidunt nibh, et finibus mauris iaculis et. </h4>
+         <div class="row">
+         <div class="col-md-6">
+             <form action="/ajax_utils/" method="POST" id="form_search_infos">
+             	<input name="ajax_utility" type="hidden" value="search_device_info" />
+               <div class="map-search-bar panel-search ">
+                 <img class="search-ico" src="/search-ico.svg">
+                 <input type=search placeholder="Buscar dispositivo ..." onfocus="this.placeholder = ''"
+               onblur="this.placeholder = 'Buscar dispositivo ...'" name="q" class="input_info">
+                </div>
+            </form>
+         </div>
+         <div class="col-md-6 text-right">
+          <a href="admin-cargar-disp.html" ><button type="button" class="btn btn-primary btn-load"><i class="fas fa-plus"></i> Cargar Dispositivo</button></a>
+        </div>
+      </div>
+    </div>
+    <div class="panel-data-recieved">
+      <ul class="list-group data-recieved">
+        <li class="list-group-item remove-device" id="infos_result">
+         {% include 'util_render_devicesinfo_list.html.twig' %}
+        </li>
+      </ul>
+    </div>
+    
+    <script>
+    $(document).ready(function() {
+		$(".input_info").on('change keyup paste', function() {
+			form = $("#form_search_infos");
+			form.ajaxSubmit( { success: function(data) { $("#infos_result").html(data); } } );
+		});
+	});
+	</script>
+	
+{% endblock %}

@@ -1,0 +1,12 @@
+<p>SMART</p>
+<div class="row">
+    <div class="col period-col"><b>INICIO:</b> {{ start }}</div>
+    <div class="col period-col"><b>FIN:</b> {{ end }}</div>
+    <div class="col text-right info-consumption"><i class="fas fa-bolt"></i> {{ consumption_smart|number_format }}</div>
+</div>
+<p>STANDARD</p>
+<div class="row">
+    <div class="col period-col"><b>INICIO:</b> {{ start }}</div>
+    <div class="col period-col"><b>FIN:</b> {{ end }}</div>
+    <div class="col text-right info-consumption"><i class="fas fa-bolt"></i> {{ consumption_standard|number_format }}</div>
+</div>

@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col period-col"><b>INICIO:</b> {{ start }}</div>
+    <div class="col period-col"><b>FIN:</b> {{ end }}</div>
+</div>
+{% for transformer in transformers %}
+	<div class="row">
+        <div class="col period-col"><b>#{{ transformer.id }}</div>
+        <div class="col text-right info-consumption"><i class="fas fa-bolt"></i> {{ transformer.energySuppliedBetween(start_obj, end_obj)|number_format }}</div>
+    </div>
+{% endfor %}

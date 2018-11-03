@@ -90,7 +90,7 @@ public class Transformer extends BeanToJson{
 		super();
 	}
     
-    public Transformer(Point coordinate, Area area, List<Residence> residences) {
+    public Transformer(Point coordinate, Area area) {
         this.setCoordinate(coordinate);
         this.area = area;
     }
@@ -111,6 +111,14 @@ public class Transformer extends BeanToJson{
             counter = counter + 1;
         }
         return totalConsumption.divide(new BigDecimal(counter));
+    }
+    
+    public BigDecimal energySuppliedBetween(Calendar start, Calendar end) {
+        BigDecimal totalConsumption = new BigDecimal(0);
+        for(Residence residence : getResidences()) {
+            totalConsumption = totalConsumption.add(residence.consumptionBetween(start, end));
+        }
+        return totalConsumption;
     }
 
 	@Override

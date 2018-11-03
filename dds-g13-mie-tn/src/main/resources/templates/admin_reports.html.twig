@@ -1,0 +1,56 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+	<div class="panel-box-title">
+      <div class="panel-admin-box-title-gradient-line"></div>
+      <h2>Consultar reportes</h2>
+      <h4 class="panel-info">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Cras eu elit ut massa maximus commodo. In diam ligula, sodales sollicitudin erat non,
+         consectetur ultrices lacus. Pellentesque mollis tincidunt nibh, et finibus mauris iaculis et. </h4>
+      </div>
+    </div>
+    <div class="panel-form">
+      <form id="form_admin_reports" method="POST" action="/ajax_utils/">
+      	<input type="hidden" name="ajax_utility" value="admin_report" />
+        <div class="form-group">
+          <label for="inputDevice">Tipo de reporte</label>
+          <br>
+          <select class="form-control form-input-b" aria-describedby="deviceTypeHelp" name="report_type">
+            <option value="devices" selected >Reporte de dispositivos</option>
+            <option value="residences"  >Reporte de residencias</option>
+            <option value="transformers"  >Reporte de transformadores</option>
+          </select>
+        </div>
+        <label>Período a consultar</label>
+        <div class="col-md-8 datepickerbox">
+             <label class="info-datepicker">INICIO</label> <input type="date" name="start" max="3000-12-31" min="1000-01-01" class="form-control daypicker">
+
+             <label class="info-datepicker">FIN</label> <input type="date" name="end" max="3000-12-31" min="1000-01-01" class="form-control daypicker">
+         </div>
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6 text-right">
+           <button type="button" class="btn btn-primary btn-load" id="form_report_submit">Consultar</button>
+         </div>
+        </div>
+      </form>
+    </div>
+    <div class="panel-data-recieved">
+      <ul class="list-group data-recieved">
+        <li class="list-group-item remove-device">
+          <div class="" id="report_result">
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <script>
+    $(document).ready(function() {
+		$("#form_report_submit").on('click', function() {
+			form = $("#form_admin_reports");
+			form.ajaxSubmit( { success: function(data) { $("#report_result").html(data); } } );
+		});
+	});
+	</script>
+{% endblock %}

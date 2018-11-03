@@ -1,15 +1,18 @@
 package ar.utn.frba.dds.g13;
 import static spark.Spark.*;
 
+import java.awt.Point;
 import java.math.BigDecimal;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.TimeZone;
 
 import org.jtwig.*;
 
+import ar.utn.frba.dds.g13.area.Area;
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
@@ -29,6 +32,8 @@ import ar.utn.frba.dds.g13.device.sensor.TemperatureSensor;
 import ar.utn.frba.dds.g13.device.states.DeviceEnergySaving;
 import ar.utn.frba.dds.g13.device.states.DeviceOff;
 import ar.utn.frba.dds.g13.device.states.DeviceOn;
+import ar.utn.frba.dds.g13.transformer.Transformer;
+import ar.utn.frba.dds.g13.user.Administrator;
 import ar.utn.frba.dds.g13.user.Client;
 import ar.utn.frba.dds.g13.user.Residence;
 import ar.utn.frba.dds.g13.user.User;
@@ -37,6 +42,7 @@ import spark.Request;
 public class SparkApp {
 	
 	public static Client client1;
+	public static Administrator admin1;
 	
 	public static JtwigTemplate getTemplate(String filename) {
 		return JtwigTemplate.fileTemplate( Paths.get("src", "main", "resources", "templates", filename + ".twig").toFile() );
@@ -68,6 +74,8 @@ public class SparkApp {
 		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Microondas Convencional", "Microondas Convencional", false, true, 0.64, 0, 0, 0));
 		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Plancha A Vapor", "Plancha A Vapor", false, true, 0.75, 0, 0, 0));
 		
+		admin1 = new Administrator("admin", "admin", "Admin Admin", "Calle Falsa 1415", null);
+		
 		
 		Calendar calendarDate = Calendar.getInstance(
 				  TimeZone.getTimeZone("UTC"));
@@ -75,6 +83,8 @@ public class SparkApp {
 		calendarDate.set(Calendar.MONTH, 10);
 		calendarDate.set(Calendar.DAY_OF_MONTH, 15);
 		ArrayList<Residence> residences = new ArrayList<Residence>();
+		
+		Area area1 = new Area("Villa del Parque", (float) 4.5, null, new Point(3, 3), null);
 		
 		Category category = new Category("Residencial", 200, 500, new BigDecimal(500), new BigDecimal(1.5));
 		
@@ -86,18 +96,25 @@ public class SparkApp {
 		client1.setId(1l);
 
 		ArrayList<Device> devices = new ArrayList<Device>();
-		Residence residence = new Residence("Segurola y Habana", devices, client1, null);
+		Residence residence = new Residence("Segurola y Habana", devices, client1, area1);
 		residence.setId(1l);
 		residences.add(residence);
+		
+		area1.setResidences(residences);
+		Transformer t = new Transformer(new Point(3, 3), area1);
+		t.setId(1l);
+		ArrayList<Transformer> transformers = new ArrayList<Transformer>();
+		transformers.add(t);
+		area1.setTransformers(transformers);
 		
 		List<StateHistory> stateHistoryList = new ArrayList<StateHistory>();
 		List<StateHistory> stateHistoryListTwo = new ArrayList<StateHistory>();
 		List<TimeIntervalDevice> timeIntervalList = new ArrayList<TimeIntervalDevice>();
 		List<TimeIntervalDevice> timeIntervalListTwo = new ArrayList<TimeIntervalDevice>();
 		
-		SmartDevice smart_device = new SmartDevice("TV", DeviceInfoTable.getDeviceByName("TV"), timeIntervalList, new DeviceOn());
+		SmartDevice smart_device = new SmartDevice("La tele de la abuela", DeviceInfoTable.getDeviceByName("TV Tubo 21inch"), timeIntervalList, new DeviceOn());
 		smart_device.setId(1l);
-		SmartDevice smart_device_two = new SmartDevice("PC", DeviceInfoTable.getDeviceByName("PC"), timeIntervalListTwo, new DeviceEnergySaving());
+		SmartDevice smart_device_two = new SmartDevice("PC SUPER GAMER", DeviceInfoTable.getDeviceByName("PC Escritorio"), timeIntervalListTwo, new DeviceEnergySaving());
 		smart_device_two.setId(2l);
 		residence.addDevice(smart_device);
 		residence.addDevice(smart_device_two);
@@ -110,8 +127,10 @@ public class SparkApp {
 		
 		
 		//DATA
-		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<Client> users = new ArrayList<Client>();
+		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
 		users.add(client1);
+		administrators.add(admin1);
 		
 		staticFiles.location("/public/");
 		
@@ -154,6 +173,13 @@ public class SparkApp {
                 	return null;
         		}
         	}
+        	for(Administrator u : administrators) {
+        		if(u.checkCredentials(request.queryParams("username"), request.queryParams("password"))) {
+                	request.session().attribute("current_user", u);
+                	response.redirect("/");
+                	return null;
+        		}
+        	}
         	response.redirect("/");
 	        return "";
 		});
@@ -163,6 +189,8 @@ public class SparkApp {
         	response.redirect("/");
         	return "";
 		});
+		
+		//CLIENT
 		
 		get("/client", (request, response) -> {
         	response.redirect("/client/residence");
@@ -444,32 +472,213 @@ public class SparkApp {
 	        return "";
 		});
 		
+		get("/client/residence/terms", (request, response) -> {
+	        Client client = (Client) loadUser(request);
+	        JtwigTemplate template = getTemplate("client_terms.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "client_home");
+	        model.with("client_section", "timelines");
+        	model.with("current_user", client);
+	        
+	        if(client.getResidences().size() == 0) {
+	        	//No residences to display
+	        	model.with("has_residences", false);
+	        } else {
+	        	model.with("has_residences", true);
+		        String rid = request.queryParamOrDefault("rid", client.getResidences().get(0).getId() + "");
+		        
+		        Residence r = null;
+		        for(Residence tr : client.getResidences()) {
+		        	if((tr.getId() + "").equals(rid)) {
+		        		r = tr;
+		        	}
+		        }
+		        
+		        model.with("rid", r.getId());
+		        model.with("display_residence", r);
+		        model.with("residences", client.getResidences());
+	        }
+	        
+	        return template.render(model);
+		});
+		
+		//ADMIN
+
+		get("/admin/devices", (request, response) -> {
+	        Administrator admin = (Administrator) loadUser(request);
+	        JtwigTemplate template = getTemplate("admin_devices.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "admin_home");
+	        model.with("admin_section", "devices");
+        	model.with("current_user", admin);
+        	
+        	model.with("devices_list", DeviceInfoTable.getDevicesInfos());
+	        
+	        return template.render(model);
+		});
+		
+		get("/admin/reports", (request, response) -> {
+	        Administrator admin = (Administrator) loadUser(request);
+	        JtwigTemplate template = getTemplate("admin_reports.html");
+	        JtwigModel model = JtwigModel.newModel();
+	        model.with("menu_section", "admin_home");
+	        model.with("admin_section", "reports");
+        	model.with("current_user", admin);
+	        
+	        return template.render(model);
+		});
+		
 		
 		
 		//AJAX
 		post("/ajax_utils/", (request, response) -> {
-	        Client client = (Client) loadUser(request);
 	        String function = request.queryParamOrDefault("ajax_utility", "-1");
+	        System.out.println("AjaxCall");
 	        switch(function) {
 		        case "search_residence_devices":
-			        String rid = request.queryParams("rid");
-			        String q = request.queryParams("q");
-			        Residence r = null;
-			        ArrayList<Device> d = new ArrayList<Device>();
-			        for(Residence tr : client.getResidences()) {
-			        	if((tr.getId() + "").equals(rid)) {
-			        		r = tr;
-			        		for(Device td : r.getDevices()) {
-			        			if(td.getName().toLowerCase().contains(q.toLowerCase())) {
-			        				d.add(td);
-			        			}
+			        {
+				        Client client = (Client) loadUser(request);
+			        	String rid = request.queryParams("rid");
+				        String q = request.queryParams("q");
+				        Residence r = null;
+				        ArrayList<Device> d = new ArrayList<Device>();
+				        for(Residence tr : client.getResidences()) {
+				        	if((tr.getId() + "").equals(rid)) {
+				        		r = tr;
+				        		for(Device td : r.getDevices()) {
+				        			if(td.getName().toLowerCase().contains(q.toLowerCase())) {
+				        				d.add(td);
+				        			}
+				        		}
+				        	}
+				        }
+				        JtwigTemplate template = getTemplate("client_devices_helper.html");
+				        JtwigModel model = JtwigModel.newModel();
+				        model.with("devices", d);
+				        return template.render(model);
+			        }
+		        case "query_residence_terms":
+			        {
+				        Client client = (Client) loadUser(request);
+				        String rid = request.queryParams("rid");
+				        Residence r = null;
+				        for(Residence tr : client.getResidences()) {
+				        	if((tr.getId() + "").equals(rid)) {
+				        		r = tr;
+				        	}
+				        }
+				        
+				        String str_start = request.queryParams("start");
+				        Calendar start = formatDateToCalendar(str_start);
+				        
+				        String str_end = request.queryParams("end");
+				        Calendar end = formatDateToCalendar(str_end);
+						
+				        BigDecimal res = r.consumptionBetween(start, end);
+				        JtwigTemplate template = getTemplate("client_terms_helper.html");
+				        JtwigModel model = JtwigModel.newModel();
+				        
+				        model.with("start", formatDateToString(start));
+				        model.with("end", formatDateToString(end));
+				        model.with("consumption", res.doubleValue());
+				        return template.render(model);
+			        }
+		        case "search_device_info":
+			        {
+				        String q = request.queryParams("q");
+			        	Collection<DeviceInfo> devices_infos = DeviceInfoTable.getDevicesInfos();
+			        	Collection<DeviceInfo> result = new ArrayList<DeviceInfo>();
+			        	
+			        	for(DeviceInfo info : devices_infos) {
+			        		if(info.getName().toLowerCase().contains(q.toLowerCase())) {
+			        			result.add(info);
 			        		}
 			        	}
+				        JtwigTemplate template = getTemplate("util_render_devicesinfo_list.html");
+				        JtwigModel model = JtwigModel.newModel();			        	
+			        	model.with("devices_list", result);				        
+				        return template.render(model);
 			        }
-			        JtwigTemplate template = getTemplate("client_devices_helper.html");
-			        JtwigModel model = JtwigModel.newModel();
-			        model.with("devices", d);
-			        return template.render(model);
+		        case "admin_report":
+			        {
+			        	System.out.println("ADMIN REPORT");
+			        	String type = request.queryParams("report_type");
+			        	
+				        String str_start = request.queryParams("start");
+				        Calendar start = formatDateToCalendar(str_start);
+				        
+				        String str_end = request.queryParams("end");
+				        Calendar end = formatDateToCalendar(str_end);
+				        
+			        	switch(type) {
+				        	case "devices":
+					        	{
+					        		BigDecimal consumptionSmart = new BigDecimal(0);
+					        		int countSmart = 0;
+					        		BigDecimal consumptionStandard = new BigDecimal(0);
+					        		int countStandard = 0;
+					        		
+					        		System.out.println("    DEVICES");
+					        		
+					        		for(Client c : users) {
+					        			for(Residence r : c.getResidences()) {
+					        				for(Device d : r.getDevices()) {
+					        					if(d.isSmart()) {
+					        						countSmart++;
+					        						consumptionSmart.add(((SmartDevice) d).consumptionBetween(start, end));
+					        					} else {
+					        						countStandard++;
+					        					}
+					        				}
+					        			}
+					        		}
+					        		
+					        		if(countSmart == 0) countSmart = 1;
+					        		if(countStandard == 0) countStandard = 1;
+					        		
+							        JtwigTemplate template = getTemplate("admin_report_devices.html");
+							        JtwigModel model = JtwigModel.newModel();	
+							        model.with("start", formatDateToString(start));
+							        model.with("end", formatDateToString(end));
+							        model.with("consumption_smart", (consumptionSmart.divide(new BigDecimal(countSmart))).doubleValue());
+							        model.with("consumption_standard", (consumptionStandard.divide(new BigDecimal(countStandard))).doubleValue());
+							        return template.render(model);
+					        	}				        		
+				        	case "residences":
+					        	{					        		
+							        JtwigTemplate template = getTemplate("admin_report_residences.html");
+							        JtwigModel model = JtwigModel.newModel();	
+							        model.with("start", formatDateToString(start));
+							        model.with("end", formatDateToString(end));
+							        model.with("start_obj", start);
+							        model.with("end_obj", end);
+							        model.with("clients", users);
+							        return template.render(model);
+					        	}
+				        	case "transformers":
+					        	{
+					        		ArrayList<Transformer> transformers_r = new ArrayList<Transformer>();
+					        		
+					        		for(Client c : users) {
+					        			for(Residence r : c.getResidences()) {
+					        				if(!transformers_r.contains(r.getTransformer())) {
+					        					transformers_r.add(r.getTransformer());
+					        				}
+					        			}
+					        		}
+					        		
+							        JtwigTemplate template = getTemplate("admin_report_transformers.html");
+							        JtwigModel model = JtwigModel.newModel();	
+							        model.with("start", formatDateToString(start));
+							        model.with("end", formatDateToString(end));
+							        model.with("start_obj", start);
+							        model.with("end_obj", end);
+							        model.with("transformers", transformers_r);
+							        return template.render(model);
+					        	}
+			        	}
+			        }		        	
+		        	return "";
 		        case "-1":
 				default:
 		        		break;
@@ -479,14 +688,28 @@ public class SparkApp {
 		
 	}
 	
+	private static Calendar formatDateToCalendar(String date) {
+	    Calendar cal = Calendar.getInstance(
+				  TimeZone.getTimeZone("UTC"));
+	    cal.set(Calendar.YEAR, Integer.parseInt(date.split("-")[0]));
+	    cal.set(Calendar.MONTH, Integer.parseInt(date.split("-")[1]));
+	    cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date.split("-")[2]));
+    
+		return cal;
+	}
+	
+	private static String formatDateToString(Calendar date) {
+		return date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.MONTH) + "-" + date.get(Calendar.YEAR);
+	}
+	
 	private static User loadUser(Request request) {
 		request.session(true);
         if(request.session().isNew()) {
         	request.session().attribute("current_user", null);
-        	request.session().attribute("current_user", client1);
-        	return client1;
+        	request.session().attribute("current_user", admin1);
+        	return admin1;
         } else {
-        	request.session().attribute("current_user", client1);
+        	request.session().attribute("current_user", admin1);
         	User user = request.session().attribute("current_user");
         	if(user == null) {
         		System.out.println(request.session().id() + " no está logueado");
