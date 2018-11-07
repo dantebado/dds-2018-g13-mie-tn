@@ -58,7 +58,7 @@ public class DeviceInfoTable {
   	
   	public static DeviceInfo getDeviceByName(final String deviceName) {
   		for (DeviceInfo deviceInfo : DevicesInfos) {
-			if(deviceInfo.getName() == deviceName) {
+			if(deviceInfo.getName().toLowerCase().equals(deviceName.toLowerCase())) {
 				return deviceInfo;
 			}
 		}

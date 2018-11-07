@@ -252,8 +252,12 @@ body, html {
 
 @media (max-width: 1000px){
   .panel-nav {
+  	width:95%;
     display: block;
     text-align: center;
+  }
+  .panel-box-warning, .panel-box-title, .panel-form , .panel-data-recieved{
+  	width:95% !important;
   }
   .panel-nav ul:first-child {
     float: none;

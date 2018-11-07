@@ -301,6 +301,7 @@ public class SparkApp {
 	        }
 	        
 	        Device d = null;
+	        System.out.println(request.queryParams("device_type"));
 	        if(DeviceInfoTable.getDeviceByName(request.queryParams("device_type")).isInteligente()) {
 	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")));
 	        } else {
