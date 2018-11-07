@@ -706,10 +706,10 @@ public class SparkApp {
 		request.session(true);
         if(request.session().isNew()) {
         	request.session().attribute("current_user", null);
-        	request.session().attribute("current_user", admin1);
-        	return admin1;
+        	//request.session().attribute("current_user", admin1);
+        	//return admin1;
         } else {
-        	request.session().attribute("current_user", admin1);
+        	//request.session().attribute("current_user", admin1);
         	User user = request.session().attribute("current_user");
         	if(user == null) {
         		System.out.println(request.session().id() + " no está logueado");
@@ -718,7 +718,7 @@ public class SparkApp {
         	}
         	return user;
         }
-        //return null;
+        return null;
 	}
 
 }

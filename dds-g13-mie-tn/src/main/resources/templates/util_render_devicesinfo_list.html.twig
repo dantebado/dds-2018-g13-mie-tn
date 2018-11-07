@@ -1,6 +1,8 @@
 {% for info in devices_list %}	
+<li class="list-group-item remove-device" >
   <div class="row">
     <div class="col">{{ info.name }}</div>
     <div class="col text-right consumption-col"><i class="fas fa-bolt"></i> ~ {{ info.consumption|number_format }}</div>
   </div>
+ </li>
 {% endfor %}

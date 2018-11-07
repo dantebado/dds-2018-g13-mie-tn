@@ -25,11 +25,10 @@
       </div>
     </div>
     <div class="panel-data-recieved">
-      <ul class="list-group data-recieved">
-        <li class="list-group-item remove-device q-devices">
+      <ul class="list-group data-recieved q-devices">
+        
         	{% set devices = display_residence.devices %}
         	{% include 'client_devices_helper.html.twig' %}
-        </li>
       </ul>
     </div>
     

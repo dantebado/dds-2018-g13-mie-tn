@@ -55,6 +55,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Simplex-Solution-Final"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Simplex-Solution-Final-master"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
