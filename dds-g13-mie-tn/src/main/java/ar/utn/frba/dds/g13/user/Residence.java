@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 
 import java.awt.Point;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import org.apache.commons.math3.optim.PointValuePair;
 
@@ -74,6 +75,31 @@ public class Residence extends BeanToJson {
 	@Transient	
 	@Expose int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
 	
+	@Transient
+	@Expose Date today = Calendar.getInstance().getTime();
+	
+	@Transient
+	@Expose Date firstDayOfMonth = subtractDays(today,dayOfMonth);
+	
+	@Transient
+	@Expose Calendar firstDayOfMonthCal = toCalendar(firstDayOfMonth);
+	
+	@Transient
+	@Expose Calendar todayCal = toCalendar(today);
+	
+	public static Date subtractDays(Date date, int days) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, -days);
+				
+		return cal.getTime();
+	}
+	
+	public static Calendar toCalendar(Date date){ 
+		  Calendar cal = Calendar.getInstance();
+		  cal.setTime(date);
+		  return cal;
+		}
 	
 	public Long getId() {
 		return id;
@@ -237,10 +263,10 @@ public class Residence extends BeanToJson {
 			if(devices.get(i).isSmart()) {
 				
 				///DESCOMENTAR LINEA SIGUIENTE PARA FUNCIONAMIENTO NORMAL
-				//if ( Math.ceil( ((SmartDevice) devices.get(i)).consumptionBetween(firstDayOfMonth, today).doubleValue() *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
+				if ( Math.ceil( ((SmartDevice) devices.get(i)).consumptionBetween(firstDayOfMonthCal, todayCal).doubleValue() *100) >= Math.ceil( resultado.getPoint()[i] *100)) {
 				
 				///DESCOMENTAR LINEA SIGUIENTE PARA TEST
-				if ( 148 >= Math.ceil( resultado.getPoint()[i] *100)) {
+				//if ( 148 >= Math.ceil( resultado.getPoint()[i] *100)) {
 				
 					System.out.printf("El dispostivo: %s ya consumio sus horas horas planificadas, se recomienda apagarlo\n" , devices.get(i).getName());
 					if(((SmartDevice) devices.get(i)).isEnergySaving()) {
