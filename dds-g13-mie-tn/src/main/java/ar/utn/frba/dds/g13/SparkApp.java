@@ -3,6 +3,7 @@ import static spark.Spark.*;
 
 import java.awt.Point;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +19,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.jtwig.*;
+import org.jtwig.environment.EnvironmentConfigurationBuilder;
 
 import com.google.gson.Gson;
 
@@ -82,6 +84,16 @@ public class SparkApp {
 		loadData();
 		
 		staticFiles.location("/public/");
+		
+		EnvironmentConfigurationBuilder
+	        .configuration()
+	            .resources()
+	                .withDefaultInputCharset(Charset.forName("UTF-8"))
+	            .and()
+	            .render()
+	                .withOutputCharset(Charset.forName("UTF-8"))
+	            .and()
+	        .build();
 		
 		get("/test_twig", (req, res) -> {
 			
