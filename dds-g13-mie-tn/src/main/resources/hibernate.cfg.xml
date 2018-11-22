@@ -4,7 +4,7 @@
  <hibernate-configuration>
    <session-factory>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="connection.url">jdbc:mysql://sgeproduction.c6egcydpwoft.us-east-2.rds.amazonaws.com:3306/sge</property>
+    <property name="connection.url">jdbc:mysql://sge.c6egcydpwoft.us-east-2.rds.amazonaws.com:3306/sge</property>
     <property name="connection.username">sge</property>
     <property name="connection.password">sgepassword</property>
  
