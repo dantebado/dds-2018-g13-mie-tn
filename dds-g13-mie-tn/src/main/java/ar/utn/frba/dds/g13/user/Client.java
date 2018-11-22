@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.category.Category;
@@ -49,6 +52,7 @@ public class Client extends User {
 	@Expose int score;
 	
 	@OneToMany(mappedBy = "client" , cascade = {CascadeType.ALL})
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Expose List<Residence> residences;
 
 	

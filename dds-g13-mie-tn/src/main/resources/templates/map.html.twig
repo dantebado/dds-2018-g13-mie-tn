@@ -32,8 +32,8 @@
     		$('.transformer-menu').collapse("toggle");
     	}
     
-    	function addMarker(mapa, x, y, radiusp, name) {
-    		L.marker([x, y]).addTo(mapa).on('click', onClick);
+    	function addArea(mapa, x, y, radiusp, name) {
+    		//L.marker([x, y]).addTo(mapa).on('click', onClick);
     		L.circle([x, y],
     			{
                     color: 'red',
@@ -41,6 +41,9 @@
                     fillOpacity: 0.2,
                     radius: radiusp * 1000000
     			}).addTo(mapa);
+        }
+    	function addTransformer(mapa, x, y) {
+    		L.marker([x, y]).addTo(mapa).on('click', onClick);
         }
     
 		$( document ).ready(function() {
@@ -54,7 +57,10 @@
     		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(mapa);
 
     		{% for area in areas %}
-    			addMarker(mapa, {{area.coordX}}, {{area.coordY}}, {{area.radius}}, "Marker");
+    			addArea(mapa, {{area.coordX}}, {{area.coordY}}, {{area.radius}}, "Marker");
+    		{% endfor %}
+    		{% for transformer in transformers %}
+    			addTransformer(mapa, {{transformer.coordX}}, {{transformer.coordY}});
     		{% endfor %}
 		});
 	</script>

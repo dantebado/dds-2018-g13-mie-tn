@@ -20,6 +20,9 @@ import ar.utn.frba.dds.g13.area.Area;
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfoTable;
+import ar.utn.frba.dds.g13.transformer.Transformer;
+import ar.utn.frba.dds.g13.user.Administrator;
+import ar.utn.frba.dds.g13.user.Client;
 import ar.utn.frba.dds.g13.user.User;
 
 public class SampleSGEStart {
@@ -43,6 +46,10 @@ public class SampleSGEStart {
 	
 	static ArrayList<Category> categories = null;
 	static ArrayList<Area> areas = null;
+	static ArrayList<Transformer> transformers = null;
+
+	static ArrayList<Client> users = null;
+	static ArrayList<Administrator> administrators = null;
 	
 	public static void main( String[] args ) {
 		
@@ -51,6 +58,12 @@ public class SampleSGEStart {
 		loadDevices();
 		loadCategories();
 		loadAreas();
+		loadTransformers();
+		loadUsers();
+		
+		for(Administrator t : administrators) {
+			System.out.println(t.getFullname());
+		}
 
 		get("/", (request, res) -> {
 	        JtwigTemplate template = getTemplate("map.html");
@@ -61,8 +74,10 @@ public class SampleSGEStart {
 		        model.with("current_user", "-1");
 	        }
 	        model.with("areas", areas);
+	        model.with("transformers", transformers);
 	        return template.render(model);
 		});
+		
 	}
 	
 	private static void loadDevices() {
@@ -107,4 +122,31 @@ public class SampleSGEStart {
 		}
 	}
 
+	private static void loadTransformers() {
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+		Long ID = null;
+		try {
+			transformers = (ArrayList<Transformer>) session.createCriteria(Transformer.class).list();
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+	}
+	private static void loadUsers() {		
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+		Long ID = null;
+		try {
+			administrators = (ArrayList<Administrator>) session.createCriteria(Administrator.class).list();
+			users = (ArrayList<Client>) session.createCriteria(Client.class).list();
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+	}
 }
