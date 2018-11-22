@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.transformer.Transformer;
@@ -43,10 +46,12 @@ public class Area {
 	@Transient
     Point coordinate;
 	
-	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL})
+	@LazyCollection(LazyCollectionOption.FALSE)
     List<Transformer> transformers;
 
-	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL})
+	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Residence> residences;
 	
 	public Long getId() {
