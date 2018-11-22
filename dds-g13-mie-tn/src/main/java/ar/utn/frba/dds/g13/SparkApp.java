@@ -80,20 +80,12 @@ public class SparkApp {
 	static ArrayList<Administrator> administrators = null;
 
 	public static void main(String[] args) {
+		java.util.Properties properties = System.getProperties();
+	    properties.list(System.out);
 		
 		loadData();
 		
 		staticFiles.location("/public/");
-		
-		EnvironmentConfigurationBuilder
-	        .configuration()
-	            .resources()
-	                .withDefaultInputCharset(Charset.forName("UTF-8"))
-	            .and()
-	            .render()
-	                .withOutputCharset(Charset.forName("UTF-8"))
-	            .and()
-	        .build();
 		
 		get("/test_twig", (req, res) -> {
 			

@@ -4,23 +4,15 @@
 	<div class="content-map">
         <div class="map-search-bar">
           <img class="search-ico" src="search-ico.svg">
-          <input type=search placeholder="Buscar transformador por direcci√≥n cercana ..." onfocus="this.placeholder = ''"
-        onblur="this.placeholder = 'Buscar transformador por direcci√≥n cercana ...'">
+          <input type=search placeholder="Buscar transformador por direcciÛn cercana ..." onfocus="this.placeholder = ''"
+        onblur="this.placeholder = 'Buscar transformador por direcciÛn cercana ...'">
         </div>
         <div class="map-search-located-menu">
             <button role="button" class=" btn btn-transformer" data-toggle="collapse" data-target="#tc">
                 <i class="fas fa-solar-panel"></i>
             </button>
             <div id="tc" class="collapse transformer-menu">
-              <h2>Transformador<br> #21934237</h2>
-              <br>
-              <h3><b>ID</b>: 21934237</h3>
-              <br>
-              <h3><b>√ÅREA</b>: CARLOS CARLOS CARLOS</h3>
-              <br>
-              <h3><b>SUMINISTRO ACTUAL</b>:</h3>
-              <br>
-              <label class="actual-transformer-consumption-map"><i class="fas fa-bolt"></i> 0.12</label>
+              
             </div>
         </div>
         <div class="map-box" id="mapa">
@@ -28,8 +20,19 @@
         
     </div>
     <script type="text/javascript">    
-    	function onClick(e){
-    		$('.transformer-menu').collapse("toggle");
+    	function displayTransformer(){
+        	if(!$(".transformer-menu").hasClass("show")) {
+        		$('.transformer-menu').collapse("toggle");
+			}    		
+    		$.ajax({
+			  type: "POST",
+			  url: "/ajax_utils/",
+			  data: {
+                    ajax_utility : "load_transformer_data",
+                    tid : tid
+				  },
+			  success: function(data) { $("#tc").html(data); }
+			});
     	}
     
     	function addArea(mapa, x, y, radiusp, name) {
@@ -42,8 +45,11 @@
                     radius: radiusp * 1000000
     			}).addTo(mapa);
         }
-    	function addTransformer(mapa, x, y) {
-    		L.marker([x, y]).addTo(mapa).on('click', onClick);
+    	function addTransformer(id, mapa, x, y) {
+    		L.marker([x, y]).addTo(mapa).on('click', function() {
+        		tid = id;
+        		displayTransformer();
+        		});
         }
     
 		$( document ).ready(function() {
@@ -60,11 +66,9 @@
     			addArea(mapa, {{area.coordX}}, {{area.coordY}}, {{area.radius}}, "Marker");
     		{% endfor %}
     		{% for transformer in transformers %}
-    			addTransformer(mapa, {{transformer.coordX}}, {{transformer.coordY}});
+    			addTransformer({{transformer.id}}, mapa, {{transformer.coordX}}, {{transformer.coordY}});
     		{% endfor %}
 		});
 	</script>
 			 		
-{% endblock %}	
-{% block footer %}
 {% endblock %}
