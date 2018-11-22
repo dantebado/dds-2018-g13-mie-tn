@@ -83,6 +83,7 @@ public class Transformer extends BeanToJson{
 	}
 	
 	public List<Residence> getResidences(){
+		System.out.println("RESIDENCES BY TRANSFORMER " + this.getId());
 		return area.getResidencesByTransformer(this);
 	}
 

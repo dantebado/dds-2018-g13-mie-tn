@@ -19,6 +19,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.jtwig.*;
 
+import com.google.gson.Gson;
+
 import ar.utn.frba.dds.g13.area.Area;
 import ar.utn.frba.dds.g13.category.Category;
 import ar.utn.frba.dds.g13.device.Device;
@@ -77,11 +79,7 @@ public class SparkApp {
 
 	public static void main(String[] args) {
 		
-		loadDevices();
-		loadCategories();
-		loadAreas();
-		loadTransformers();
-		loadUsers();
+		loadData();
 		
 		staticFiles.location("/public/");
 		
@@ -259,7 +257,7 @@ public class SparkApp {
 	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")));
 	        } else {
 	        	List<TimeIntervalDevice> consumptionHistory = new ArrayList<TimeIntervalDevice>();
-	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOff());
+	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOn());
 	        }
 	        r.addDevice(d);
 
@@ -633,6 +631,22 @@ public class SparkApp {
 			        	}
 			        }		        	
 		        	return "";
+		        case "load_transformer_data":
+			        {
+			        	JtwigTemplate template = getTemplate("transformer_sidebar.html");
+				        JtwigModel model = JtwigModel.newModel();	
+
+				        Transformer tr = null;
+				        String tid = request.queryParams("tid");
+				        for(Transformer t : transformers) {
+				        	if((t.getId() + "").equals(tid)) {
+				        		tr = t;
+				        	}
+				        }
+				        
+				        model.with("transformer", tr);
+				        return template.render(model);
+			        }
 		        case "-1":
 				default:
 		        		break;
@@ -674,67 +688,19 @@ public class SparkApp {
         }
         return null;
 	}
-	
-	private static void loadDevices() {
+
+	private static void loadData() {		
 		Session session = getSessionFactory().openSession();
 		Transaction tx = null;
 		Long ID = null;
 		try {
 			DeviceInfoTable.setDevices((ArrayList<DeviceInfo>) session.createCriteria(DeviceInfo.class).list());
-		} catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-	}
 
-	private static void loadCategories() {
-		Session session = getSessionFactory().openSession();
-		Transaction tx = null;
-		Long ID = null;
-		try {
 			categories = (ArrayList<Category>) session.createCriteria(Category.class).list();
-		} catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-	}
-	
-	private static void loadAreas() {
-		Session session = getSessionFactory().openSession();
-		Transaction tx = null;
-		Long ID = null;
-		try {
 			areas = (ArrayList<Area>) session.createCriteria(Area.class).list();
-		} catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-	}
-
-	private static void loadTransformers() {
-		Session session = getSessionFactory().openSession();
-		Transaction tx = null;
-		Long ID = null;
-		try {
+			
 			transformers = (ArrayList<Transformer>) session.createCriteria(Transformer.class).list();
-		} catch (HibernateException e) {
-			if (tx!=null) tx.rollback();
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-	}
-	private static void loadUsers() {		
-		Session session = getSessionFactory().openSession();
-		Transaction tx = null;
-		Long ID = null;
-		try {
+			
 			administrators = (ArrayList<Administrator>) session.createCriteria(Administrator.class).list();
 			users = (ArrayList<Client>) session.createCriteria(Client.class).list();
 		} catch (HibernateException e) {

@@ -130,10 +130,6 @@ public class Area {
     
     public Transformer assignTransformer(Point point) {
     	Transformer t = transformers.get(0);
-    	System.out.println("TRANSFORMERS " + transformers.size());
-    	System.out.println("ASDASD " + t.getId());
-    	System.out.println("X " + this.coordX);
-    	System.out.println("POS " + t.getCoordinate().getX());
     	double dist = t.getCoordinate().distance(point);
     	for(Transformer tt : transformers) {
     		double tdistv = tt.getCoordinate().distance(point);
@@ -148,7 +144,9 @@ public class Area {
 	public List<Residence> getResidencesByTransformer(Transformer transformer) {
 		ArrayList<Residence> residences = new ArrayList<Residence>();
 		for(Residence r : this.residences) {
-			if(r.getTransformer().getId() == transformer.getId()) {
+			Long rid = r.getTransformer().getId();
+			if(rid == transformer.getId()) {
+				System.out.println("         SI " + r.actualConsumption().doubleValue());
 				residences.add(r);
 			}
 		}
