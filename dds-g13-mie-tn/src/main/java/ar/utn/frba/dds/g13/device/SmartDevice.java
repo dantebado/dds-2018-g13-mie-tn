@@ -10,19 +10,29 @@ import java.util.TimeZone;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.states.DeviceState;
 import ar.utn.frba.dds.g13.device.states.Turnable;
+import ar.utn.frba.dds.g13.mosquitto.SGEPubMQTT;
 
 
 @Entity
 @DiscriminatorValue("SMART")
 public class SmartDevice extends Device implements Turnable {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	
 	@Transient
 	DeviceState state;
@@ -118,16 +128,19 @@ public class SmartDevice extends Device implements Turnable {
 		return state.isEnergySaving(this);
 	}
 
-	public void turnOn() {
+	public void turnOn() throws MqttException, InterruptedException {
 		state.turnOn(this);
+		SGEPubMQTT.sendAction(Integer.toString(id), "ENCENDER", "INTELIGENTE");
 	}
 
-	public void turnOff() {
+	public void turnOff() throws MqttException, InterruptedException {
 		state.turnOff(this);
+		SGEPubMQTT.sendAction(Integer.toString(id), "APAGAR", "INTELIGENTE");
 	}
 
-	public void turnEnergySaving() {
+	public void turnEnergySaving() throws MqttException, InterruptedException {
 		state.turnEnergySaving(this);
+		SGEPubMQTT.sendAction(Integer.toString(id), "MODO AHORRO ENERGIA", "INTELIGENTE");
 	}
 
 	@Override

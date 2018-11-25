@@ -1,5 +1,6 @@
 package ar.utn.frba.dds.g13.device.sensor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
 import ar.utn.frba.dds.g13.device.automation.Actuator;
 import ar.utn.frba.dds.g13.device.automation.rules.AutomationRule;
+import ar.utn.frba.dds.g13.mosquitto.SGESubMQTT;
 
 @Entity
 @Table(name = "Sensor")
@@ -78,7 +83,6 @@ public abstract class Sensor extends Thread {
 	@JoinColumn(name="device_id")
 	SmartDevice device;
 	
-	
 	public long getId() {
 		return id;
 	}
@@ -130,9 +134,36 @@ public abstract class Sensor extends Thread {
 	}
 	
 	private Measure measure() {
-		Measure nm = measureValue();
-		lastMeasure = nm;
+		//Measure nm = measureValue();
+		Measure nm = getNextMeasure(id);
+		if (nm != null) {
+			nm.setSensor(this);
+			lastMeasure = nm;
+		}
 		return nm;
+	}
+	
+	public static Measure getNextMeasure(long id) {
+		JSONArray messures = SGESubMQTT.getListaMediciones();
+		if (messures != null) {
+			JSONArray newMessures = null;
+			JSONObject messureFounded = null;
+			boolean noneFounded = true;
+			for (int i = 0; (i < messures.length()); ++i) {
+				JSONObject obj = messures.getJSONObject(i);
+				String nextId = obj.getString("id_estado");
+				if (nextId.equals(Long.toString(id)) || noneFounded) {
+					messureFounded = messures.getJSONObject(i);
+					noneFounded = false;
+				}
+				else {
+					newMessures.put(messures.getJSONObject(i));
+				}
+			}
+			SGESubMQTT.setListaMediciones(newMessures);
+			return new Measure(new BigDecimal(messureFounded.getString("value")), messureFounded.getString("messure"));	
+		}
+		return null;
 	}
 	
 	public void run() {

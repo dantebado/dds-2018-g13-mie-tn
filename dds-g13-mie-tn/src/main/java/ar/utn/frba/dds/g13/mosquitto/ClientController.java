@@ -1,7 +1,9 @@
-package ar.edu.dds;
+package ar.utn.frba.dds.g13.mosquitto;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Scanner;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
 
 public class ClientController {
@@ -16,7 +18,7 @@ public class ClientController {
 	    return false;
 	}
 	
-    public static void main(String[] args){
+    public static void main(String[] args) throws MqttException, InterruptedException{
     	//String ClientId = args[0];
     	Scanner scanner = new Scanner(System.in);
 
@@ -38,7 +40,7 @@ public class ClientController {
             	if (listContains(selection)) {
 	            	System.out.print("Ingrese ID del dispositivo:\t");
 	            	String selectionofID = scanner.nextLine();
-	            	SGRPubMQTT.sendAction( selectionofID, selection, "MANUAL");
+	            	SGEPubMQTT.sendAction( selectionofID, selection, "MANUAL");
             	}
             	else {
             		System.out.println("Error: Comando no valido");

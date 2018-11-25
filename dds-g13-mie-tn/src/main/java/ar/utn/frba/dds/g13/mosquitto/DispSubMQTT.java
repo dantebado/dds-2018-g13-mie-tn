@@ -1,4 +1,4 @@
-package ar.edu.dds;
+package ar.utn.frba.dds.g13.mosquitto;
 
 import javax.xml.bind.DatatypeConverter;
 import org.eclipse.paho.client.mqttv3.*;
@@ -30,14 +30,14 @@ public class DispSubMQTT {
             	String receivedAction = Pubmessage.getString("action");
             	String receivedMode = Pubmessage.getString("mode");
             	
-            	if (receivedId == id) {
+            	if (receivedId.equals(id)) {
             		switch (receivedAction) {
             		
             			case "ENCENDER": {
-            				if (State != "ON") {
-	            				if (receivedMode == "INTELIGENTE" && Mode == receivedMode) {
+            				if (!State.equals("ON")) {
+	            				if (receivedMode.equals("INTELIGENTE") && Mode.equals(receivedMode)) {
 	            					System.out.println("NEW ORDER RECIVED: " + receivedAction);
-	            					if (State == "ENERGY_SAVING") {            				
+	            					if (State.equals("ENERGY_SAVING")) {            				
 	            						System.out.println("leaving energy saving mode...");
 	            					}
 	            					else {
@@ -45,16 +45,17 @@ public class DispSubMQTT {
 	            					}
 	            					
 	            					State = "ON";
+	            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
 	            					break;
 	            				}
-            					if (receivedMode == "MANUAL") {
+            					if (receivedMode.equals("MANUAL")) {
             						System.out.println("NEW ORDER RECIVED: " + receivedAction);
-            						if (Mode == "INTELIGENTE") {
+            						if (Mode.equals("INTELIGENTE")) {
             							System.out.println("SMART MODE OFF");
             							
             							Mode = "MANUAL";
             						}
-	            					if (State == "ENERGY_SAVING") {            				
+	            					if (State.equals("ENERGY_SAVING")) {            				
 	            						System.out.println("leaving energy saving mode...");
 	            					}
 	            					else {
@@ -62,6 +63,7 @@ public class DispSubMQTT {
 	            					}
 	            					
 	            					State = "ON";
+	            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
 	            					break;
             					}
             				}
@@ -69,17 +71,18 @@ public class DispSubMQTT {
             			}
             			
             			case "APAGAR": {
-            				if (State != "OFF") {
-            					if (receivedMode == "INTELIGENTE" && Mode == receivedMode) {
+            				if (!State.equals("OFF")) {
+            					if (receivedMode.equals("INTELIGENTE") && Mode.equals(receivedMode)) {
 	            					System.out.println("NEW ORDER RECIVED: " + receivedAction);
 	            					System.out.println("turning " + name + " off..."); 
 	            					
 	            					State = "OFF";
+	            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
 	            					break;
             					}
-            					if (receivedMode == "MANUAL") {
+            					if (receivedMode.equals("MANUAL")) {
             						System.out.println("NEW ORDER RECIVED: " + receivedAction);
-            						if (Mode == "INTELIGENTE") {
+            						if (Mode.equals("INTELIGENTE")) {
             							System.out.println("SMART MODE OFF");
             							
             							Mode = "MANUAL";
@@ -87,6 +90,7 @@ public class DispSubMQTT {
 	            					System.out.println("turning " + name + " off...");
 	            					
 	            					State = "OFF";
+	            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
 	            					break;
             					}
             				}
@@ -94,17 +98,21 @@ public class DispSubMQTT {
             			}
             			
             			case "MODO AHORRO ENERGIA": {
-            				if (State != "ENERGY_SAVING") {
-            					if (receivedMode == "INTELIGENTE" && Mode == receivedMode) {
+            				if (!State.equals("ENERGY_SAVING")) {
+            					if (State.equals("OFF")) {
+            						System.out.println("turning " + name + " on...");
+            					}
+            					if (receivedMode.equals("INTELIGENTE") && Mode.equals(receivedMode)) {
 	            					System.out.println("NEW ORDER RECIVED: " + receivedAction);
 	            					System.out.println("entering energy saving mode...");
 	            					
 	            					State = "ENERGY_SAVING";
+	            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
 	            					break;
             					}
-            					if (receivedMode == "MANUAL") {
+            					if (receivedMode.equals("MANUAL")) {
             						System.out.println("NEW ORDER RECIVED: " + receivedAction);
-            						if (Mode == "INTELIGENTE") {
+            						if (Mode.equals("INTELIGENTE")) {
             							System.out.println("SMART MODE OFF");
             							
             							Mode = "MANUAL";
@@ -112,6 +120,7 @@ public class DispSubMQTT {
 	            					System.out.println("entering energy saving mode...");
 	            					
 	            					State = "ENERGY_SAVING";
+	            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
 	            					break;
             					}
             				}
@@ -119,19 +128,21 @@ public class DispSubMQTT {
             			}
             			
             			case "MODO INTELIGENTE": {
-            				if (Mode == "MANUAL") {
+            				if (Mode.equals("MANUAL")) {
             					System.out.println("SMART MODE ON");
             					
-            					Mode = "INTELIGENTE";	
+            					Mode = "INTELIGENTE";
+            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
             				}
             				break;
             			}
             			
             			case "MODO MANUAL": {
-            				if (Mode == "INTELIGENTE") {
+            				if (Mode.equals("INTELIGENTE")) {
             					System.out.println("SMART MODE OFF");
             					
-            					Mode = "MANUAL";	
+            					Mode = "MANUAL";
+            					System.out.println("NUEVO ESTADO " + name + " : Estado = " + State + " Modo = " + Mode);
             				}
             				break;
             			}
@@ -145,7 +156,7 @@ public class DispSubMQTT {
         client.connect();
 
         client.subscribe("actions");
-        System.out.println("ok!");
+        System.out.println("Mqtt successfully subscribed");
 
 
     }

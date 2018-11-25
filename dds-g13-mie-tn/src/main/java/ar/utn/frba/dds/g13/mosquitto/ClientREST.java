@@ -1,4 +1,4 @@
-package ar.edu.dds;
+package ar.utn.frba.dds.g13.mosquitto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;

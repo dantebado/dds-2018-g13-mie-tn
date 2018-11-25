@@ -1,4 +1,4 @@
-package ar.edu.dds;
+package ar.utn.frba.dds.g13.mosquitto;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;

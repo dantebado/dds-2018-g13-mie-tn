@@ -1,14 +1,30 @@
-package ar.edu.dds;
+package ar.utn.frba.dds.g13.mosquitto;
 
 import javax.xml.bind.DatatypeConverter;
 import org.eclipse.paho.client.mqttv3.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class SGRSubMQTT {
+public class SGESubMQTT {
+	public static JSONArray listaMediciones = new JSONArray();
+	public static boolean listaOnUse = false;
+	
+    public static JSONArray getListaMediciones() {
+    	if (!listaOnUse) {
+    		listaOnUse = true;
+    		return listaMediciones;
+    	}
+    	return null;
+	}
 
-    public static void main(String[] args) throws MqttException, InterruptedException {
+	public static void setListaMediciones(JSONArray listaMediciones) {
+		SGESubMQTT.listaMediciones = listaMediciones;
+		listaOnUse = false;
+	}
+
+	public static void main(String[] args) throws MqttException, InterruptedException {
         
-        System.out.println("== START SGR SUBSCRIBER ==");
+        System.out.println("== START SGE SUBSCRIBER ==");
 
         String mqttId = MqttClient.generateClientId();
         MqttClient client = new MqttClient("tcp://localhost:1883", mqttId);
@@ -28,7 +44,8 @@ public class SGRSubMQTT {
             	String receivedMessure = Pubmessage.getString("messure");
             	int receivedValue = Pubmessage.getInt("value");
             	
-            	//sendNewMessure(receivedId, receivedValue);
+            	listaMediciones.put(Pubmessage);
+            	//REFACTOR sendNewMessure(receivedId, receivedValue);
             }
 
             public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
@@ -37,7 +54,7 @@ public class SGRSubMQTT {
         client.connect();
 
         client.subscribe("measurement");
-        System.out.println("ok!");
+        System.out.println("Mqtt successfully subscribed");
 
 
     }
