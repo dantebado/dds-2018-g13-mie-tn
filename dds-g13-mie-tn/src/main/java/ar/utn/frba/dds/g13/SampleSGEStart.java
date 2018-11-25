@@ -55,10 +55,10 @@ public class SampleSGEStart {
 		
 		staticFiles.location("/public/");
 		
-		loadDevices();
 		loadCategories();
 		loadAreas();
 		loadTransformers();
+		loadDevices();
 		loadUsers();
 		
 		for(Administrator t : administrators) {

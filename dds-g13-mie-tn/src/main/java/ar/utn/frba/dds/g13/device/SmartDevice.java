@@ -30,10 +30,6 @@ import ar.utn.frba.dds.g13.mosquitto.SGEPubMQTT;
 @DiscriminatorValue("SMART")
 public class SmartDevice extends Device implements Turnable {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	
 	@Transient
 	DeviceState state;
 	
@@ -130,17 +126,17 @@ public class SmartDevice extends Device implements Turnable {
 
 	public void turnOn() throws MqttException, InterruptedException {
 		state.turnOn(this);
-		SGEPubMQTT.sendAction(Integer.toString(id), "ENCENDER", "INTELIGENTE");
+		SGEPubMQTT.sendAction(Long.toString(this.getId()), "ENCENDER", "INTELIGENTE");
 	}
 
 	public void turnOff() throws MqttException, InterruptedException {
 		state.turnOff(this);
-		SGEPubMQTT.sendAction(Integer.toString(id), "APAGAR", "INTELIGENTE");
+		SGEPubMQTT.sendAction(Long.toString(this.getId()), "APAGAR", "INTELIGENTE");
 	}
 
 	public void turnEnergySaving() throws MqttException, InterruptedException {
 		state.turnEnergySaving(this);
-		SGEPubMQTT.sendAction(Integer.toString(id), "MODO AHORRO ENERGIA", "INTELIGENTE");
+		SGEPubMQTT.sendAction(Long.toString(this.getId()), "MODO AHORRO ENERGIA", "INTELIGENTE");
 	}
 
 	@Override
