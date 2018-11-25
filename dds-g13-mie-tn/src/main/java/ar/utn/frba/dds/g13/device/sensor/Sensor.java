@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -173,7 +174,15 @@ public abstract class Sensor extends Thread {
 				lm = System.currentTimeMillis();				
 				measure();
 				for(Actuator actuator : actuatorsToNotify) {
-					actuator.notifySensorChange();
+					try {
+						actuator.notifySensorChange();
+					} catch (MqttException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}

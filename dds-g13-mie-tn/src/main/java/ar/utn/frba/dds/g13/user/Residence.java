@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.apache.commons.math3.optim.PointValuePair;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -260,7 +261,7 @@ public class Residence extends BeanToJson {
         return acum;
     }
 
-	public void makeSimplexMethod() {
+	public void makeSimplexMethod() throws MqttException, InterruptedException {
 		PointValuePair resultado = simplex.makeSimplexMethod(this);
 		for (int i = 0; i < devices.size(); ++i) {
 			if(devices.get(i).isSmart()) {

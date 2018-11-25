@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.device.Device;
@@ -104,17 +106,17 @@ public class Actuator {
 		Actuator.GLOBAL_ACTUATORS.add(this);
 	}
 	
-	public void notifySensorChange() {
+	public void notifySensorChange() throws MqttException, InterruptedException {
 		analyzeRules();
 	}
 	
-	private void sendActionsToDevice(List<DeviceAction> actions) {
+	private void sendActionsToDevice(List<DeviceAction> actions) throws MqttException, InterruptedException {
 		for(DeviceAction action : actions) {
 			action.execute(smartdevice);
 		}
 	}
 	
-	public void analyzeRules() {
+	public void analyzeRules() throws MqttException, InterruptedException {
 		List<DeviceAction> actions = new ArrayList<DeviceAction>();
 		for(AutomationRule rule : rules) {
 			actions.addAll(rule.analyze(getMeasureSet()));

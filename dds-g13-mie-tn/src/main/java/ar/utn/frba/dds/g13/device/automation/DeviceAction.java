@@ -10,6 +10,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import ar.utn.frba.dds.g13.device.SmartDevice;
 
 @Entity
@@ -31,6 +33,6 @@ public abstract class DeviceAction {
 		this.id = id;
 	}
 	
-	public abstract void execute(SmartDevice device);
+	public abstract void execute(SmartDevice device) throws MqttException, InterruptedException;
 
 }

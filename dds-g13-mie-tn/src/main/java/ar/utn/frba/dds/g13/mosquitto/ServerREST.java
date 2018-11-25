@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ar.edu.dds.helpers.ApiMsg;
-import ar.edu.dds.helpers.ClientMsg;
-import ar.edu.dds.helpers.JsonTransformer;
+import ar.utn.frba.dds.g13.mosquitto.helpers.ApiMsg;
+import ar.utn.frba.dds.g13.mosquitto.helpers.ClientMsg;
+import ar.utn.frba.dds.g13.mosquitto.helpers.JsonTransformer;
 
 import static spark.Spark.*;
 

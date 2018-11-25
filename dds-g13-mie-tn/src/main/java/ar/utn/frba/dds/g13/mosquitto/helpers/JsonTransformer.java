@@ -1,4 +1,4 @@
-package ar.edu.dds.helpers;
+package ar.utn.frba.dds.g13.mosquitto.helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

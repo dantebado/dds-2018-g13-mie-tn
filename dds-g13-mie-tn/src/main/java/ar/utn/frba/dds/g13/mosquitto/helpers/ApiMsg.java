@@ -1,4 +1,4 @@
-package ar.edu.dds.helpers;
+package ar.utn.frba.dds.g13.mosquitto.helpers;
 
 public class ApiMsg {
 
