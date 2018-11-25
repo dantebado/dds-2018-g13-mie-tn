@@ -77,4 +77,8 @@ public class DeviceInfoTable {
 		}
 		return instance;
 	}
+
+	public static void setDevices(ArrayList<DeviceInfo> list) {
+		DevicesInfos = list;
+	}
 }

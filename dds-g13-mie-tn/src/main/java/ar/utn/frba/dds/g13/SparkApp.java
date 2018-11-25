@@ -3,6 +3,7 @@ import static spark.Spark.*;
 
 import java.awt.Point;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +11,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 import org.jtwig.*;
+import org.jtwig.environment.EnvironmentConfigurationBuilder;
+
+import com.google.gson.Gson;
 
 import ar.utn.frba.dds.g13.area.Area;
 import ar.utn.frba.dds.g13.category.Category;
@@ -47,90 +58,32 @@ public class SparkApp {
 	public static JtwigTemplate getTemplate(String filename) {
 		return JtwigTemplate.fileTemplate( Paths.get("src", "main", "resources", "templates", filename + ".twig").toFile() );
 	}
+	
+	static SessionFactory factory = null; 
+	public static SessionFactory getSessionFactory() {
+		if(factory == null) {
+	        Configuration configObj = new Configuration();
+	        configObj.configure("hibernate.cfg.xml");
+
+	        ServiceRegistry serviceRegistryObj = new StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build(); 
+
+	        factory = configObj.buildSessionFactory(serviceRegistryObj);    
+		}
+		return factory;
+    }
+
+	static ArrayList<Category> categories = null;
+	static ArrayList<Area> areas = null;
+	static ArrayList<Transformer> transformers = null;
+
+	static ArrayList<Client> users = null;
+	static ArrayList<Administrator> administrators = null;
 
 	public static void main(String[] args) {
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Aire Acondicionado 3500", "Aire Acondicionado 3500", true, false, 1.613, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Aire Acondicionado 2200", "Aire Acondicionado 2200", true, true, 1.013, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV Tubo 21inch", "TV Tubo 21inch", false, false, 0.075, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("TV Tubo 21-34inch", "TV Tubo 21-34inch", false, false, 0.175, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 40inch", "LCD 40inch", false, false, 0.18, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 24inch", "LCD 24inch", true, true, 0.04, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 32inch", "LCD 32inch", true, true, 0.055, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("LCD 40inch", "LCD 40inch", true, true, 0.08, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Heladera Freezer", "Heladera Freezer", true, true, 0.09, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Heladera", "Heladera", true, true, 0.075, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lavarropas Auto 5kg Calentador", "Lavarropas Auto 5kg Calentador", false, false, 0.875, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lavarropas Auto 5kg", "Lavarropas Auto 5kg", true, true, 0.175, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lavarropas Semiauto 5kg", "Lavarropas Semiauto 5kg", false, true, 0.1275, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Ventilador de Pie", "Ventilador de Pie", false, true, 0.09, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Ventilador de Techo", "Ventilador de Techo", true, true, 0.06, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara Halógena 40W", "Lámpara Halógena 40W", true, false, 0.04, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara Halógena 60W", "Lámpara Halógena 60W", true, false, 0.06, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara Halógena 100W", "Lámpara Halógena 100W", true, false, 0.015, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara 11W", "Lámpara Halógena 15W", true, true, 0.011, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara 15W", "Lámpara Halógena 15W", true, true, 0.015, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Lámpara 20W", "Lámpara Halógena 20W", true, true, 0.02, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("PC Escritorio", "PC Escritorio", true, true, 0.4, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Microondas Convencional", "Microondas Convencional", false, true, 0.64, 0, 0, 0));
-		DeviceInfoTable.addDeviceInfo(new DeviceInfo("Plancha A Vapor", "Plancha A Vapor", false, true, 0.75, 0, 0, 0));
+		java.util.Properties properties = System.getProperties();
+	    properties.list(System.out);
 		
-		admin1 = new Administrator("admin", "admin", "Admin Admin", "Calle Falsa 1415", null);
-		
-		
-		Calendar calendarDate = Calendar.getInstance(
-				  TimeZone.getTimeZone("UTC"));
-		calendarDate.set(Calendar.YEAR, 2017);
-		calendarDate.set(Calendar.MONTH, 10);
-		calendarDate.set(Calendar.DAY_OF_MONTH, 15);
-		ArrayList<Residence> residences = new ArrayList<Residence>();
-		
-		Area area1 = new Area("Villa del Parque", (float) 4.5, null, new Point(3, 3), null);
-		
-		Category category = new Category("Residencial", 200, 500, new BigDecimal(500), new BigDecimal(1.5));
-		
-		client1 = new Client("name", "pass",
-				"Juan Perez", "Balcarce 50", calendarDate,
-				"DNI", "20469755", "43687952",
-				category, 13,
-				residences);
-		client1.setId(1l);
-
-		ArrayList<Device> devices = new ArrayList<Device>();
-		Residence residence = new Residence("Segurola y Habana", devices, client1, area1);
-		residence.setId(1l);
-		residences.add(residence);
-		
-		area1.setResidences(residences);
-		Transformer t = new Transformer(new Point(3, 3), area1);
-		t.setId(1l);
-		ArrayList<Transformer> transformers = new ArrayList<Transformer>();
-		transformers.add(t);
-		area1.setTransformers(transformers);
-		
-		List<StateHistory> stateHistoryList = new ArrayList<StateHistory>();
-		List<StateHistory> stateHistoryListTwo = new ArrayList<StateHistory>();
-		List<TimeIntervalDevice> timeIntervalList = new ArrayList<TimeIntervalDevice>();
-		List<TimeIntervalDevice> timeIntervalListTwo = new ArrayList<TimeIntervalDevice>();
-		
-		SmartDevice smart_device = new SmartDevice("La tele de la abuela", DeviceInfoTable.getDeviceByName("TV Tubo 21inch"), timeIntervalList, new DeviceOn());
-		smart_device.setId(1l);
-		SmartDevice smart_device_two = new SmartDevice("PC SUPER GAMER", DeviceInfoTable.getDeviceByName("PC Escritorio"), timeIntervalListTwo, new DeviceEnergySaving());
-		smart_device_two.setId(2l);
-		residence.addDevice(smart_device);
-		residence.addDevice(smart_device_two);
-		
-		ArrayList<Sensor> sensors = new ArrayList<Sensor>();
-		sensors.add(new TemperatureSensor(5, smart_device));
-		sensors.get(0).setId(1l);
-		
-		Actuator act = new Actuator(smart_device, new ArrayList<AutomationRule>(), sensors);
-		
-		
-		//DATA
-		ArrayList<Client> users = new ArrayList<Client>();
-		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
-		users.add(client1);
-		administrators.add(admin1);
+		loadData();
 		
 		staticFiles.location("/public/");
 		
@@ -159,7 +112,9 @@ public class SparkApp {
 	        } else {
 	        	model.with("current_user", user);
 	        }
-	        
+
+	        model.with("areas", areas);
+	        model.with("transformers", transformers);
 	        return template.render(model);
 		});
 		
@@ -306,7 +261,7 @@ public class SparkApp {
 	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")));
 	        } else {
 	        	List<TimeIntervalDevice> consumptionHistory = new ArrayList<TimeIntervalDevice>();
-	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOff());
+	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOn());
 	        }
 	        r.addDevice(d);
 
@@ -680,6 +635,22 @@ public class SparkApp {
 			        	}
 			        }		        	
 		        	return "";
+		        case "load_transformer_data":
+			        {
+			        	JtwigTemplate template = getTemplate("transformer_sidebar.html");
+				        JtwigModel model = JtwigModel.newModel();	
+
+				        Transformer tr = null;
+				        String tid = request.queryParams("tid");
+				        for(Transformer t : transformers) {
+				        	if((t.getId() + "").equals(tid)) {
+				        		tr = t;
+				        	}
+				        }
+				        
+				        model.with("transformer", tr);
+				        return template.render(model);
+			        }
 		        case "-1":
 				default:
 		        		break;
@@ -721,5 +692,28 @@ public class SparkApp {
         }
         return null;
 	}
+
+	private static void loadData() {		
+		Session session = getSessionFactory().openSession();
+		Transaction tx = null;
+		Long ID = null;
+		try {
+			DeviceInfoTable.setDevices((ArrayList<DeviceInfo>) session.createCriteria(DeviceInfo.class).list());
+
+			categories = (ArrayList<Category>) session.createCriteria(Category.class).list();
+			areas = (ArrayList<Area>) session.createCriteria(Area.class).list();
+			
+			transformers = (ArrayList<Transformer>) session.createCriteria(Transformer.class).list();
+			
+			administrators = (ArrayList<Administrator>) session.createCriteria(Administrator.class).list();
+			users = (ArrayList<Client>) session.createCriteria(Client.class).list();
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+	}
+
 
 }

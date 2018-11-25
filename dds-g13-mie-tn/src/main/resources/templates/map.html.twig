@@ -12,61 +12,63 @@
                 <i class="fas fa-solar-panel"></i>
             </button>
             <div id="tc" class="collapse transformer-menu">
-              <h2>Transformador<br> #21934237</h2>
-              <br>
-              <h3><b>ID</b>: 21934237</h3>
-              <br>
-              <h3><b>ÁREA</b>: CARLOS CARLOS CARLOS</h3>
-              <br>
-              <h3><b>SUMINISTRO ACTUAL</b>:</h3>
-              <br>
-              <label class="actual-transformer-consumption-map"><i class="fas fa-bolt"></i> 0.12</label>
+              
             </div>
         </div>
         <div class="map-box" id="mapa">
         </div>
         
     </div>
-    <script type="text/javascript">
-						$( document ).ready(function() {
-		mapa = L.map('mapa', {
-	    center: [-34.598313, -58.463745],
-	    zoom: 10,  
-	    minZoom: 4,
-	    maxZoom:17,
-	    zoomControl:true 
-		});
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	    attribution: ''}).addTo(mapa);
-		var marker = L.marker([-34.595444, -58.500822]).addTo(mapa).on('click', onClick);
-		var marker2 = L.marker([-34.598998,-58.511096]).addTo(mapa).on('click', onClick);
-		
-		var circle = L.circle(
-			    [-34.599108, -58.496969]
-			,{
-				 color: 'red',
-				 fillColor: 'red',
-			    fillOpacity: 0,
-			    radius: 2000
-			}).addTo(mapa);
-			
-		var circle2 = L.circle(
-			    [-34.579108, -58.496969]
-			,{
-				 color: '#323232',
-				 fillColor: '#c0c0c0',
-			    fillOpacity: 0.4,
-			    radius: 2000
-			}).addTo(mapa);
-	});
-	function onClick(e){
-		$('.transformer-menu').collapse("toggle");
-	}
-	
-	
+    <script type="text/javascript">    
+    	function displayTransformer(){
+        	if(!$(".transformer-menu").hasClass("show")) {
+        		$('.transformer-menu').collapse("toggle");
+			}    		
+    		$.ajax({
+			  type: "POST",
+			  url: "/ajax_utils/",
+			  data: {
+                    ajax_utility : "load_transformer_data",
+                    tid : tid
+				  },
+			  success: function(data) { $("#tc").html(data); }
+			});
+    	}
+    
+    	function addArea(mapa, x, y, radiusp, name) {
+    		//L.marker([x, y]).addTo(mapa).on('click', onClick);
+    		L.circle([x, y],
+    			{
+                    color: 'red',
+                    fillColor: 'red',
+                    fillOpacity: 0.2,
+                    radius: radiusp * 1000000
+    			}).addTo(mapa);
+        }
+    	function addTransformer(id, mapa, x, y) {
+    		L.marker([x, y]).addTo(mapa).on('click', function() {
+        		tid = id;
+        		displayTransformer();
+        		});
+        }
+    
+		$( document ).ready(function() {
+    		mapa = L.map('mapa', {
+        	    center: [-34.598313, -58.463745],
+        	    zoom: 10,  
+        	    minZoom: 4,
+        	    maxZoom:17,
+        	    zoomControl:true 
+    		});
+    		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(mapa);
 
-			 			</script>
+    		{% for area in areas %}
+    			addArea(mapa, {{area.coordX}}, {{area.coordY}}, {{area.radius}}, "Marker");
+    		{% endfor %}
+    		{% for transformer in transformers %}
+    			addTransformer({{transformer.id}}, mapa, {{transformer.coordX}}, {{transformer.coordY}});
+    		{% endfor %}
+		});
+	</script>
 			 		
-{% endblock %}	
-{% block footer %}
 {% endblock %}

@@ -23,6 +23,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.apache.commons.math3.optim.PointValuePair;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.google.gson.annotations.Expose;
 
@@ -50,7 +52,8 @@ public class Residence extends BeanToJson {
 	@Column(name="address")
 	@Expose String address;
 
-	@OneToMany(mappedBy = "residence" , cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "residence" , cascade = {CascadeType.ALL})
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Expose List<Device> devices;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})

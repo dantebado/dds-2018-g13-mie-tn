@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.google.gson.annotations.Expose;
 
 import ar.utn.frba.dds.g13.transformer.Transformer;
@@ -43,10 +46,12 @@ public class Area {
 	@Transient
     Point coordinate;
 	
-	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL})
+	@LazyCollection(LazyCollectionOption.FALSE)
     List<Transformer> transformers;
 
-	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "area" , cascade = {CascadeType.ALL})
+	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Residence> residences;
 	
 	public Long getId() {
@@ -125,10 +130,6 @@ public class Area {
     
     public Transformer assignTransformer(Point point) {
     	Transformer t = transformers.get(0);
-    	System.out.println("TRANSFORMERS " + transformers.size());
-    	System.out.println("ASDASD " + t.getId());
-    	System.out.println("X " + this.coordX);
-    	System.out.println("POS " + t.getCoordinate().getX());
     	double dist = t.getCoordinate().distance(point);
     	for(Transformer tt : transformers) {
     		double tdistv = tt.getCoordinate().distance(point);
@@ -143,7 +144,9 @@ public class Area {
 	public List<Residence> getResidencesByTransformer(Transformer transformer) {
 		ArrayList<Residence> residences = new ArrayList<Residence>();
 		for(Residence r : this.residences) {
-			if(r.getTransformer().getId() == transformer.getId()) {
+			Long rid = r.getTransformer().getId();
+			if(rid == transformer.getId()) {
+				System.out.println("         SI " + r.actualConsumption().doubleValue());
 				residences.add(r);
 			}
 		}

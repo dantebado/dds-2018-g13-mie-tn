@@ -41,7 +41,7 @@ public class Transformer extends BeanToJson{
 	@Column(name="y")
 	@Expose double coordY;
 	
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="area_id")
 	@Expose Area area;    
     
@@ -83,6 +83,7 @@ public class Transformer extends BeanToJson{
 	}
 	
 	public List<Residence> getResidences(){
+		System.out.println("RESIDENCES BY TRANSFORMER " + this.getId());
 		return area.getResidencesByTransformer(this);
 	}
 
