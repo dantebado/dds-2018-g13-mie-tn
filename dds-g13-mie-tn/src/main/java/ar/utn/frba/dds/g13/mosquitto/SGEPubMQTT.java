@@ -19,7 +19,7 @@ public class SGEPubMQTT {
     	recievedMode = null;
 
         String mqttId = MqttClient.generateClientId();
-        MqttClient client = new MqttClient("tcp://localhost:1883", mqttId);
+        MqttClient client = new MqttClient("tcp://52.14.65.40:1883", mqttId);
         client.connect();
         	
         String payload;

@@ -52,9 +52,6 @@ import spark.Request;
 
 public class SparkApp {
 	
-	public static Client client1;
-	public static Administrator admin1;
-	
 	public static JtwigTemplate getTemplate(String filename) {
 		return JtwigTemplate.fileTemplate( Paths.get("src", "main", "resources", "templates", filename + ".twig").toFile() );
 	}

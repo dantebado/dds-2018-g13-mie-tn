@@ -32,7 +32,7 @@ public class DispPubMQTT {
 
         System.out.println("== START " + name + " PUBLISHER ==");
         
-        MqttClient client = new MqttClient("tcp://localhost:1883", mqttiId);
+        MqttClient client = new MqttClient("tcp://52.14.65.40:1883", mqttiId);
         client.connect();
 
 
