@@ -38,13 +38,13 @@ public class SGESubMQTT {
             	
             	System.out.println("Received JSON:" + new String(base64Decoded));	
             	
-            	JSONObject Pubmessage = new JSONObject(new String(base64Decoded));
+            	/*JSONObject Pubmessage = new JSONObject(new String(base64Decoded));
             	String receivedId = Pubmessage.getString("id");
             	String receivedName = Pubmessage.getString("name");
             	String receivedMessure = Pubmessage.getString("messure");
             	int receivedValue = Pubmessage.getInt("value");
             	
-            	listaMediciones.put(Pubmessage);
+            	listaMediciones.put(Pubmessage);*/
             	//REFACTOR sendNewMessure(receivedId, receivedValue);
             }
 
