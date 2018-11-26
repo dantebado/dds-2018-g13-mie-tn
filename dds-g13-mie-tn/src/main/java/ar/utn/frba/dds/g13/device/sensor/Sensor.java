@@ -31,6 +31,7 @@ import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.SmartDevice;
 import ar.utn.frba.dds.g13.device.automation.Actuator;
 import ar.utn.frba.dds.g13.device.automation.rules.AutomationRule;
+import ar.utn.frba.dds.g13.mosquitto.RecivedMeasure;
 import ar.utn.frba.dds.g13.mosquitto.SGESubMQTT;
 
 @Entity
@@ -145,24 +146,22 @@ public abstract class Sensor extends Thread {
 	}
 	
 	public static Measure getNextMeasure(long id) {
-		JSONArray messures = SGESubMQTT.getListaMediciones();
+		List<RecivedMeasure> messures = SGESubMQTT.getListaMediciones();
 		if (messures != null) {
-			JSONArray newMessures = null;
-			JSONObject messureFounded = null;
+			List<RecivedMeasure> newMessures = null;
+			RecivedMeasure messureFounded = null;
 			boolean noneFounded = true;
-			for (int i = 0; (i < messures.length()); ++i) {
-				JSONObject obj = messures.getJSONObject(i);
-				String nextId = obj.getString("id_estado");
-				if (nextId.equals(Long.toString(id)) || noneFounded) {
-					messureFounded = messures.getJSONObject(i);
+			for(RecivedMeasure rm : SGESubMQTT.getListaMediciones()) {
+				if ((rm.getId()).equals(Long.toString(id)) || noneFounded) {
+					messureFounded = rm;
 					noneFounded = false;
 				}
 				else {
-					newMessures.put(messures.getJSONObject(i));
+					newMessures.add(rm);
 				}
 			}
 			SGESubMQTT.setListaMediciones(newMessures);
-			return new Measure(new BigDecimal(messureFounded.getString("value")), messureFounded.getString("messure"));	
+			return new Measure(new BigDecimal(messureFounded.getValue()), messureFounded.getMessure());	
 		}
 		return null;
 	}

@@ -1,27 +1,32 @@
 package ar.utn.frba.dds.g13.mosquitto;
 
+import java.util.List;
+
 import javax.xml.bind.DatatypeConverter;
 import org.eclipse.paho.client.mqttv3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ar.utn.frba.dds.g13.device.Device;
+
 public class SGESubMQTT {
-	public static JSONArray listaMediciones = new JSONArray();
+	public static List<RecivedMeasure> listaMediciones;
 	public static boolean listaOnUse = false;
+
 	
-    public static JSONArray getListaMediciones() {
-    	if (!listaOnUse) {
+	public static List<RecivedMeasure> getListaMediciones() {
+		if (!listaOnUse) {
     		listaOnUse = true;
     		return listaMediciones;
     	}
     	return null;
 	}
-
-	public static void setListaMediciones(JSONArray listaMediciones) {
+	
+	public static void setListaMediciones(List<RecivedMeasure> listaMediciones) {
 		SGESubMQTT.listaMediciones = listaMediciones;
 		listaOnUse = false;
 	}
-
+	
 	public static void main(String[] args) throws MqttException, InterruptedException {
         
         System.out.println("== START SGE SUBSCRIBER ==");
@@ -38,13 +43,14 @@ public class SGESubMQTT {
             	
             	System.out.println("Received JSON:" + new String(base64Decoded));	
             	
-            	/*JSONObject Pubmessage = new JSONObject(new String(base64Decoded));
+            	JSONObject Pubmessage = new JSONObject(new String(base64Decoded));
             	String receivedId = Pubmessage.getString("id");
             	String receivedName = Pubmessage.getString("name");
             	String receivedMessure = Pubmessage.getString("messure");
             	int receivedValue = Pubmessage.getInt("value");
+            	RecivedMeasure Messure = new RecivedMeasure(receivedId,receivedName,receivedMessure,receivedValue);
             	
-            	listaMediciones.put(Pubmessage);*/
+            	listaMediciones.add(Messure);
             	//REFACTOR sendNewMessure(receivedId, receivedValue);
             }
 
