@@ -281,9 +281,6 @@ public class SparkApp {
 		
 		get("/client/residence/automation", (request, response) -> {
 			System.out.println(Actuator.GLOBAL_ACTUATORS.size());
-			Actuator a = Actuator.GLOBAL_ACTUATORS.get(0);
-			System.out.println(a.getSensors().size());
-			System.out.println(a.getRules().size());
 	        Client client = (Client) loadUser(request);
 	        JtwigTemplate template = getTemplate("client_automation.html");
 	        JtwigModel model = JtwigModel.newModel();

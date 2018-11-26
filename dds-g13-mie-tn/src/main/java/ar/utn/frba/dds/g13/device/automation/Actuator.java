@@ -117,7 +117,7 @@ public class Actuator {
 	
 	private void sendActionsToDevice(List<DeviceAction> actions) throws MqttException, InterruptedException {
 		for(DeviceAction action : actions) {
-			action.execute(smartdevice);
+			action.execute(smartdevice, this);
 		}
 	}
 	

@@ -5,7 +5,7 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.json.JSONObject;
 
 public class DispSubMQTT {
-	public static String State = "OFF";
+	public static String State = "ON";
 	public static String Mode = "INTELIGENTE";
 	
     public static void main(String[] args) throws MqttException, InterruptedException {

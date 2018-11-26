@@ -33,6 +33,6 @@ public abstract class DeviceAction {
 		this.id = id;
 	}
 	
-	public abstract void execute(SmartDevice device) throws MqttException, InterruptedException;
+	public abstract void execute(SmartDevice device, Actuator actuator) throws MqttException, InterruptedException;
 
 }

@@ -128,18 +128,14 @@ public class SmartDevice extends Device implements Turnable {
 
 	public void turnOn() throws MqttException, InterruptedException {
 		state.turnOn(this);
-		SGEPubMQTT.sendAction(Long.toString(this.getId()), "ENCENDER", "INTELIGENTE");
 	}
 
 	public void turnOff() throws MqttException, InterruptedException {
-		System.out.println(state);
 		state.turnOff(this);
-		SGEPubMQTT.sendAction(Long.toString(this.getId()), "APAGAR", "INTELIGENTE");
 	}
 
 	public void turnEnergySaving() throws MqttException, InterruptedException {
 		state.turnEnergySaving(this);
-		SGEPubMQTT.sendAction(Long.toString(this.getId()), "MODO AHORRO ENERGIA", "INTELIGENTE");
 	}
 
 	@Override
