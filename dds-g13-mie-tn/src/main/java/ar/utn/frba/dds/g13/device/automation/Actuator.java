@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.google.gson.annotations.Expose;
 
@@ -40,19 +42,20 @@ public class Actuator {
 	private Long id;
 	
 	@OneToMany(mappedBy = "actuator" , cascade = {CascadeType.ALL})
+	@LazyCollection(LazyCollectionOption.FALSE)
 	List<AutomationRule> rules;
 	
 	@ManyToMany(
-			cascade = { CascadeType.ALL },
-			fetch = FetchType.EAGER)
+			cascade = { CascadeType.ALL })
     @JoinTable(
         name = "ActuatorSensor", 
         joinColumns = { @JoinColumn(name = "actuator_id") }, 
         inverseJoinColumns = { @JoinColumn(name = "sensor_id") }
     )
+	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Sensor> sensors;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="device_id")
 	@Expose SmartDevice smartdevice;
 	

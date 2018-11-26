@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
+import ar.utn.frba.dds.g13.device.states.DeviceOn;
 import ar.utn.frba.dds.g13.device.states.DeviceState;
 import ar.utn.frba.dds.g13.device.states.Turnable;
 import ar.utn.frba.dds.g13.mosquitto.SGEPubMQTT;
@@ -69,6 +70,7 @@ public class SmartDevice extends Device implements Turnable {
 
 	public SmartDevice(){
 		super();
+		if(state == null) state = new DeviceOn();
 	}
 	
 	public SmartDevice(String name,
@@ -130,6 +132,7 @@ public class SmartDevice extends Device implements Turnable {
 	}
 
 	public void turnOff() throws MqttException, InterruptedException {
+		System.out.println(state);
 		state.turnOff(this);
 		SGEPubMQTT.sendAction(Long.toString(this.getId()), "APAGAR", "INTELIGENTE");
 	}

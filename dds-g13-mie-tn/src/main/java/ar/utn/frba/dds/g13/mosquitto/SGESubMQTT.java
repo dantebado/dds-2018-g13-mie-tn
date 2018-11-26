@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import ar.utn.frba.dds.g13.device.Device;
 
-public class SGESubMQTT {
+public class SGESubMQTT extends Thread {
 	public static List<RecivedMeasure> listaMediciones = new ArrayList<RecivedMeasure>();
 	public static boolean listaOnUse = false;
 
@@ -25,12 +25,17 @@ public class SGESubMQTT {
 		listaOnUse = false;
 	}
 	
-	public static void main(String[] args) throws MqttException, InterruptedException {
+	public void run() {
         
         System.out.println("== START SGE SUBSCRIBER ==");
 
         String mqttId = MqttClient.generateClientId();
-        MqttClient client = new MqttClient("tcp://52.14.65.40:1883", mqttId);
+        MqttClient client = null;
+		try {
+			client = new MqttClient("tcp://52.14.65.40:1883", mqttId);
+		} catch (MqttException e) {
+			e.printStackTrace();
+		}
         client.setCallback(new MqttCallback() {
             public void connectionLost(Throwable throwable) {
                 System.out.println("Connection to MQTT broker lost!");
@@ -55,9 +60,19 @@ public class SGESubMQTT {
             public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
             }
         });
-        client.connect();
+        try {
+			client.connect();
+		} catch (MqttSecurityException e) {
+			e.printStackTrace();
+		} catch (MqttException e) {
+			e.printStackTrace();
+		}
 
-        client.subscribe("measurement");
+        try {
+			client.subscribe("measurement");
+		} catch (MqttException e) {
+			e.printStackTrace();
+		}
         System.out.println("Mqtt successfully subscribed");
 
 

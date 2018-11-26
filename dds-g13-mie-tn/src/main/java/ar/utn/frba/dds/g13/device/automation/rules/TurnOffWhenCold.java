@@ -24,9 +24,12 @@ public class TurnOffWhenCold extends AutomationRule {
 	protected List<DeviceAction> getActionsToExecute(List<Measure> measures) {
 		List<DeviceAction> actions = new ArrayList<DeviceAction>();
 		for(Measure measure : measures) {
-			if(measure.getMagnitude() == "TEMPERATURE") {
-				if(measure.getValue().compareTo(new BigDecimal(20)) < 0) {
+			System.out.println(measure.getMagnitude() + " " + measure.getValue());
+			if(measure.getMagnitude().equalsIgnoreCase("temperature")) {
+				System.out.println(measure.getValue().doubleValue());
+				if(measure.getValue().doubleValue() < 20) {
 					actions.add(new AutomationTurnOff());
+					System.out.println("TURN OFF");
 				}
 			}
 		}

@@ -43,6 +43,8 @@ public abstract class Sensor extends Thread {
 	@Transient
 	public static String[] types = {"Estado de Dispositivo",	//0
 									"Temperatura"};				//1
+	@Transient
+	public boolean started = false;
 	
 	public static Class searchClassByType(int type) {
 		switch(type) {
@@ -145,18 +147,21 @@ public abstract class Sensor extends Thread {
 			nm.setSensor(this);
 			lastMeasure = nm;
 		}
-		System.out.println("      " + nm);
-		return nm;
+		if(lastMeasure != null)
+			System.out.println("      " + lastMeasure.getValue());
+		return lastMeasure;
 	}
 	
 	public static Measure getNextMeasure(long id) {
 		List<RecivedMeasure> messures = SGESubMQTT.getListaMediciones();
 		if (messures != null && messures.size() != 0) {
-			List<RecivedMeasure> newMessures = null;
+			List<RecivedMeasure> newMessures = new ArrayList<RecivedMeasure>();
 			RecivedMeasure messureFounded = null;
 			boolean noneFounded = true;
-			for(RecivedMeasure rm : SGESubMQTT.getListaMediciones()) {
-				if ((rm.getId()).equals(Long.toString(id)) || noneFounded) {
+			
+			for(RecivedMeasure rm : messures) {
+				if ((rm.getId()).equals(Long.toString(id)) && noneFounded) {
+					System.out.println("   founded");
 					messureFounded = rm;
 					noneFounded = false;
 				}
@@ -164,6 +169,7 @@ public abstract class Sensor extends Thread {
 					newMessures.add(rm);
 				}
 			}
+			
 			SGESubMQTT.setListaMediciones(newMessures);
 			if(noneFounded) {
 				return null;
@@ -183,10 +189,8 @@ public abstract class Sensor extends Thread {
 					try {
 						actuator.notifySensorChange();
 					} catch (MqttException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

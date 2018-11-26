@@ -49,6 +49,18 @@ public abstract class AutomationRule {
 		}
 	}
 	
+	public static AutomationRule createRuleByType(String type_p) {
+		int type = getRuleIndexByName(type_p);
+		switch(type) {
+			case 0:
+				return new TurnOffWhenCold();
+			case 1:
+				return new TurnEnergySavingRule();
+			default:
+				return null;
+		}
+	}
+	
 	public static int getRuleIndexByName(String name) {
 		int i=0;
 		for(String s : rules_names) {
@@ -94,6 +106,11 @@ public abstract class AutomationRule {
 	
 	public List<DeviceAction> analyze(List<Measure> measures) {
 		List<DeviceAction> actions = new ArrayList<DeviceAction>();
+		for(Measure m : measures) {
+			if(m == null) {
+				return actions;
+			}
+		}
 		actions.addAll(getActionsToExecute(measures));
 		return actions;
 	}

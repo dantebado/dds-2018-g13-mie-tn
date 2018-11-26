@@ -43,6 +43,7 @@ import ar.utn.frba.dds.g13.device.sensor.TemperatureSensor;
 import ar.utn.frba.dds.g13.device.states.DeviceEnergySaving;
 import ar.utn.frba.dds.g13.device.states.DeviceOff;
 import ar.utn.frba.dds.g13.device.states.DeviceOn;
+import ar.utn.frba.dds.g13.mosquitto.SGESubMQTT;
 import ar.utn.frba.dds.g13.transformer.Transformer;
 import ar.utn.frba.dds.g13.user.Administrator;
 import ar.utn.frba.dds.g13.user.Client;
@@ -79,8 +80,18 @@ public class SparkApp {
 	public static void main(String[] args) {
 		java.util.Properties properties = System.getProperties();
 	    properties.list(System.out);
+	    
+	    new SGESubMQTT().start();
 		
 		loadData();
+		for(Actuator a : Actuator.GLOBAL_ACTUATORS) {
+			for(Sensor s : a.getSensors()) {
+				if(!s.started) {
+					s.started = true;
+					s.start();	
+				}
+			}
+		}
 		
 		staticFiles.location("/public/");
 		
@@ -269,6 +280,10 @@ public class SparkApp {
 		});
 		
 		get("/client/residence/automation", (request, response) -> {
+			System.out.println(Actuator.GLOBAL_ACTUATORS.size());
+			Actuator a = Actuator.GLOBAL_ACTUATORS.get(0);
+			System.out.println(a.getSensors().size());
+			System.out.println(a.getRules().size());
 	        Client client = (Client) loadUser(request);
 	        JtwigTemplate template = getTemplate("client_automation.html");
 	        JtwigModel model = JtwigModel.newModel();
@@ -419,6 +434,7 @@ public class SparkApp {
         				}
         			}
         		}
+        		a_rules.add(AutomationRule.createRuleByType(AutomationRule.rules_names[tindex]));
 
 		        Actuator n_act = new Actuator(d, a_rules, a_sensors);
 		        
