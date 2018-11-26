@@ -125,6 +125,8 @@ public abstract class Sensor extends Thread {
 		this.intervalInSeconds = intervalInSeconds;
 		this.device = device;
 		actuatorsToNotify = new ArrayList<Actuator>();
+		
+		this.start();
 	}
 	
 	public void addActuatorToNotify(Actuator actuator) {
@@ -137,17 +139,19 @@ public abstract class Sensor extends Thread {
 	
 	private Measure measure() {
 		//Measure nm = measureValue();
-		Measure nm = getNextMeasure(id);
+		Measure nm = Sensor.getNextMeasure(id);
+		System.out.println("SENSOR " + id + " MIDIENDO ");
 		if (nm != null) {
 			nm.setSensor(this);
 			lastMeasure = nm;
 		}
+		System.out.println("      " + nm);
 		return nm;
 	}
 	
 	public static Measure getNextMeasure(long id) {
 		List<RecivedMeasure> messures = SGESubMQTT.getListaMediciones();
-		if (messures != null) {
+		if (messures != null && messures.size() != 0) {
 			List<RecivedMeasure> newMessures = null;
 			RecivedMeasure messureFounded = null;
 			boolean noneFounded = true;
@@ -161,6 +165,9 @@ public abstract class Sensor extends Thread {
 				}
 			}
 			SGESubMQTT.setListaMediciones(newMessures);
+			if(noneFounded) {
+				return null;
+			}
 			return new Measure(new BigDecimal(messureFounded.getValue()), messureFounded.getMessure());	
 		}
 		return null;

@@ -114,9 +114,12 @@ public class Client extends User {
 	
 	public ArrayList<Sensor> getSensorCollection() {
 		ArrayList<Sensor> ss = new ArrayList<Sensor>();
-		for(Actuator a : Actuator.GLOBAL_ACTUATORS) {
-			if(a.getDevice().getResidence().getClient().getId() == this.getId()) {
-				ss.addAll(a.getSensors());
+		System.out.println(ss.size());
+		if(ss.size() != 0) {
+			for(Actuator a : Actuator.GLOBAL_ACTUATORS) {
+				if(a.getDevice().getResidence().getClient().getId() == this.getId()) {
+					ss.addAll(a.getSensors());
+				}
 			}
 		}
 		return ss;

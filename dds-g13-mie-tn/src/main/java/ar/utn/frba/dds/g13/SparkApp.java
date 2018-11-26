@@ -261,6 +261,8 @@ public class SparkApp {
 	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOn());
 	        }
 	        r.addDevice(d);
+	        
+	        saveData();
 
         	response.redirect("/");
 	        return null;
@@ -419,6 +421,8 @@ public class SparkApp {
         		}
 
 		        Actuator n_act = new Actuator(d, a_rules, a_sensors);
+		        
+		        saveData();
 	        }
 	        
         	response.redirect("/client/residence?rid=" + rid);
@@ -704,6 +708,7 @@ public class SparkApp {
 			
 			administrators = (ArrayList<Administrator>) session.createCriteria(Administrator.class).list();
 			users = (ArrayList<Client>) session.createCriteria(Client.class).list();
+			Actuator.GLOBAL_ACTUATORS = (ArrayList<Actuator>) session.createCriteria(Actuator.class).list();
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace(); 
@@ -711,6 +716,25 @@ public class SparkApp {
 			session.close();
 		}
 	}
-
+	
+	private static void saveData() {
+		Session session = getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		Long ID = null;
+		try {
+			for(Client c : users) {
+				session.saveOrUpdate(c);
+			}
+			for(Actuator a : Actuator.GLOBAL_ACTUATORS) {
+				session.saveOrUpdate(a);
+			}
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		} finally {
+			session.close();
+		}
+	}
 
 }

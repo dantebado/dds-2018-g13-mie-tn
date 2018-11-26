@@ -1,5 +1,7 @@
 package ar.utn.frba.dds.g13.mosquitto;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
@@ -10,16 +12,12 @@ import org.json.JSONObject;
 import ar.utn.frba.dds.g13.device.Device;
 
 public class SGESubMQTT {
-	public static List<RecivedMeasure> listaMediciones;
+	public static List<RecivedMeasure> listaMediciones = new ArrayList<RecivedMeasure>();
 	public static boolean listaOnUse = false;
 
 	
 	public static List<RecivedMeasure> getListaMediciones() {
-		if (!listaOnUse) {
-    		listaOnUse = true;
-    		return listaMediciones;
-    	}
-    	return null;
+		return listaMediciones;
 	}
 	
 	public static void setListaMediciones(List<RecivedMeasure> listaMediciones) {
@@ -44,10 +42,10 @@ public class SGESubMQTT {
             	System.out.println("Received JSON:" + new String(base64Decoded));	
             	
             	JSONObject Pubmessage = new JSONObject(new String(base64Decoded));
-            	String receivedId = Pubmessage.getString("id");
-            	String receivedName = Pubmessage.getString("name");
-            	String receivedMessure = Pubmessage.getString("messure");
-            	int receivedValue = Pubmessage.getInt("value");
+            	String receivedId = Pubmessage.get("id").toString();
+            	String receivedName = Pubmessage.get("name").toString();
+            	String receivedMessure = Pubmessage.get("measure").toString();
+            	int receivedValue = Integer.parseInt(Pubmessage.get("value").toString());
             	RecivedMeasure Messure = new RecivedMeasure(receivedId,receivedName,receivedMessure,receivedValue);
             	
             	listaMediciones.add(Messure);

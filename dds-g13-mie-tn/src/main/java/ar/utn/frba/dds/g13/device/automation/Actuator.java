@@ -103,7 +103,9 @@ public class Actuator {
 		for(AutomationRule rule : rules) {
 			rule.setActuator(this);
 		}
-		Actuator.GLOBAL_ACTUATORS.add(this);
+		if(!Actuator.GLOBAL_ACTUATORS.contains(this)) {
+			Actuator.GLOBAL_ACTUATORS.add(this);	
+		}
 	}
 	
 	public void notifySensorChange() throws MqttException, InterruptedException {
