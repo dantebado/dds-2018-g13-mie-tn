@@ -24,16 +24,22 @@
         	if(!$(".transformer-menu").hasClass("show")) {
         		$('.transformer-menu').collapse("toggle");
 			}    		
-    		$.ajax({
-			  type: "POST",
-			  url: "/ajax_utils/",
-			  data: {
-                    ajax_utility : "load_transformer_data",
-                    tid : tid
-				  },
-			  success: function(data) { $("#tc").html(data); }
-			});
+    		updateTData();
     	}
+
+    	function updateTData() {
+        	if(tid != -1) {
+        		$.ajax({
+    			  type: "POST",
+    			  url: "/ajax_utils/",
+    			  data: {
+                        ajax_utility : "load_transformer_data",
+                        tid : tid
+    				  },
+    			  success: function(data) { $("#tc").html(data); }
+    			});
+            }
+        }
     
     	function addArea(mapa, x, y, radiusp, name) {
     		//L.marker([x, y]).addTo(mapa).on('click', onClick);
@@ -47,11 +53,12 @@
         }
     	function addTransformer(id, mapa, x, y) {
     		L.marker([x, y]).addTo(mapa).on('click', function() {
-        		tid = id;
-        		displayTransformer();
+            		tid = id;
+            		displayTransformer();
         		});
         }
-    
+
+    	var tid = -1;
 		$( document ).ready(function() {
     		mapa = L.map('mapa', {
         	    center: [-34.598313, -58.463745],
@@ -68,6 +75,10 @@
     		{% for transformer in transformers %}
     			addTransformer({{transformer.id}}, mapa, {{transformer.coordX}}, {{transformer.coordY}});
     		{% endfor %}
+
+    		setInterval(function() {
+    			updateTData();
+        		}, 1000)
 		});
 	</script>
 			 		
