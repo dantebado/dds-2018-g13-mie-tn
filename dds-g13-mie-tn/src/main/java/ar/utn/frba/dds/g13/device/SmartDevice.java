@@ -19,11 +19,16 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import ar.utn.frba.dds.g13.device.deviceinfo.DeviceInfo;
 import ar.utn.frba.dds.g13.device.states.DeviceOn;
 import ar.utn.frba.dds.g13.device.states.DeviceState;
 import ar.utn.frba.dds.g13.device.states.Turnable;
+import ar.utn.frba.dds.g13.mosquitto.HibernateUtil;
 import ar.utn.frba.dds.g13.mosquitto.SGEPubMQTT;
 
 
@@ -71,6 +76,23 @@ public class SmartDevice extends Device implements Turnable {
 	public SmartDevice(){
 		super();
 		if(state == null) state = new DeviceOn();
+	} 
+	
+	public SmartDevice getSmartDeviceById(Long device_id) {
+	    Session session = null;
+	    Object device = null;
+	    try {
+	        session = HibernateUtil.getSessionFactory().openSession();
+	        device = (SmartDevice)session.load(SmartDevice.class, device_id);
+	        Hibernate.initialize(device);
+	    } catch (Exception e) {
+	       e.printStackTrace();
+	    } finally {
+	        if (session != null && session.isOpen()) {
+	            session.close();
+	        }
+	    }
+	    return (SmartDevice) device;
 	}
 	
 	public SmartDevice(String name,
