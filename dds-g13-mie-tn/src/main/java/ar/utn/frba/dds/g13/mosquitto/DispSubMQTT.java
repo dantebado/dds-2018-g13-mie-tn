@@ -16,7 +16,7 @@ public class DispSubMQTT {
     	System.out.println("== START " + name + " SUBSCRIBER ==");
 
         String mqttId = MqttClient.generateClientId();
-        MqttClient client = new MqttClient("tcp://52.14.65.40:1883", mqttId);
+        MqttClient client = new MqttClient("tcp://3.16.14.197:1883", mqttId);
         client.setCallback(new MqttCallback() {
             public void connectionLost(Throwable throwable) {
                 System.out.println("Connection to MQTT broker lost!");

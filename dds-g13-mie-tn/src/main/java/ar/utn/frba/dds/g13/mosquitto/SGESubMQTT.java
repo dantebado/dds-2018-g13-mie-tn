@@ -37,7 +37,7 @@ public class SGESubMQTT extends Thread {
         String mqttId = MqttClient.generateClientId();
         MqttClient client = null;
 		try {
-			client = new MqttClient("tcp://52.14.65.40:1883", mqttId);
+			client = new MqttClient("tcp://3.16.14.197:1883", mqttId);
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}

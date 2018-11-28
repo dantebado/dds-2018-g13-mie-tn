@@ -28,7 +28,7 @@ public class ClientController {
     	Scanner scanner = new Scanner(System.in);
         String mqttiId = MqttClient.generateClientId();
         
-        MqttClient client = new MqttClient("tcp://52.14.65.40:1883", mqttiId);
+        MqttClient client = new MqttClient("tcp://3.16.14.197:1883", mqttiId);
         client.connect();
 
     	System.out.println("== START CLIENT CONTROLLER ==");
