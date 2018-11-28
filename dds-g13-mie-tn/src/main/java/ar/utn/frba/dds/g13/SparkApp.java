@@ -53,6 +53,8 @@ import spark.Request;
 
 public class SparkApp {
 	
+	public static String MQTTIP = "tcp://18.191.251.115:1883";
+	
 	public static JtwigTemplate getTemplate(String filename) {
 		return JtwigTemplate.fileTemplate( Paths.get("src", "main", "resources", "templates", filename + ".twig").toFile() );
 	}
@@ -101,6 +103,8 @@ public class SparkApp {
 		}
 		
 		staticFiles.location("/public/");
+		
+		port(80);
 		
 		get("/test_twig", (req, res) -> {
 			

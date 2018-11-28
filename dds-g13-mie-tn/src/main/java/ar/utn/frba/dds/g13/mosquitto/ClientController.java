@@ -8,6 +8,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 
+import ar.utn.frba.dds.g13.SparkApp;
 import ar.utn.frba.dds.g13.device.SmartDevice;
 import ar.utn.frba.dds.g13.device.automation.Actuator;
 
@@ -28,7 +29,7 @@ public class ClientController {
     	Scanner scanner = new Scanner(System.in);
         String mqttiId = MqttClient.generateClientId();
         
-        MqttClient client = new MqttClient("tcp://3.16.14.197:1883", mqttiId);
+        MqttClient client = new MqttClient(SparkApp.MQTTIP, mqttiId);
         client.connect();
 
     	System.out.println("== START CLIENT CONTROLLER ==");

@@ -4,6 +4,9 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
+
+import ar.utn.frba.dds.g13.SparkApp;
+
 import javax.xml.bind.DatatypeConverter;
 
 import java.util.Random;
@@ -32,7 +35,7 @@ public class DispPubMQTT {
 
         System.out.println("== START " + name + " PUBLISHER ==");
         
-        MqttClient client = new MqttClient("tcp://3.16.14.197:1883", mqttiId);
+        MqttClient client = new MqttClient(SparkApp.MQTTIP, mqttiId);
         client.connect();
 
 

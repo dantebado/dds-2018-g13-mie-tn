@@ -4,6 +4,8 @@ import javax.xml.bind.DatatypeConverter;
 import org.eclipse.paho.client.mqttv3.*;
 import org.json.JSONObject;
 
+import ar.utn.frba.dds.g13.SparkApp;
+
 public class DispSubMQTT {
 	public static String State = "ON";
 	public static String Mode = "INTELIGENTE";
@@ -16,7 +18,7 @@ public class DispSubMQTT {
     	System.out.println("== START " + name + " SUBSCRIBER ==");
 
         String mqttId = MqttClient.generateClientId();
-        MqttClient client = new MqttClient("tcp://3.16.14.197:1883", mqttId);
+        MqttClient client = new MqttClient(SparkApp.MQTTIP, mqttId);
         client.setCallback(new MqttCallback() {
             public void connectionLost(Throwable throwable) {
                 System.out.println("Connection to MQTT broker lost!");

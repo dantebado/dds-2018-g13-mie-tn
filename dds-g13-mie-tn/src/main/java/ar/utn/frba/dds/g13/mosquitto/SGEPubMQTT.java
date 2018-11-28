@@ -7,6 +7,8 @@ import javax.xml.bind.DatatypeConverter;
 import org.eclipse.paho.client.mqttv3.*;
 import org.json.JSONObject;
 
+import ar.utn.frba.dds.g13.SparkApp;
+
 public class SGEPubMQTT {
     
 	public static void sendAction(String recievedId, String recievedAction, String recievedMode)throws MqttException, InterruptedException {
@@ -19,7 +21,7 @@ public class SGEPubMQTT {
     	recievedMode = null;
 
         String mqttId = MqttClient.generateClientId();
-        MqttClient client = new MqttClient("tcp://3.16.14.197:1883", mqttId);
+        MqttClient client = new MqttClient(SparkApp.MQTTIP, mqttId);
         client.connect();
         	
         String payload;

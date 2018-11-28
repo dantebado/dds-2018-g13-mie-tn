@@ -9,6 +9,7 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ar.utn.frba.dds.g13.SparkApp;
 import ar.utn.frba.dds.g13.device.Device;
 import ar.utn.frba.dds.g13.device.automation.Actuator;
 import ar.utn.frba.dds.g13.device.automation.AutomationTurnEnergySaving;
@@ -37,7 +38,7 @@ public class SGESubMQTT extends Thread {
         String mqttId = MqttClient.generateClientId();
         MqttClient client = null;
 		try {
-			client = new MqttClient("tcp://3.16.14.197:1883", mqttId);
+			client = new MqttClient(SparkApp.MQTTIP, mqttId);
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
