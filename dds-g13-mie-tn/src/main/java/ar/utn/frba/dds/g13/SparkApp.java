@@ -171,6 +171,7 @@ public class SparkApp {
 		
 		get("/client/residence", (request, response) -> {
 	        Client client = (Client) loadUser(request);
+	        if(client == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("client_home.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "client_home");
@@ -201,6 +202,7 @@ public class SparkApp {
 		
 		get("/client/residence/devices", (request, response) -> {
 	        Client client = (Client) loadUser(request);
+	        if(client == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("client_devices.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "client_home");
@@ -231,6 +233,7 @@ public class SparkApp {
 		
 		get("/client/residence/devices/load", (request, response) -> {
 	        Client client = (Client) loadUser(request);
+	        if(client == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("client_devices_load.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "client_home");
@@ -288,6 +291,7 @@ public class SparkApp {
 		
 		get("/client/residence/automation", (request, response) -> {
 	        Client client = (Client) loadUser(request);
+	        if(client == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("client_automation.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "client_home");
@@ -320,6 +324,7 @@ public class SparkApp {
 		
 		post("/client/residence/automation/check/", (request, response) -> {
 	        Client client = (Client) loadUser(request);
+	        if(client == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("client_automation_check.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "client_home");
@@ -390,6 +395,7 @@ public class SparkApp {
 		
 		post("/client/residence/automation/finish_pipeline/", (request, response) -> {
 	        Client client = (Client) loadUser(request);
+	        if(client == null) { response.redirect("/404"); return null; }
 	        
 	        String rid = request.queryParamOrDefault("rid", client.getResidences().get(0).getId() + "");	        
 	        Residence r = null;
@@ -450,6 +456,7 @@ public class SparkApp {
 		
 		get("/client/residence/terms", (request, response) -> {
 	        Client client = (Client) loadUser(request);
+	        if(client == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("client_terms.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "client_home");
@@ -482,6 +489,7 @@ public class SparkApp {
 
 		get("/admin/devices", (request, response) -> {
 	        Administrator admin = (Administrator) loadUser(request);
+	        if(admin == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("admin_devices.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "admin_home");
@@ -495,6 +503,7 @@ public class SparkApp {
 		
 		get("/admin/reports", (request, response) -> {
 	        Administrator admin = (Administrator) loadUser(request);
+	        if(admin == null) { response.redirect("/404"); return null; }
 	        JtwigTemplate template = getTemplate("admin_reports.html");
 	        JtwigModel model = JtwigModel.newModel();
 	        model.with("menu_section", "admin_home");
