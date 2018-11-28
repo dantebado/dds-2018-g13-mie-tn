@@ -114,17 +114,6 @@ public class SparkApp {
 		
 		get("/test", (req, res) -> "Test successful");
 		
-		get("*", (req, res) -> {    
-			JtwigTemplate template = getTemplate("404.html");
-	        JtwigModel model = JtwigModel.newModel();
-        	
-		    if(!req.pathInfo().startsWith("/static")){
-		        res.status(404);
-		        return template.render(model);
-		    }
-		    return null;
-		});
-		
 		//WEBSITE
 		
 		get("/", (request, res) -> {
@@ -684,6 +673,19 @@ public class SparkApp {
 		        		break;
 	        }
 	        return "";
+		});
+		
+		//404
+		
+		get("*", (req, res) -> {    
+			JtwigTemplate template = getTemplate("404.html");
+	        JtwigModel model = JtwigModel.newModel();
+        	
+		    if(!req.pathInfo().startsWith("/static")){
+		        res.status(404);
+		        return template.render(model);
+		    }
+		    return null;
 		});
 		
 	}

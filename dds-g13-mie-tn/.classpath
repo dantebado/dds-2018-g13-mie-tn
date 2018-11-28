@@ -71,6 +71,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpmime/4.5.2/httpmime-4.5.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/json/json/20160212/json-20160212.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.1.0/org.eclipse.paho.client.mqttv3-1.1.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Simplex-Solution-Final-master"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Simplex-Solution-Final"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
