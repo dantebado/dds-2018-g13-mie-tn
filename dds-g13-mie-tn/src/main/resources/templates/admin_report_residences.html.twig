@@ -5,7 +5,7 @@
 {% for client in clients %}
 	{% for residence in client.residences %}
 		<div class="row">
-            <div class="col period-col"><b>#{{ residence.id }} — {{ residence.address }}</div>
+            <div class="col period-col"><b>#{{ residence.id }} - {{ residence.address }}</div>
             <div class="col text-right info-consumption"><i class="fas fa-bolt"></i> {{ residence.consumptionBetween(start_obj, end_obj)|number_format }}</div>
         </div>
 	{% endfor %}

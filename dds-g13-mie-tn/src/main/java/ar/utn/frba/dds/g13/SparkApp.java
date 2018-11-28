@@ -92,6 +92,13 @@ public class SparkApp {
 				}
 			}
 		}
+		for(Client user : users) {
+			for(Residence r : user.getResidences()) {
+				for(SmartDevice d : r.getSmartDevices()) {
+					d.init_in_case();
+				}
+			}
+		}
 		
 		staticFiles.location("/public/");
 		
@@ -264,12 +271,10 @@ public class SparkApp {
 	        }
 	        
 	        Device d = null;
-	        System.out.println(request.queryParams("device_type"));
 	        if(DeviceInfoTable.getDeviceByName(request.queryParams("device_type")).isInteligente()) {
 	        	d = new StandardDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")));
 	        } else {
-	        	List<TimeIntervalDevice> consumptionHistory = new ArrayList<TimeIntervalDevice>();
-	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), consumptionHistory, new DeviceOn());
+	        	d = new SmartDevice(request.queryParams("device_name"), DeviceInfoTable.getDeviceByName(request.queryParams("device_type")), new DeviceOn());
 	        }
 	        r.addDevice(d);
 	        
@@ -280,7 +285,6 @@ public class SparkApp {
 		});
 		
 		get("/client/residence/automation", (request, response) -> {
-			System.out.println(Actuator.GLOBAL_ACTUATORS.size());
 	        Client client = (Client) loadUser(request);
 	        JtwigTemplate template = getTemplate("client_automation.html");
 	        JtwigModel model = JtwigModel.newModel();
@@ -571,7 +575,6 @@ public class SparkApp {
 			        }
 		        case "admin_report":
 			        {
-			        	System.out.println("ADMIN REPORT");
 			        	String type = request.queryParams("report_type");
 			        	
 				        String str_start = request.queryParams("start");
@@ -587,8 +590,6 @@ public class SparkApp {
 					        		int countSmart = 0;
 					        		BigDecimal consumptionStandard = new BigDecimal(0);
 					        		int countStandard = 0;
-					        		
-					        		System.out.println("    DEVICES");
 					        		
 					        		for(Client c : users) {
 					        			for(Residence r : c.getResidences()) {
@@ -676,7 +677,7 @@ public class SparkApp {
 	
 	private static Calendar formatDateToCalendar(String date) {
 	    Calendar cal = Calendar.getInstance(
-				  TimeZone.getTimeZone("UTC"));
+				  TimeZone.getTimeZone("GMT-3"));
 	    cal.set(Calendar.YEAR, Integer.parseInt(date.split("-")[0]));
 	    cal.set(Calendar.MONTH, Integer.parseInt(date.split("-")[1]));
 	    cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date.split("-")[2]));
@@ -684,8 +685,8 @@ public class SparkApp {
 		return cal;
 	}
 	
-	private static String formatDateToString(Calendar date) {
-		return date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.MONTH) + "-" + date.get(Calendar.YEAR);
+	public static String formatDateToString(Calendar date) {
+		return date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.MONTH) + "-" + date.get(Calendar.YEAR) + " @ " + date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE);
 	}
 	
 	private static User loadUser(Request request) {
@@ -730,7 +731,8 @@ public class SparkApp {
 		}
 	}
 	
-	private static void saveData() {
+	public static void saveData() {
+		System.out.println("========================= START DATA SAVING =========================");
 		Session session = getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		Long ID = null;
@@ -742,8 +744,10 @@ public class SparkApp {
 				session.saveOrUpdate(a);
 			}
 			tx.commit();
+			System.out.println("========================= DONEw DATA SAVING =========================");
 		} catch (HibernateException e) {
 			if (tx!=null) tx.rollback();
+			System.out.println("========================= ERROR DATA SAVING =========================");
 			e.printStackTrace(); 
 		} finally {
 			session.close();

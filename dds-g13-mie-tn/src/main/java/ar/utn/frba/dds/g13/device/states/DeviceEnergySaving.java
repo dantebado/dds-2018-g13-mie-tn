@@ -1,5 +1,7 @@
 package ar.utn.frba.dds.g13.device.states;
 
+import ar.utn.frba.dds.g13.device.SmartDevice;
+
 public class DeviceEnergySaving implements DeviceState {
 
 	public boolean isOn(Turnable device) {
@@ -14,13 +16,21 @@ public class DeviceEnergySaving implements DeviceState {
 		return true;
 	}
 
-	public void turnOn(Turnable device) {
+	public boolean turnOn(SmartDevice device) {
+		device.saveCurrentStatusInterval();
 		device.setState(new DeviceOn());
+		return true;
 	}
 
-	public void turnOff(Turnable device) {
+	public boolean turnOff(SmartDevice device) {
+		device.saveCurrentStatusInterval();
 		device.setState(new DeviceOff());
+		return true;
 	}
 
-	public void turnEnergySaving(Turnable device) { }
+	public boolean turnEnergySaving(SmartDevice device) { return false; }
+	
+	public String toString() {
+		return "es";
+	}
 }

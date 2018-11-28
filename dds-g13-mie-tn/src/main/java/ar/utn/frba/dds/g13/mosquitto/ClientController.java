@@ -3,7 +3,9 @@ package ar.utn.frba.dds.g13.mosquitto;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Scanner;
 
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 
 import ar.utn.frba.dds.g13.device.SmartDevice;
@@ -24,6 +26,10 @@ public class ClientController {
     public static void main(String[] args) throws MqttException, InterruptedException{
     	//String ClientId = args[0];
     	Scanner scanner = new Scanner(System.in);
+        String mqttiId = MqttClient.generateClientId();
+        
+        MqttClient client = new MqttClient("tcp://52.14.65.40:1883", mqttiId);
+        client.connect();
 
     	System.out.println("== START CLIENT CONTROLLER ==");
 
@@ -43,13 +49,20 @@ public class ClientController {
             	if (listContains(selection)) {
 	            	System.out.print("Ingrese ID del dispositivo:\t");
 	            	String selectionofID = scanner.nextLine();
-	            	SGEPubMQTT.sendAction( selectionofID, selection, "MANUAL");
-	            	SmartDevice device = SmartDevice.getSmartDeviceById(selectionofID);
-	            	switch (selection) {
-	            		case "APAGAR":	 device.turnOn();
-	            		case "ENCENDER": device.turnOff();
-	            		case "MODO AHORRO ENERGIA": device.turnEnergySaving();
-	            	}
+	            	
+	            	String payload;
+	                JSONObject json = new JSONObject();
+	                json.put("type", "controller");
+	                json.put("id", selectionofID);
+	                json.put("action", selection);
+
+	                payload = json.toString();
+	                byte[] jsonBytes = payload.getBytes();
+	                String base64Encoded = DatatypeConverter.printBase64Binary(jsonBytes);
+	         
+	                MqttMessage message = new MqttMessage();
+	                message.setPayload(base64Encoded.getBytes());
+	                client.publish("controller", message);
             	}
             	else {
             		System.out.println("Error: Comando no valido");

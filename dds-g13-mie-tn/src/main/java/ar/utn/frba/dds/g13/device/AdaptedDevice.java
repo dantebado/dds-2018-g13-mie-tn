@@ -41,10 +41,8 @@ public class AdaptedDevice extends SmartDevice {
 	}
 	
 	public AdaptedDevice(StandardDevice adaptee,
-			List<TimeIntervalDevice> consumptionHistory,
 			DeviceState state) {
-		super(adaptee.name, adaptee.getDevice_info(),
-				consumptionHistory, state);
+		super(adaptee.name, adaptee.getDevice_info(), state);
 		this.consumptionHistory = consumptionHistory;
 		this.state = state;
 	}

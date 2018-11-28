@@ -1,5 +1,7 @@
 package ar.utn.frba.dds.g13.device.states;
 
+import ar.utn.frba.dds.g13.device.SmartDevice;
+
 public class DeviceOn implements DeviceState {
 
 	public boolean isOn(Turnable device) {
@@ -14,15 +16,23 @@ public class DeviceOn implements DeviceState {
 		return false;
 	}
 
-	public void turnOn(Turnable device) { }
+	public boolean turnOn(SmartDevice device) { return false; }
 
-	public void turnOff(Turnable device) {
+	public boolean turnOff(SmartDevice device) {
+		device.saveCurrentStatusInterval();
 		device.setState(new DeviceOff());
 		System.out.println("Se apagó el device");
+		return true;
 	}
 
-	public void turnEnergySaving(Turnable device) {
+	public boolean turnEnergySaving(SmartDevice device) {
+		device.saveCurrentStatusInterval();
 		device.setState(new DeviceEnergySaving());
+		return true;
+	}
+	
+	public String toString() {
+		return "on";
 	}
 
 }

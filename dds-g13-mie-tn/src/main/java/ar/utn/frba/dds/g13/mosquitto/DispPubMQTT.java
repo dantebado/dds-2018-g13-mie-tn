@@ -43,6 +43,7 @@ public class DispPubMQTT {
             
             String payload;
             JSONObject json = new JSONObject();
+            json.put("type", "device");
             json.put("id", id);
             json.put("name", name);
             json.put("minValue", minValue);

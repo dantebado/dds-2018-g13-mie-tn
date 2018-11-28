@@ -42,7 +42,7 @@ public class TimeIntervalDevice {
 	@Column(name="consuming")
 	Boolean consuming; //Cambiar a estado
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="device_id")
 	@Expose Device device;
 	

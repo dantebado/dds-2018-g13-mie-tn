@@ -19,6 +19,7 @@ import org.hibernate.annotations.Cascade;
 
 import com.google.gson.annotations.Expose;
 
+import ar.utn.frba.dds.g13.SparkApp;
 import ar.utn.frba.dds.g13.user.Client;
 
 @Entity
@@ -41,7 +42,7 @@ public class StateHistory {
 	@Column(name="state")
 	String state;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="device_id")
 	@Expose Device device;
 	
@@ -95,6 +96,46 @@ public class StateHistory {
 		this.end = end;
 		this.state = state;
 		this.device = device;
+	}
+	
+	public BigDecimal consumtionInInterval(BigDecimal hourlyConsumption) {
+		float intervalInHours = (end.getTimeInMillis() - start.getTimeInMillis()) / (1000 * 60 * 60);
+		return (!state.equalsIgnoreCase("off"))? hourlyConsumption.multiply(new BigDecimal(intervalInHours)) : new BigDecimal(0);
+	}
+	
+	public boolean isBetween(Calendar start, Calendar end) {
+		return (start.getTimeInMillis() <= this.start.getTimeInMillis() &&
+				this.end.getTimeInMillis() <= end.getTimeInMillis());
+	}
+
+	public double secondsOverlap(Calendar start, Calendar end) {
+		System.out.println("BTW " + SparkApp.formatDateToString(start) + " AND " + SparkApp.formatDateToString(this.start));
+		Calendar startO = start;
+		Calendar endO = end;
+		
+		if(startO.getTimeInMillis() > this.start.getTimeInMillis()) {
+			startO = this.start;
+		}
+		
+		System.out.println("      " + SparkApp.formatDateToString(startO));
+		System.out.println("BTW " + SparkApp.formatDateToString(end) + " AND " + SparkApp.formatDateToString(this.end));
+	
+		if(this.end.getTimeInMillis() <= endO.getTimeInMillis()) {
+			endO = this.end;
+		}
+		System.out.println("      " + SparkApp.formatDateToString(endO));
+		
+		long e = endO.getTimeInMillis(); long s = startO.getTimeInMillis();
+		double d = (e-s) / (6000);
+		
+		System.out.println("             " + d);
+		if(d<0)d=0;
+		return d;
+	}
+	
+	public BigDecimal consumptionBetween(Calendar start, Calendar end) {
+		BigDecimal ovl = new BigDecimal(secondsOverlap(start, end));
+		return (!state.equalsIgnoreCase("off"))? device.getHourlyConsumption().divide(new BigDecimal(60)).multiply(ovl) : new BigDecimal(0);
 	}
 
 }

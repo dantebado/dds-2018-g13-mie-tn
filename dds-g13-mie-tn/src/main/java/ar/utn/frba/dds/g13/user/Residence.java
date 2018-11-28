@@ -187,8 +187,7 @@ public class Residence extends BeanToJson {
 	public void adaptStandardDevice(Device device) {
 		if(devices.contains(device) && !device.isSmart()) {
 			devices.remove(device);
-			addDevice(new AdaptedDevice((StandardDevice) device,
-					new ArrayList<TimeIntervalDevice>(), new DeviceOff()));
+			addDevice(new AdaptedDevice((StandardDevice) device, new DeviceOff()));
 		}
 	}
 	

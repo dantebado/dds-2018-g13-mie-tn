@@ -142,13 +142,10 @@ public abstract class Sensor extends Thread {
 	private Measure measure() {
 		//Measure nm = measureValue();
 		Measure nm = Sensor.getNextMeasure(id);
-		System.out.println("SENSOR " + id + " MIDIENDO ");
 		if (nm != null) {
 			nm.setSensor(this);
 			lastMeasure = nm;
 		}
-		if(lastMeasure != null)
-			System.out.println("      " + lastMeasure.getValue());
 		return lastMeasure;
 	}
 	
@@ -161,7 +158,6 @@ public abstract class Sensor extends Thread {
 			
 			for(RecivedMeasure rm : messures) {
 				if ((rm.getId()).equals(Long.toString(id)) && noneFounded) {
-					System.out.println("   founded");
 					messureFounded = rm;
 					noneFounded = false;
 				}
