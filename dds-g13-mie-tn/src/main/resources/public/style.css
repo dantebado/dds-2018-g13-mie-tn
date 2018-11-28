@@ -541,3 +541,7 @@ font-size: 14px;
 .admin-login a {
   color: #ff7675 !important;
 }
+
+#timeline_parameters {
+	width:100%;
+}
